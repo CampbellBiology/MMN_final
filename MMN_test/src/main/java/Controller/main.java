@@ -1,22 +1,22 @@
-//package Controller;
-//
-//import java.util.ArrayList;
-//
-//import DataClass.storeAverageRating;
-//
-//public class main {
-//
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		getStoreAvgRating gsar = new getStoreAvgRating();
-//		
-//		ArrayList <storeAverageRating> sar = gsar.getRatingSorting();
-//		
-//		System.out.println("size : " + sar.size());
-//		
-//		for(int i=0;i<sar.size();i++) {
-//			System.out.println(sar.get(i).getStoreCode() + " / " + sar.get(i).getAvgRating());
-//		}
-//	}
-//
-//}
+package Controller;
+
+import DataClass.storeData;
+import DataClass.tagData;
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		searchResult sr = new searchResult("고기");
+
+		for(storeData sd : sr.storeInfo) {
+			System.out.println(sd.getStoreName());
+			System.out.println(sd.getStoreCode());
+		}
+		
+		for(tagData td : sr.tagInfo) {
+			System.out.println(td.getTagName());
+		}
+	}
+
+}

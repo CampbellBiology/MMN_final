@@ -22,6 +22,4 @@ public class tagData {
 	public void setTagViews(int tagViews) {
 		this.tagViews = tagViews;
 	}
-	
-	
 }

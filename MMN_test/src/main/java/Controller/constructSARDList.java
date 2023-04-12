@@ -30,9 +30,9 @@ public class constructSARDList {
 		// sdList를 순회한다.
 		for(storeData tmp : sdList) {
 			// res는 평균 평점이다.
-			double res = _db.getAverageRating(tmp.storeCode);
+			double res = _db.getAverageRating(tmp.getStoreCode());
 			// storeAverageRating의 객체를 생성한다.
-			storeAverageRatingData sar = new storeAverageRatingData(tmp.storeCode, res);
+			storeAverageRatingData sar = new storeAverageRatingData(tmp.getStoreCode(), res);
 			// 위 객체를 list에 추가해준다.
 			list.add(sar);
 		}

@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import DataClass.Insert_joinData;
 import DataClass.loginData;
@@ -40,9 +44,9 @@ public class DB_Conn {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// db연결 문자열 but 이방법은 보안에 취약하다. ..
-			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
-			String id = "root"; // mysql 접속아이디
-			String pwd = "1234"; // mysql 접속 비번
+			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+			String id = "junghan"; // mysql 접속아이디
+			String pwd = "yeil!1234"; // mysql 접속 비번
 
 			// db 접속
 
@@ -363,8 +367,8 @@ public class DB_Conn {
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
-			stmt = conn.createStatement();
 			String sql = "SELECT * FROM storeTbl where storeCode = " + storeCode;
+			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 
 			while (res.next()) {
@@ -403,22 +407,25 @@ public class DB_Conn {
 	}
 
 	// 메뉴 검색을 통해 storeData ArrayList를 가져온다.
-	public ArrayList<storeData> getMenuInfo(String query) {
-		ArrayList<storeData> list = new ArrayList<>();
+	public ArrayList <storeData> getMenuInfo(String query) {
+		ArrayList <storeData> list = new ArrayList<storeData>();
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
 			String sql = "SELECT * FROM menuTbl WHERE foodName LIKE \"%";
-			stmt = conn.createStatement();
 			for (int i = 0; i < tmp.length; i++) {
 				sql += tmp[i] + "%";
 			}
 			sql += "\"";
+			
+			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
-				list.add(getStoreData(res.getInt("storeCode")));
+				storeData sd = getStoreData(res.getInt("storeCode"));
+				
+				list.add(sd);
 			}
 
 		} catch (Exception e) {
@@ -439,18 +446,18 @@ public class DB_Conn {
 
 	// 가게검색을 통해 storeData ArrayList를 가져온다.
 	public ArrayList<storeData> getStoreInfo(String query) {
-		ArrayList<storeData> list = new ArrayList<>();
+		ArrayList <storeData> list = new ArrayList<storeData>();
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
 			String sql = "SELECT * FROM storeTbl WHERE storeName LIKE \"%";
-			stmt = conn.createStatement();
 			for (int i = 0; i < tmp.length; i++) {
 				sql += tmp[i] + "%";
 			}
 			sql += "\"";
+			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
 				int storeCode = res.getInt("storeCode");
@@ -493,24 +500,25 @@ public class DB_Conn {
 
 	// 태그검색을 통해 tagData ArrayList를 가져온다.
 	public ArrayList<tagData> getTagInfo(String query) {
-		ArrayList<tagData> list = new ArrayList<>();
+		ArrayList <tagData> list = new ArrayList<tagData>();
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
 			String sql = "SELECT * FROM tagTbl WHERE tagName LIKE \"%";
-			stmt = conn.createStatement();
 			for (int i = 0; i < tmp.length; i++) {
 				sql += tmp[i] + "%";
 			}
 			sql += "\"";
+			
+			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
 				tagData td = new tagData();
 				td.setTagId(res.getInt("tagID"));
 				td.setTagName(res.getString("tagName"));
-				td.setTagViews(res.getInt("tagViews"));
+				td.setTagViews(res.getInt("tagView"));
 
 				list.add(td);
 			}
