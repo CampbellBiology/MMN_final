@@ -5,5 +5,6 @@ public class Insert_joinData {
 	public String userPW;
 	public String userName;
 	public String userEmail;
+	public String userImgPath;
 	public String isMaster;
 }

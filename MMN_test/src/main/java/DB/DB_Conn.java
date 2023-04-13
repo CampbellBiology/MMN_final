@@ -7,10 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import DataClass.Insert_joinData;
 import DataClass.loginData;
@@ -18,6 +14,7 @@ import DataClass.menuData;
 import DataClass.rtdCntData;
 import DataClass.storeData;
 import DataClass.tagData;
+import DataClass.watchlistData;
 
 public class DB_Conn {
 	String _Sql;
@@ -44,9 +41,13 @@ public class DB_Conn {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// db연결 문자열 but 이방법은 보안에 취약하다. ..
-			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
-			String id = "junghan"; // mysql 접속아이디
-			String pwd = "yeil!1234"; // mysql 접속 비번
+//			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+//			String id = "junghan"; // mysql 접속아이디
+//			String pwd = "yeil!1234"; // mysql 접속 비번
+
+			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+			String id = "root"; // mysql 접속아이디
+			String pwd = "1234"; // mysql 접속 비번
 
 			// db 접속
 
@@ -93,16 +94,6 @@ public class DB_Conn {
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
-
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-
 		}
 	}
 
@@ -402,13 +393,13 @@ public class DB_Conn {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return sd;
 	}
 
 	// 메뉴 검색을 통해 storeData ArrayList를 가져온다.
-	public ArrayList <storeData> getMenuInfo(String query) {
-		ArrayList <storeData> list = new ArrayList<storeData>();
+	public ArrayList<storeData> getMenuInfo(String query) {
+		ArrayList<storeData> list = new ArrayList<storeData>();
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
@@ -419,13 +410,11 @@ public class DB_Conn {
 				sql += tmp[i] + "%";
 			}
 			sql += "\"";
-			
+
 			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
-				storeData sd = getStoreData(res.getInt("storeCode"));
-				
-				list.add(sd);
+				list.add(getStoreData(res.getInt("storeCode")));
 			}
 
 		} catch (Exception e) {
@@ -446,7 +435,7 @@ public class DB_Conn {
 
 	// 가게검색을 통해 storeData ArrayList를 가져온다.
 	public ArrayList<storeData> getStoreInfo(String query) {
-		ArrayList <storeData> list = new ArrayList<storeData>();
+		ArrayList<storeData> list = new ArrayList<storeData>();
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
@@ -500,7 +489,7 @@ public class DB_Conn {
 
 	// 태그검색을 통해 tagData ArrayList를 가져온다.
 	public ArrayList<tagData> getTagInfo(String query) {
-		ArrayList <tagData> list = new ArrayList<tagData>();
+		ArrayList<tagData> list = new ArrayList<tagData>();
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
@@ -511,7 +500,7 @@ public class DB_Conn {
 				sql += tmp[i] + "%";
 			}
 			sql += "\"";
-			
+
 			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
@@ -538,4 +527,146 @@ public class DB_Conn {
 
 		return list;
 	}
+
+	// 관심목록에 가게데이터를 추가한다.
+	public void addWatchlistInfo(String userID, int storeCode) {
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "INSERT INTO watchlistTbl values (?, ?);";
+
+			// sql 실행객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			// ? 에 입력될 값 매핑
+			pstmt.setString(1, userID);
+			pstmt.setInt(2, storeCode);
+			
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	// 관심목록에 가게데이터를 삭제한다.
+	public void deleteWatchlistInfo(String userID, int storeCode) {
+
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from watchlistTbl where userID = '"+userID+"' and storeCode ="+storeCode;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	// 관심목록에 등록된 가게데이터를 가져온다.
+	public ArrayList<watchlistData> getWatchListInfo(String userID) {
+		ArrayList<watchlistData> list = new ArrayList<watchlistData>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM watchlistTbl WHERE userID = '" + userID + "'";
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				int storeCode = res.getInt("storeCode");
+
+				watchlistData wd = new watchlistData(userID, storeCode);
+				list.add(wd);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+	}
+	
+//	public String getStoreInfo(int cateCode) {
+//		
+//		String[] tmp = query.split(" ");
+//
+//		Statement stmt = null;
+//		ResultSet res = null;
+//		try {
+//			String sql = "SELECT * FROM storeTbl WHERE storeName LIKE \"%";
+//			for (int i = 0; i < tmp.length; i++) {
+//				sql += tmp[i] + "%";
+//			}
+//			sql += "\"";
+//			stmt = conn.createStatement();
+//			res = stmt.executeQuery(sql);
+//			while (res.next()) {
+//				int storeCode = res.getInt("storeCode");
+//				String storeName = res.getString("storeName");
+//				int cateCode = res.getInt("cateCode");
+//				String openAt = res.getString("openAt");
+//				String closeAt = res.getString("closeAt");
+//				String offDays = res.getString("offDays");
+//				String lastOrder = res.getString("lastOrder");
+//				String phone = res.getString("phone");
+//				String addr = res.getString("addr");
+//				String parking = res.getString("parking");
+//				String storeImgPath = res.getString("storeImagePath");
+//				String web = res.getString("web");
+//				String breakStart = res.getString("breakStart");
+//				String breakEnd = res.getString("breakEnd");
+//
+//				// storeData 클래스의 객체를 생성한다.
+//				storeData sd = new storeData(storeCode, storeName, cateCode, openAt, closeAt, offDays, lastOrder, phone,
+//						addr, parking, storeImgPath, web, breakStart, breakEnd);
+//
+//				list.add(sd);
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (res != null)
+//					res.close();
+//				if (stmt != null)
+//					stmt.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		return list;
+//	}
 }

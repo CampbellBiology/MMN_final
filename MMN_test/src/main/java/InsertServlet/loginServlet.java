@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import Controller.watchlist;
 import DB.DB_Conn;
 import DataClass.loginData;
 
@@ -49,6 +51,13 @@ public class loginServlet extends HttpServlet {
 
 			int res = _DB.loginMathcing(_Data);
 			loginData.setLoginStatus(res);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("member", _Data.userID);
+			
+			watchlist w = new watchlist(_Data, _DB);
+			
+		//	System.out.println(session.getAttribute("member"));
 
 			String context = request.getContextPath();
 

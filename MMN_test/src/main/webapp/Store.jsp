@@ -33,12 +33,14 @@
 	
 	ArrayList<menuData> list = _db.menufindAll();
 
-	ArrayList<storeData> storeList = new ArrayList<>();
-	ArrayList<rtdCntData> rtdCntList = new ArrayList<>();
+	ArrayList<storeData> storeList;
+	ArrayList<rtdCntData> rtdCntList;
 	storeList = _db.storefindAll();
 	rtdCntList = _db.rtdCntfindAll();
+	
+	System.out.println("size : " + storeList.size());
 	storeData sd = storeList.get(0);
-	String storeImgPath = sd.storeImgPath;
+	String storeImgPath = sd.getStoreImgPath();
 
 	Collections.sort(rtdCntList);
 
@@ -60,17 +62,17 @@
 					</div>
 				</div>
 				<div id="store_info">
-					<div id="store_name"><%=sd.storeName%></div>
+					<div id="store_name"><%=sd.getStoreName()%></div>
 					<div id="store_keep">
 						<img id="keepImg" src="<%=keep_btn_path%>" width=100px
 							onclick="keepClick()" onmouseover="onHover()"
 							onmouseout="offHover()">
 					</div>
-					<div id="store_detail"><%="가게 시작 시간 : " + sd.openAt + "<br>가게 마감 시간 : " + sd.closeAt + "<br> 마지막 주문 가능 시간 : "
-		+ (sd.lastOrder == null ? "정보 없음" : sd.lastOrder) + "<br>가게 주차 여부 : "
-		+ (sd.parking.equals("Y") ? "주차 가능" : "주차 불가") + "<br> 휴무일 : " + (sd.offDays == null ? "정보 없음" : sd.offDays)
-		+ "<br> 주소 : " + sd.addr + "<br> 전화번호 : " + sd.phone + "<br> 홈페이지 : " + (sd.web == null ? "정보 없음" : sd.web)
-		+ "<br> 브레이크 타임 : " + (sd.breakStart == null ? "정보 없음" : sd.breakStart + " - " + sd.breakEnd)%><br>
+					<div id="store_detail"><%="가게 시작 시간 : " + sd.getOpenAt() + "<br>가게 마감 시간 : " + sd.getCloseAt() + "<br> 마지막 주문 가능 시간 : "
+		+ (sd.getLastOrder() == null ? "정보 없음" : sd.getLastOrder()) + "<br>가게 주차 여부 : "
+		+ (sd.getParking().equals("Y") ? "주차 가능" : "주차 불가") + "<br> 휴무일 : " + (sd.getOffDays() == null ? "정보 없음" : sd.getOffDays())
+		+ "<br> 주소 : " + sd.getAddr() + "<br> 전화번호 : " + sd.getPhone() + "<br> 홈페이지 : " + (sd.getWeb() == null ? "정보 없음" : sd.getWeb())
+		+ "<br> 브레이크 타임 : " + (sd.getBreakStart() == null ? "정보 없음" : sd.getBreakStart() + " - " + sd.getBreakEnd())%><br>
 					</div>
 				</div>
 
