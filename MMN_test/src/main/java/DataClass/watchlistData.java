@@ -1,5 +1,6 @@
 package DataClass;
 
+// 데이터베이스에 있는 관심목록 데이터들
 public class watchlistData {
 	String userID;
 	int storeCode;

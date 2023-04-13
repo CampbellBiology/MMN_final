@@ -16,11 +16,11 @@ public class Main {
 		
 //		db.deleteWatchlistInfo("aabb", 2);
 		
-		ArrayList <watchlistData> wdl = db.getWatchListInfo("aabb");
-		
-		for(watchlistData wd:wdl) {
-			System.out.println(wd.getStoreCode());
-		}
+//		ArrayList <watchlistData> wdl = db.getWatchListInfo("aabb");
+//		
+//		for(watchlistData wd:wdl) {
+//			System.out.println(wd.getStoreCode());
+//		}
 	}
 
 }

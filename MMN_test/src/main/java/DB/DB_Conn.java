@@ -567,6 +567,9 @@ public class DB_Conn {
 		try {
 			String sql = "delete from watchlistTbl where userID = '"+userID+"' and storeCode ="+storeCode;
 			pstmt = conn.prepareStatement(sql);
+
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -617,56 +620,33 @@ public class DB_Conn {
 		return list;
 	}
 	
-//	public String getStoreInfo(int cateCode) {
-//		
-//		String[] tmp = query.split(" ");
-//
-//		Statement stmt = null;
-//		ResultSet res = null;
-//		try {
-//			String sql = "SELECT * FROM storeTbl WHERE storeName LIKE \"%";
-//			for (int i = 0; i < tmp.length; i++) {
-//				sql += tmp[i] + "%";
-//			}
-//			sql += "\"";
-//			stmt = conn.createStatement();
-//			res = stmt.executeQuery(sql);
-//			while (res.next()) {
-//				int storeCode = res.getInt("storeCode");
-//				String storeName = res.getString("storeName");
-//				int cateCode = res.getInt("cateCode");
-//				String openAt = res.getString("openAt");
-//				String closeAt = res.getString("closeAt");
-//				String offDays = res.getString("offDays");
-//				String lastOrder = res.getString("lastOrder");
-//				String phone = res.getString("phone");
-//				String addr = res.getString("addr");
-//				String parking = res.getString("parking");
-//				String storeImgPath = res.getString("storeImagePath");
-//				String web = res.getString("web");
-//				String breakStart = res.getString("breakStart");
-//				String breakEnd = res.getString("breakEnd");
-//
-//				// storeData 클래스의 객체를 생성한다.
-//				storeData sd = new storeData(storeCode, storeName, cateCode, openAt, closeAt, offDays, lastOrder, phone,
-//						addr, parking, storeImgPath, web, breakStart, breakEnd);
-//
-//				list.add(sd);
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (res != null)
-//					res.close();
-//				if (stmt != null)
-//					stmt.close();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return list;
-//	}
+	// 카테고리 코드에 맞는 카테고리 이름을 가져온다.
+	public String getCategoryName(int cateCode) {
+		String ret="";
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM categoryTbl WHERE cateCode =" + cateCode;
+			
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				ret = res.getString("cateName");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ret;
+	}
 }
