@@ -41,13 +41,13 @@ public class DB_Conn {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// db연결 문자열 but 이방법은 보안에 취약하다. ..
-//			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
-//			String id = "junghan"; // mysql 접속아이디
-//			String pwd = "yeil!1234"; // mysql 접속 비번
+			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+			String id = "junghan"; // mysql 접속아이디
+			String pwd = "yeil!1234"; // mysql 접속 비번
 
-			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
-			String id = "root"; // mysql 접속아이디
-			String pwd = "1234"; // mysql 접속 비번
+//			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+//			String id = "root"; // mysql 접속아이디
+//			String pwd = "1234"; // mysql 접속 비번
 
 			// db 접속
 
@@ -533,7 +533,7 @@ public class DB_Conn {
 		PreparedStatement pstmt = null;
 		
 		try {
-			String sql = "INSERT INTO watchlistTbl values (?, ?);";
+			String sql = "INSERT INTO watchlistTbl values (?, ?)";
 
 			// sql 실행객체 생성
 			pstmt = conn.prepareStatement(sql);

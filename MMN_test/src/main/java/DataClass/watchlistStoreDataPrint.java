@@ -9,6 +9,56 @@ public class watchlistStoreDataPrint {
 	double averageRating;
 	String cateName;
 	String addr;
+	int storeCode;
+	
+	public String getStoreImagePath() {
+		return storeImagePath;
+	}
+
+	public void setStoreImagePath(String storeImagePath) {
+		this.storeImagePath = storeImagePath;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public double getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(double averageRating) {
+		this.averageRating = averageRating;
+	}
+
+	public String getCateName() {
+		return cateName;
+	}
+
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+
+	public String getAddr() {
+		return addr;
+	}
+
+	public int getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(int storeCode) {
+		this.storeCode = storeCode;
+	}
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+
 	
 	public watchlistStoreDataPrint(storeData _sd) {
 		// TODO Auto-generated constructor stub
@@ -20,5 +70,6 @@ public class watchlistStoreDataPrint {
 		averageRating = _db.getAverageRating(_sd.getStoreCode());
 		cateName = _db.getCategoryName(_sd.getCateCode());
 		addr = _sd.getAddr();
+		storeCode = _sd.getStoreCode();
 	}
 }

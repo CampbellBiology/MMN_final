@@ -11,8 +11,11 @@ public class Main {
 		// TODO Auto-generated method stub
 		DB_Conn db = new DB_Conn();
 		
-//		db.addWatchlistInfo("aabb", 2);
-//		db.addWatchlistInfo("aabb", 1);
+		db.addWatchlistInfo("aabb", 2);
+		db.addWatchlistInfo("aabb", 1);
+		db.addWatchlistInfo("aabb", 3);
+		db.addWatchlistInfo("aabb", 4);
+		db.addWatchlistInfo("aabb", 5);
 		
 //		db.deleteWatchlistInfo("aabb", 2);
 		

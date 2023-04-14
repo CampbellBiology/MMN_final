@@ -55,7 +55,7 @@ public class loginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", _Data.userID);
 			
-			watchlist w = new watchlist(_Data, _DB);
+			watchlist _watchlist = new watchlist(_Data.userID);
 			
 		//	System.out.println(session.getAttribute("member"));
 

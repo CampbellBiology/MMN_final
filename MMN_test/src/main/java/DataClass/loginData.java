@@ -1,8 +1,8 @@
 package DataClass;
 
 public class loginData {
-	public String userID;
-	public String userPW;
+	public static String userID;
+	public static String userPW;
 	private static int loginStatus;
 
 	public static int getLoginStatus() {
