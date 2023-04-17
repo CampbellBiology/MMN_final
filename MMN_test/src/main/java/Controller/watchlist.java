@@ -53,7 +53,7 @@ public class watchlist {
 				// 가져온 storeData를 출력하는 객체를 생성한다.
 				watchlistStoreDataPrint wsdp = new watchlistStoreDataPrint(sd);
 
-				// 관심목록 출력 리스트에 wsd 객체를 추가한다.
+				// 관심목록 출력 리스트에 wsdp 객체를 추가한다.
 				wsdpList.add(wsdp);
 			}
 		}

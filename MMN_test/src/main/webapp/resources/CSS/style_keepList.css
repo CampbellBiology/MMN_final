@@ -51,27 +51,32 @@
 
 
  /* 여기서부터 팝업 안 */
-input[type="text"]{
-	display:none;'
+input[type="text"] {
+	display: none;
 }
 
 input[type="checkbox"] {
-    display:none;
+	display: none;
 }
 
-input[type="checkbox"] + label { 
-    cursor: pointer; 
-    padding-left: 23px; 
-    background-repeat: no-repeat;
-    background-image: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_inactive.png);
+input[type="checkbox"]+label {
+	cursor: pointer;
+	padding-left: 23px;
+	background-repeat: no-repeat;
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_inactive.png);
 	background-size: 100%;
 }
-input[type="checkbox"]:checked + label {
-    background-image: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_active.png);
+
+input[type="checkbox"]:checked+label {
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_active.png);
 	background-size: 100%;
 }
-input[type="checkbox"]:disabled + label {
-    background-image: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_inactive.png);
+
+input[type="checkbox"]:disabled+label {
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_inactive.png);
 	background-size: 100%;
 }
 

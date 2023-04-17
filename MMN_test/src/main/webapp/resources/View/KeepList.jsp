@@ -26,10 +26,9 @@
 			DB_Conn db = new DB_Conn();
 			String userID = "aabb";
 			watchlist wl = new watchlist(userID);
-			watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[5];
+			watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
 
-			wl.getWdList().get(0).getStoreCode();
-			int lim = Math.min(wl.getWsdpList().size(), 5);
+			int lim = Math.min(wl.getWsdpList().size(), 10);
 
 			for (int i = 0; i < lim; i++) {
 				arr[i] = wl.getWsdpList().get(i);
@@ -45,7 +44,7 @@
 					if (arr[0] != null) {
 					%>
 					<div id="store">
-						<div id="keep_icon1" class="keep_icon">
+						<div id="keep_icon">
 							<input type="text" name="storeCode1"
 								value="<%=arr[0].getStoreCode()%>"><input
 								type="checkbox" name="check1" id="check1" checked><label
@@ -67,7 +66,7 @@
 					if (arr[1] != null) {
 					%>
 					<div id="store">
-						<div id="keep_icon2" class="keep_icon">
+						<div id="keep_icon">
 							<input type="text" name="storeCode2"
 								value="<%=arr[1].getStoreCode()%>"><input
 								type="checkbox" name="check2" id="check2" checked><label
@@ -90,7 +89,7 @@
 					if (arr[2] != null) {
 					%>
 					<div id="store">
-						<div id="keep_icon3" class="keep_icon">
+						<div id="keep_icon">
 							<input type="text" name="storeCode3"
 								value="<%=arr[2].getStoreCode()%>"><input
 								type="checkbox" name="check3" id="check3" checked><label
@@ -114,7 +113,7 @@
 					if (arr[3] != null) {
 					%>
 					<div id="store">
-						<div id="keep_icon4" class="keep_icon">
+						<div id="keep_icon">
 							<input type="text" name="storeCode4"
 								value="<%=arr[3].getStoreCode()%>"><input
 								type="checkbox" name="check4" id="check4" checked><label
@@ -137,7 +136,7 @@
 					if (arr[4] != null) {
 					%>
 					<div id="store">
-						<div id="keep_icon5" class="keep_icon">
+						<div id="keep_icon">
 							<input type="text" name="storeCode5"
 								value="<%=arr[4].getStoreCode()%>"><input
 								type="checkbox" name="check5" id="check5" checked><label
@@ -150,6 +149,121 @@
 							<div id="store_score"><%=arr[4].getAverageRating()%></div>
 							<div id="store_category"><%=arr[4].getCateName()%></div>
 							<div id="store_address"><%=arr[4].getAddr()%></div>
+						</div>
+					</div>
+					<%
+					}
+					%>
+					
+					<%
+					if (arr[5] != null) {
+					%>
+					<div id="store">
+						<div id="keep_icon">
+							<input type="text" name="storeCode6"
+								value="<%=arr[5].getStoreCode()%>"><input
+								type="checkbox" name="check6" id="check6" checked><label
+								for="check6"></label>
+						</div>
+						<div id="store_photo"
+							style="background:url(<%=arr[5].getStoreImagePath()%>) no-repeat; background-size: 100%;"></div>
+						<div id="store_details">
+							<div id="store_name"><%=arr[5].getStoreName()%></div>
+							<div id="store_score"><%=arr[5].getAverageRating()%></div>
+							<div id="store_category"><%=arr[5].getCateName()%></div>
+							<div id="store_address"><%=arr[5].getAddr()%></div>
+						</div>
+					</div>
+					<%
+					}
+					%>
+					
+					<%
+					if (arr[6] != null) {
+					%>
+					<div id="store">
+						<div id="keep_icon">
+							<input type="text" name="storeCode7"
+								value="<%=arr[6].getStoreCode()%>"><input
+								type="checkbox" name="check7" id="check7" checked><label
+								for="check7"></label>
+						</div>
+						<div id="store_photo"
+							style="background:url(<%=arr[6].getStoreImagePath()%>) no-repeat; background-size: 100%;"></div>
+						<div id="store_details">
+							<div id="store_name"><%=arr[6].getStoreName()%></div>
+							<div id="store_score"><%=arr[6].getAverageRating()%></div>
+							<div id="store_category"><%=arr[6].getCateName()%></div>
+							<div id="store_address"><%=arr[6].getAddr()%></div>
+						</div>
+					</div>
+					<%
+					}
+					%>
+					
+					<%
+					if (arr[7] != null) {
+					%>
+					<div id="store">
+						<div id="keep_icon">
+							<input type="text" name="storeCode8"
+								value="<%=arr[7].getStoreCode()%>"><input
+								type="checkbox" name="check8" id="check8" checked><label
+								for="check8"></label>
+						</div>
+						<div id="store_photo"
+							style="background:url(<%=arr[7].getStoreImagePath()%>) no-repeat; background-size: 100%;"></div>
+						<div id="store_details">
+							<div id="store_name"><%=arr[7].getStoreName()%></div>
+							<div id="store_score"><%=arr[7].getAverageRating()%></div>
+							<div id="store_category"><%=arr[7].getCateName()%></div>
+							<div id="store_address"><%=arr[7].getAddr()%></div>
+						</div>
+					</div>
+					<%
+					}
+					%>
+					
+					<%
+					if (arr[8] != null) {
+					%>
+					<div id="store">
+						<div id="keep_icon">
+							<input type="text" name="storeCode9"
+								value="<%=arr[8].getStoreCode()%>"><input
+								type="checkbox" name="check9" id="check9" checked><label
+								for="check9"></label>
+						</div>
+						<div id="store_photo"
+							style="background:url(<%=arr[8].getStoreImagePath()%>) no-repeat; background-size: 100%;"></div>
+						<div id="store_details">
+							<div id="store_name"><%=arr[8].getStoreName()%></div>
+							<div id="store_score"><%=arr[8].getAverageRating()%></div>
+							<div id="store_category"><%=arr[8].getCateName()%></div>
+							<div id="store_address"><%=arr[8].getAddr()%></div>
+						</div>
+					</div>
+					<%
+					}
+					%>
+					
+					<%
+					if (arr[9] != null) {
+					%>
+					<div id="store">
+						<div id="keep_icon">
+							<input type="text" name="storeCode10"
+								value="<%=arr[9].getStoreCode()%>"><input
+								type="checkbox" name="check10" id="check10" checked><label
+								for="check10"></label>
+						</div>
+						<div id="store_photo"
+							style="background:url(<%=arr[9].getStoreImagePath()%>) no-repeat; background-size: 100%;"></div>
+						<div id="store_details">
+							<div id="store_name"><%=arr[9].getStoreName()%></div>
+							<div id="store_score"><%=arr[9].getAverageRating()%></div>
+							<div id="store_category"><%=arr[9].getCateName()%></div>
+							<div id="store_address"><%=arr[9].getAddr()%></div>
 						</div>
 					</div>
 					<%

@@ -40,25 +40,34 @@ public class loginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		try {
+			// 유저 아이디
 			String user_id = request.getParameter("user_id");
+			// 유저 패스워드
 			String user_pw = request.getParameter("user_pw");
 
+			// 데이터베이스 접근
 			DB_Conn _DB = new DB_Conn();
+			// 로그인 데이터 객체 생성
 			loginData _Data = new loginData();
 
+			// 로그인 데이터 유저 아이디, 유저 패스워드
 			_Data.userID = user_id;
 			_Data.userPW = user_pw;
 
+			// 로그인 데이터 매칭 결과
 			int res = _DB.loginMathcing(_Data);
+			// 로그인 데이터에서 로그인 상태를 업데이트 한다.
 			loginData.setLoginStatus(res);
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("member", _Data.userID);
-			
-			watchlist _watchlist = new watchlist(_Data.userID);
-			
-		//	System.out.println(session.getAttribute("member"));
 
+			// 세션 객체를 얻는다.
+			HttpSession session = request.getSession();
+			// member 속성에 유저 아이디를 넣는다. 이걸로 유저가 로그인 중인지 체크한다.
+			session.setAttribute("member", _Data.userID);
+
+			// 유저의 관심목록 객체를 생성한다.
+			watchlist _watchlist = new watchlist(_Data.userID);
+
+			// 로그인 후 띄울 화면을 설정하기 위한 코드
 			String context = request.getContextPath();
 
 			if (res == 0) {

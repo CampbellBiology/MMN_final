@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DB.DB_Conn;
-import DataClass.Insert_joinData;
 
 /**
- * Servlet implementation class servlet_
+ * Servlet implementation class storeServlet
  */
-@WebServlet("/resources/View/join")
-public class joinServlet extends HttpServlet {
+@WebServlet("/store")
+public class storeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public joinServlet() {
+	public storeServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -35,35 +34,33 @@ public class joinServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 
-		request.setCharacterEncoding("utf-8");
-
 		try {
 			// 유저 아이디
-			String user_id = request.getParameter("user_id");
-			// 유저 패스워드
-			String user_pw = request.getParameter("user_pw");
-			// 유저 이름
-			String user_name = request.getParameter("user_name");
-			// 유저 이메일
-			String user_email = request.getParameter("user_email");
+			String userId = request.getParameter("userId");
+			// 가게코드
+			int storeCode = Integer.parseInt(request.getParameter("storeCode"));
+			// 관심목록에서 제거해야 될 가게일 때 chk1는 공백이고 chk2는 null이다.
+			// 관심목록에 추가해야 될 가게일 때 chk2는 공백이고 chk1는 null이다.
+			String chk1 = request.getParameter("toDelete");
+			String chk2 = request.getParameter("toAdd");
 
-			// 데이터베이스 접근
-			DB_Conn _DB = new DB_Conn();
-			// 삽입할 회원가입 정보를 저장할 객체다.
-			Insert_joinData _Data = new Insert_joinData();
+			DB_Conn db = new DB_Conn();
 
-			_Data.userID = user_id;
-			_Data.userPW = user_pw;
-			_Data.userName = user_name;
-			_Data.userEmail = user_email;
-			_Data.isMaster = "N";
-
-			// 데이터베이스에 회원가입 자료들을 삽입한다.
-			_DB.Insert_UserData(_Data);
-
+			// 관심목록에 가게를 제거해야 한다면
+			if (chk2 == null) {
+				db.deleteWatchlistInfo(userId, storeCode);
+			}
+			// 관심목록에 가게를 추가해야 된다면
+			else {
+				db.addWatchlistInfo(userId, storeCode);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		// 관심목록을 누른 뒤 바껴야될 페이지는 여전히 Store.jsp 이다.
+		String context = request.getContextPath();
+		response.sendRedirect(context + "/Store.jsp");
 	}
 
 	/**
@@ -74,7 +71,6 @@ public class joinServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-
 	}
 
 }

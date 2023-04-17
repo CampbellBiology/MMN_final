@@ -1,8 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@page import="DB.*"%>
 <%@page import="DataClass.*"%>
 <%@page import="java.util.*"%>
+<%@page import="Controller.*"%>
 
 <!Doctype html>
 <html lang="ko">
@@ -13,7 +15,8 @@
 
 <link rel="stylesheet" href="resources/CSS/style_store.css">
 <link rel="stylesheet" href="resources/slick-1.8.1/slick/slick.css">
-<link rel="stylesheet" href="resources/slick-1.8.1/slick/slick-theme.css">
+<link rel="stylesheet"
+	href="resources/slick-1.8.1/slick/slick-theme.css">
 <link rel="stylesheet" href="resources/CSS/style_ImagePopUp.css">
 
 </head>
@@ -26,33 +29,43 @@
 		<div id="body">
 
 			<%
-	DB_Conn _db = new DB_Conn();
-	_db.constructStoreMap();
-	_db.constructRtdCnt_map();
-	_db.constructMenuMap();
-	
-	ArrayList<menuData> list = _db.menufindAll();
+			DB_Conn _db = new DB_Conn();
+			_db.constructStoreMap();
+			_db.constructRtdCnt_map();
+			_db.constructMenuMap();
 
-	ArrayList<storeData> storeList;
-	ArrayList<rtdCntData> rtdCntList;
-	storeList = _db.storefindAll();
-	rtdCntList = _db.rtdCntfindAll();
-	
-	System.out.println("size : " + storeList.size());
-	storeData sd = storeList.get(0);
-	String storeImgPath = sd.getStoreImgPath();
+			ArrayList<menuData> list = _db.menufindAll();
 
-	Collections.sort(rtdCntList);
+			ArrayList<storeData> storeList;
+			ArrayList<rtdCntData> rtdCntList;
+			storeList = _db.storefindAll();
+			rtdCntList = _db.rtdCntfindAll();
 
-	String keep_btn_path = "resources/UI/UI/keep_btn.png";
-	String keep_btn_sel_path = "resources/UI/UI/keep_btn_sel.png";
-	%>
+			System.out.println("size : " + storeList.size());
+			storeData sd = storeList.get(0);
+			String storeImgPath = sd.getStoreImgPath();
+
+			Collections.sort(rtdCntList);
+
+			String userId = "aabb";
+
+			watchlist wl = new watchlist(userId);
+			boolean flag = false;
+
+			for (int i = 0; i < wl.getWdList().size(); i++) {
+				int sc = wl.getWdList().get(i).getStoreCode();
+
+				if (sd.getStoreCode() == sc) {
+					flag = true;
+				}
+			}
+			%>
 
 			<div id="store">
 				<div id="store_photo">
 					가게 이미지 및 음식 사진
 					<div id="big_photo" class="photo">
-						<img src="<%=storeImgPath %>">
+						<img src="<%=storeImgPath%>">
 					</div>
 					<div id="small_photo" class="photo">이미지2</div>
 					<div id="small_photo" class="photo">이미지3</div>
@@ -64,15 +77,23 @@
 				<div id="store_info">
 					<div id="store_name"><%=sd.getStoreName()%></div>
 					<div id="store_keep">
-						<img id="keepImg" src="<%=keep_btn_path%>" width=100px
-							onclick="keepClick()" onmouseover="onHover()"
-							onmouseout="offHover()">
+						<form method="post" action="store">
+							<input type="text" class="toServlet" name="userId"
+								value="<%=userId%>"> <input type="text"
+								class="toServlet" name="storeCode"
+								value="<%=sd.getStoreCode()%>"> <input type="text"
+								class="toServlet" name="flag" value="<%=flag%>">
+							<Button type="submit"
+								id="<%=flag == true ? "submit1" : "submit2"%>"
+								name=<%=flag == true ? "toDelete" : "toAdd"%> value=""></Button>
+						</form>
 					</div>
 					<div id="store_detail"><%="가게 시작 시간 : " + sd.getOpenAt() + "<br>가게 마감 시간 : " + sd.getCloseAt() + "<br> 마지막 주문 가능 시간 : "
 		+ (sd.getLastOrder() == null ? "정보 없음" : sd.getLastOrder()) + "<br>가게 주차 여부 : "
-		+ (sd.getParking().equals("Y") ? "주차 가능" : "주차 불가") + "<br> 휴무일 : " + (sd.getOffDays() == null ? "정보 없음" : sd.getOffDays())
-		+ "<br> 주소 : " + sd.getAddr() + "<br> 전화번호 : " + sd.getPhone() + "<br> 홈페이지 : " + (sd.getWeb() == null ? "정보 없음" : sd.getWeb())
-		+ "<br> 브레이크 타임 : " + (sd.getBreakStart() == null ? "정보 없음" : sd.getBreakStart() + " - " + sd.getBreakEnd())%><br>
+		+ (sd.getParking().equals("Y") ? "주차 가능" : "주차 불가") + "<br> 휴무일 : "
+		+ (sd.getOffDays() == null ? "정보 없음" : sd.getOffDays()) + "<br> 주소 : " + sd.getAddr() + "<br> 전화번호 : "
+		+ sd.getPhone() + "<br> 홈페이지 : " + (sd.getWeb() == null ? "정보 없음" : sd.getWeb()) + "<br> 브레이크 타임 : "
+		+ (sd.getBreakStart() == null ? "정보 없음" : sd.getBreakStart() + " - " + sd.getBreakEnd())%><br>
 					</div>
 				</div>
 
@@ -112,16 +133,16 @@
 						<div id="review_whatIAte">
 							내가 먹은 메뉴 <select>
 								<%
-		int cnt = 0;
-		for (menuData md : list) {
-		%>
+								int cnt = 0;
+								for (menuData md : list) {
+								%>
 								<option value="<%=md.getFoodCode()%>"
 									<%=cnt == 0 ? "selected" : ""%>>
 									<%=md.getFoodName()%></option>
 								<%
-		cnt++;
-		}
-		%>
+								cnt++;
+								}
+								%>
 							</select>
 						</div>
 						<div id="score_title">평점</div>
@@ -247,7 +268,8 @@
 
 							<!-- 슬라이드 CSS 라이브러리 -->
 							<div id="mainImage">
-								<img src="resources/UI/storeImg/1.jpg" id="main_image" width="400px">
+								<img src="resources/UI/storeImg/1.jpg" id="main_image"
+									width="400px">
 							</div>
 							<!-- 우측 리뷰 영역 -->
 							<div id="pop_riview">
@@ -298,39 +320,39 @@
 					</div>
 				</div>
 			</div>
-			</div>
+		</div>
 
-				<!-- 모달 팝업 스크립트 -->
-				<script>
-                    function show() {
-                        document.querySelector(".background").className = "background show";
-                    }
+		<!-- 모달 팝업 스크립트 -->
+		<script>
+			function show() {
+				document.querySelector(".background").className = "background show";
+			}
 
-                    function close() {
-                        document.querySelector(".background").className = "background";
-                    }
+			function close() {
+				document.querySelector(".background").className = "background";
+			}
 
-                    document.querySelector("#show").addEventListener("click", show);
-                    document.querySelector("#close").addEventListener("click", close);
-                </script>
+			document.querySelector("#show").addEventListener("click", show);
+			document.querySelector("#close").addEventListener("click", close);
+		</script>
 
-				<!-- 슬라이드 CSS 라이브러리 스크립트 -->
-				<script src="https://code.jquery.com/jquery-2.2.0.min.js"
-					type="text/javascript"></script>
-				<script src="resources/slick-1.8.1/slick/slick.js" type="text/javascript"
-					charset="utf-8"></script>
-				<script type="text/javascript">
-                    $(document).on('ready', function () {
+		<!-- 슬라이드 CSS 라이브러리 스크립트 -->
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"
+			type="text/javascript"></script>
+		<script src="resources/slick-1.8.1/slick/slick.js"
+			type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).on('ready', function() {
 
-                        $(".center").slick({
-                            dots: true,
-                            infinite: true,
-                            centerMode: true,
-                            slidesToShow: 5,
-                            slidesToScroll: 3
-                        });
-                    });
-                </script>
+				$(".center").slick({
+					dots : true,
+					infinite : true,
+					centerMode : true,
+					slidesToShow : 5,
+					slidesToScroll : 3
+				});
+			});
+		</script>
 	</main>
 
 

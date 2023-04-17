@@ -33,8 +33,8 @@
 		%>
 
 		<tr>
-			<td><%=dto.storeCode%></td>
-			<td><%=dto.storeName%></td>
+			<td><%=dto.getStoreCode()%></td>
+			<td><%=dto.getStoreName()%></td>
 
 		</tr>
 

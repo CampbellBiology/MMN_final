@@ -112,6 +112,51 @@
 
 
 /* 여기서부터 팝업 안 */
+#storeCode {
+	display: none;
+}
+
+#userID{
+	display: none;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+input[type="checkbox"]+label {
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+	padding-left: 23px;
+	background-repeat: no-repeat;
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_inactive.png);
+	background-size: 100%;
+}
+
+input[type="checkbox"]:hover+label:hover{
+	width: 30px;
+	height: 30px;
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_hover.png);
+	background-size: 100%;
+}
+
+input[type="checkbox"]:checked+label {
+	width: 30px;
+	height: 30px;
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_active.png);
+	background-size: 100%;
+}
+
+input[type="checkbox"]:disabled+label {
+	background-image:
+		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/watchlist_inactive.png);
+	background-size: 100%;
+}
+
 
 
 .store {
