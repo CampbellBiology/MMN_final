@@ -1,18 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+* {
+  font-family: 'Jua', sans-serif;
+}
+
 #loginasdf {
     position: absolute;
     right: 15%;
     display: block;
+    /* display:none; */
 }
 
 #signupasdf {
     position: absolute;
     right: 7%;
+    display: block;
+    /* display:none; */
+}
+
+
+/* 로그인 완료 시 display block으로  */
+#watchlist_button {
+    position: absolute;
+    right:12%;
+    border: none;
+    background: none;
+    /* display:block; */
+    display: none;
+}
+
+/* 로그인 완료 시 display block으로  */
+#profile {
+    position: absolute;
+    right: 5%;
+    width: 60px;
+    height: 60px;
+    background-color: #070b07;
+    float: left;
+    border: 3px solid #E17305;
+    border-radius: 70%;
+    overflow: hidden;
+    /* display:block; */
+    display: none;
+}
+
+#profile_photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 
 
 
-/* 팝업창 */
+/* 관심리스트 팝업창 */
 
 .background {
     position: fixed;
@@ -22,25 +63,25 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 1000;
-  
+
     /* 숨기기 */
     z-index: -1;
     opacity: 0;
-  }
-  
-  .show {
+}
+
+.show {
     opacity: 1;
     z-index: 1000;
     transition: all 0.5s;
-  }
-  
-  .window {
+}
+
+.window {
     position: relative;
     width: 100%;
     height: 100%;
-  }
-  
-  .popup {
+}
+
+.popup {
     overflow: auto;
     position: absolute;
     background-color: rgb(255, 254, 250);
@@ -48,29 +89,29 @@
     left: 75%;
     transform: translate(-50%, -50%);
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-  
+
     /* 임시 지정 */
     width: 250px;
     height: 500px;
-  
+
     /* 초기에 약간 아래에 배치 */
     transform: translate(-50%, -40%);
-  
+
     /* background: url(../UI/UI/뭐뭇나_List_none.png) center center; */
     background-repeat: no-repeat;
     background-size: 100%;
-  }
-  
-  .show .popup {
+}
+
+.show .popup {
     transform: translate(-50%, -50%);
     transition: all 0.5s;
-  }
+}
 
 
 
-  
 
- /* 여기서부터 팝업 안 */
+
+/* 여기서부터 팝업 안 */
 
 
 .store {
@@ -81,56 +122,103 @@
     border-radius: 5px;
     padding: 5px;
     margin-bottom: 10px;
-  }
-  
-  .keep_icon {
-   width: 30px;
-   height: 30px;
-   background-color: blue;
-   position: absolute;
-   margin-left: 170px;
-  }
-  .store_photo {
+}
+
+.keep_icon {
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+    position: absolute;
+    margin-left: 170px;
+}
+
+.store_photo {
     background-color: rgb(240, 240, 240);
     width: 100px;
     height: 100px;
     float: left;
-  }
-  .store_details {
+}
+
+.store_details {
     background-color: rgb(220, 220, 220);
     width: 100px;
-    float:right;
-  }
-  .store_name {
+    float: right;
+}
+
+.store_name {
     background-color: rgb(175, 175, 175);
-  }
-  .store_score {
+}
+
+.store_score {
     background-color: rgb(131, 129, 129);
-  }
-  .store_category {
+}
+
+.store_category {
     background-color: rgb(90, 90, 90);
-  }
-  .store_address {
+}
+
+.store_address {
     background-color: rgb(46, 45, 45);
-  }
+}
 
 
 
-  #store0 {display: none;} 
-  #store1 {display: none;}
-  #store2 {display: none;}
-  #store3 {display: none;}
-  #store4 {display: none;}
-  #store5 {display: none;}
-  #store6 {display: none;}
-  #store7 {display: none;}
-  #store8 {display: none;}
-  #store9 {display: none;}
+#store0 {
+    display: none;
+}
+
+#store1 {
+    display: none;
+}
+
+#store2 {
+    display: none;
+}
+
+#store3 {
+    display: none;
+}
+
+#store4 {
+    display: none;
+}
+
+#store5 {
+    display: none;
+}
+
+#store6 {
+    display: none;
+}
+
+#store7 {
+    display: none;
+}
+
+#store8 {
+    display: none;
+}
+
+#store9 {
+    display: none;
+}
 
 
-  .list_none {
+.list_none {
     display: block;
     width: 220px;
     height: 400px;
-    margin:0 auto;
-  }
+    margin: 0 auto;
+}
+
+
+
+
+/* ifram으로 불러온 html */
+#main_page {
+    display: block;
+}
+
+#store_page {
+    display: none;
+}
