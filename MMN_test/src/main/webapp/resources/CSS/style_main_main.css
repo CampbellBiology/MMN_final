@@ -7,15 +7,15 @@
 #loginasdf {
     position: absolute;
     right: 15%;
-    display: block;
-    /* display:none; */
+    /* display: block; */
+    display:none;
 }
 
 #signupasdf {
     position: absolute;
     right: 7%;
-    display: block;
-    /* display:none; */
+    /* display: block; */
+    display:none;
 }
 
 
@@ -25,8 +25,8 @@
     right:12%;
     border: none;
     background: none;
-    /* display:block; */
-    display: none;
+    display:block;
+    /* display: none; */
 }
 
 /* 로그인 완료 시 display block으로  */
@@ -40,8 +40,8 @@
     border: 3px solid #E17305;
     border-radius: 70%;
     overflow: hidden;
-    /* display:block; */
-    display: none;
+    display:block;
+    /* display: none; */
 }
 
 #profile_photo {
@@ -216,9 +216,13 @@
 
 /* ifram으로 불러온 html */
 #main_page {
-    display: block;
+    display: none;
 }
 
 #store_page {
     display: none;
+}
+
+#tag_page {
+    display: block;
 }
