@@ -12,6 +12,7 @@ import DataClass.Insert_joinData;
 import DataClass.loginData;
 import DataClass.menuData;
 import DataClass.rtdCntData;
+import DataClass.storeByTagDataPrint;
 import DataClass.storeData;
 import DataClass.tagData;
 import DataClass.watchlistData;
@@ -225,7 +226,7 @@ public class DB_Conn {
 		ResultSet res = null;
 		try {
 			stmt = conn.createStatement();
-			String sql = "SELECT * FROM reviewTarget";
+			String sql = "SELECT * FROM reviewTargetTbl";
 			res = stmt.executeQuery(sql);
 
 			// tmp는 카운트 변수이다. 예를 들어, foodCode = 1 일때, tmp[1]은 foodCode가 1인 리뷰타겟의 개수이다.
@@ -632,6 +633,73 @@ public class DB_Conn {
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
 				ret = res.getString("cateName");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ret;
+	}
+	
+	public storeByTagDataPrint getStoreByTag(int tagID) {
+		storeByTagDataPrint sbdp = new storeByTagDataPrint();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tag_storeTbl where tagID = " + tagID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				int storeCode = res.getInt("storeCode");
+				storeData sd = getStoreData(storeCode);
+
+				sbdp.setStoreCode(res.getInt("storeCode"));
+				sbdp.setStoreImgPath(sd.getStoreImgPath());
+				sbdp.setCateName(getCategoryName(sd.getCateCode()));
+				sbdp.setAverageRating(getAverageRating(storeCode));
+				sbdp.setStoreName(sd.getStoreName());
+				sbdp.setTagID(tagID);
+				sbdp.setWatchlist(haveWatchlist(loginData.userID, storeCode));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return sbdp;
+	}
+	
+	public boolean haveWatchlist(String userID, int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		boolean ret = false;
+		try {
+			String sql = "SELECT * FROM watchlistTbl WHERE userID = '" + userID + "'" + "and storeCode = " + storeCode;
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				ret = true;
 			}
 
 		} catch (Exception e) {

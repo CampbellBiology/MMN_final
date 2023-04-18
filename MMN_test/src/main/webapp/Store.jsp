@@ -18,6 +18,7 @@
 <link rel="stylesheet"
 	href="resources/slick-1.8.1/slick/slick-theme.css">
 <link rel="stylesheet" href="resources/CSS/style_ImagePopUp.css">
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 </head>
 
@@ -47,18 +48,10 @@
 
 			Collections.sort(rtdCntList);
 
-			String userId = "aabb";
+			String userID = "aabb";
+			int storeCode = sd.getStoreCode();
 
-			watchlist wl = new watchlist(userId);
-			boolean flag = false;
-
-			for (int i = 0; i < wl.getWdList().size(); i++) {
-				int sc = wl.getWdList().get(i).getStoreCode();
-
-				if (sd.getStoreCode() == sc) {
-					flag = true;
-				}
-			}
+			boolean flag = _db.haveWatchlist(userID, storeCode);
 			%>
 
 			<div id="store">
@@ -77,16 +70,15 @@
 				<div id="store_info">
 					<div id="store_name"><%=sd.getStoreName()%></div>
 					<div id="store_keep">
-						<form method="post" action="store">
-							<input type="text" class="toServlet" name="userId"
-								value="<%=userId%>"> <input type="text"
-								class="toServlet" name="storeCode"
-								value="<%=sd.getStoreCode()%>"> <input type="text"
-								class="toServlet" name="flag" value="<%=flag%>">
-							<Button type="submit"
-								id="<%=flag == true ? "submit1" : "submit2"%>"
-								name=<%=flag == true ? "toDelete" : "toAdd"%> value=""></Button>
-						</form>
+						<Button type="button" id="keepBtn" value="">
+							<img src="<%=flag == true
+		? "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png"%>"
+								id="keepImg" onclick="keepClick();sendRequest();"
+								onmouseover="onHover()" onmouseout="offHover()">
+							</Button>
+						<p id="text"></p>
+
 					</div>
 					<div id="store_detail"><%="가게 시작 시간 : " + sd.getOpenAt() + "<br>가게 마감 시간 : " + sd.getCloseAt() + "<br> 마지막 주문 가능 시간 : "
 		+ (sd.getLastOrder() == null ? "정보 없음" : sd.getLastOrder()) + "<br>가게 주차 여부 : "
@@ -353,6 +345,36 @@
 				});
 			});
 		</script>
+
+
+		<script>
+		function sendRequest() {
+			var httpRequest;
+			function createRequest() {
+				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+												// 오페라 등
+					return new XMLHttpRequest();
+				} else { // 익스플로러 6과 그 이하의 버전
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			function receiveResponse() {
+				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+				if (httpRequest.readyState == XMLHttpRequest.DONE
+						&& httpRequest.status == 200) {
+					document.getElementById("text").innerHTML = httpRequest.responseText;
+				}
+			}
+			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+																// 상태를 파악함.
+			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
+			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			httpRequest.send("userId=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
+			}
+		</script>
+
 	</main>
 
 
