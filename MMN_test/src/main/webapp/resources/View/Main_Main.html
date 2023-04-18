@@ -37,123 +37,210 @@
   <!-- <button id="show">팝업열기</button> -->
   <div class="background">
     <div class="window">
-
+      
+      <button id="close">
+        <img src="../UI/UI/close1.png" class="close" width="30px" height="30px">
+      </button>
       <div class="popup">
+        <!-- <img src="../UI/UI/watch_txt.png" class="watch_txt"> -->
         <img src="../UI/UI/뭐뭇나_List_none.png" class="list_none" id="list_none">
 
+
+        <!-- 여기서부터 한 덩이 -->
+        <!-- store 영역 누르면 해당 가게 페이지로 이동 -->
         <div id = "store0" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
+          <div class="keep_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"  class="star" viewBox="0 0 16 16">
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg>
+          </div>
+          <div class="store_photo"></div>
           <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+            <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+            <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+            <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+            <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
           </div>
         </div>
+        <!-- 여기까지 한 덩이 -->
+        
 
+        <!-- 다음 가게 -->
         <div id = "store1" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
+          <div class="keep_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="star" viewBox="0 0 16 16">
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"  class="empty_star" viewBox="0 0 16 16">
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg>
+          </div>
+          <div class="store_photo"></div>
           <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+            <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+            <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+            <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+            <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
           </div>
         </div>
 
-        <div id = "store2" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+          <!-- 다음 가게 -->
+          <div id = "store2" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"  class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
+  
 
-        <div id = "store3" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store3" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
-        <div id = "store4" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store4" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
-        <div id = "store5" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store5" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
-        <div id = "store6" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store6" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
-        <div id = "store7" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store7" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
-        <div id = "store8" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store8" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
-        <div id = "store9" class="store">
-          <div class="keep_icon"></div>
-          <div class="store_photo">사진</div>
-          <div class="store_details">
-            <div class="store_name">가게명</div>
-            <div class="store_score">평점</div>
-            <div class="store_category">업종분류</div>
-            <div class="store_address">주소 뫄뫄뫄뫄뫄뫄뫄뫄</div>
+           <!-- 다음 가게 -->
+           <div id = "store9" class="store">
+            <div class="keep_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="yellow" class="star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#F2F2F2" class="empty_star" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="store_photo"></div>
+            <div class="store_details">
+              <div class="store_name"><span class="subject">가게명: </span><span class="gray">삼겹천국</span></div><hr>
+              <div class="store_score"><span class="subject">평점: </span><span class="gray">4.5</span></div><hr>
+              <div class="store_category"><span class="subject">업종분류: </span><span class="gray">고기/구이</span></div><hr>
+              <div class="store_address"><span class="subject">주소: </span><span class="gray">뫄뫄뫄뫄뫄뫄뫄뫄ㅁㄴㅇㄻㄴㅇㄹ</span></div>
+            </div>
           </div>
-        </div>
 
 
-
-        <button id="close">팝업닫기</button>
       </div>
 
 
