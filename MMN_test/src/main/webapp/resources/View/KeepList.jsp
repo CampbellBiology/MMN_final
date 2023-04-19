@@ -35,7 +35,6 @@
 			}
 			%>
 
-			<form method="post" action="watchlistInactive">
 				<div class="popup">
 
 					<input type="text" name="userID" value="<%=userID%>">
@@ -273,7 +272,6 @@
 					<button type="submit" id="close">팝업닫기</button>
 
 				</div>
-			</form>
 		</div>
 	</div>
 	<script>

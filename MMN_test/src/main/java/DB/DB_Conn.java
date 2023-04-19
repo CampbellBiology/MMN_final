@@ -793,4 +793,33 @@ public class DB_Conn {
 		
 		return ret;
 	}
+	
+	public String getUserImagePath(String userID) {
+		String ret ="";
+		
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM userTbl where userID = " + userID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				ret = res.getString("userImagePath");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return ret;
+	}
 }

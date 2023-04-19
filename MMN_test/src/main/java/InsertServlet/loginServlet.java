@@ -75,7 +75,7 @@ public class loginServlet extends HttpServlet {
 				response.sendRedirect(context + "/loginSuccess.jsp");
 			} else if (res == 1) {
 				System.out.println("일반 계정 로그인 성공");
-				response.sendRedirect(context + "/resources/View/Main.html");
+				response.sendRedirect(context + "/resources/View/Main_Main.jsp");
 			} else if (res == 2) {
 				System.out.println("비밀번호를 다시 확인 해주세요");
 				response.sendRedirect(context + "/loginFailure.jsp");

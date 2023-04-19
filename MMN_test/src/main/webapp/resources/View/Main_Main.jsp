@@ -22,6 +22,7 @@
 
 <body>
 <%
+	System.out.println(session.getAttribute("member"));
 	DB_Conn db = new DB_Conn();
 	String userID = "aabb";
 	watchlist wl = new watchlist(userID);
@@ -42,7 +43,7 @@
       <a class="btn btn-primary" href="#signup" id="signupasdf">회원가입</a>
 
       <!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-      <div id="profile"><img src="../UI/profile/jennie.jpg" id="profile_photo"></div>
+      <div id="profile"><img src="<%= db.getUserImagePath(userID) %>" id="profile_photo"></div>
     </div>
   </nav>
 
