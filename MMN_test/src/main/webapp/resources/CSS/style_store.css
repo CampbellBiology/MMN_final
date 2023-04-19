@@ -357,50 +357,12 @@ li {
     display: inline-block;
 }
 
-.toServlet {
-	display: none;
+#keepImg{
+	width:100px;
+	height:100px;
 }
 
-#submit1{
-	width: 100px;
-	height: 100px;
-	border:none;
-	background-color:#ffffff;
-	background-repeat: no-repeat; 
-	background-image:
-		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png);
-	background-size: 100%;
-}
-
-#submit2{
-	width: 100px;
-	height: 100px;
-	border:none;
-	background-color:#ffffff;
-	background-repeat: no-repeat;
-	background-image:
-		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png);
-	background-size: 100%;
-}
-
-#submit1:hover{
-	width: 100px;
-	height: 100px;
-	border:none;
-	background-color:#ffffff;
-	background-repeat: no-repeat;
-	background-image:
-		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_hover.png);
-	background-size: 100%;
-}
-
-#submit2:hover{
-	width: 100px;
-	height: 100px;
-	border:none;
-	background-color:#ffffff;
-	background-repeat: no-repeat;
-	background-image:
-		url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_hover.png);
-	background-size: 100%;
+#keepBtn{
+	border: none;
+	background-color:#ffffff
 }
