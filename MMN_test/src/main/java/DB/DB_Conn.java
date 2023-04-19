@@ -6,11 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import DataClass.Insert_joinData;
 import DataClass.loginData;
 import DataClass.menuData;
+import DataClass.reviewData;
 import DataClass.rtdCntData;
 import DataClass.storeByTagDataPrint;
 import DataClass.storeData;
@@ -651,8 +653,8 @@ public class DB_Conn {
 		return ret;
 	}
 	
-	public storeByTagDataPrint getStoreByTag(int tagID) {
-		storeByTagDataPrint sbdp = new storeByTagDataPrint();
+	public ArrayList<storeByTagDataPrint> getStoreListByTag(int tagID, String userID) {
+		ArrayList<storeByTagDataPrint> ret = new ArrayList<>();
 
 		Statement stmt = null;
 		ResultSet res = null;
@@ -662,16 +664,22 @@ public class DB_Conn {
 			res = stmt.executeQuery(sql);
 
 			while (res.next()) {
+				storeByTagDataPrint sbdp = new storeByTagDataPrint();
 				int storeCode = res.getInt("storeCode");
 				storeData sd = getStoreData(storeCode);
 
-				sbdp.setStoreCode(res.getInt("storeCode"));
+				sbdp.setStoreCode(storeCode);
 				sbdp.setStoreImgPath(sd.getStoreImgPath());
 				sbdp.setCateName(getCategoryName(sd.getCateCode()));
 				sbdp.setAverageRating(getAverageRating(storeCode));
 				sbdp.setStoreName(sd.getStoreName());
 				sbdp.setTagID(tagID);
-				sbdp.setWatchlist(haveWatchlist(loginData.userID, storeCode));
+				sbdp.setWatchlist(haveWatchlist(userID, storeCode));
+				sbdp.setRd(getReviewByStoreCode(storeCode));
+				sbdp.setAddr(sd.getAddr());
+				sbdp.setNickName(getNickname(userID));
+				
+				ret.add(sbdp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -685,8 +693,10 @@ public class DB_Conn {
 				e.printStackTrace();
 			}
 		}
+		
+		Collections.sort(ret);
 
-		return sbdp;
+		return ret;
 	}
 	
 	public boolean haveWatchlist(String userID, int storeCode) {
@@ -715,6 +725,72 @@ public class DB_Conn {
 			}
 		}
 
+		return ret;
+	}
+	
+	public reviewData getReviewByStoreCode(int storeCode) {
+		reviewData rd = new reviewData();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM reviewTbl where storeCode = " + storeCode;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				rd.setUserID(res.getString("userID"));
+				rd.setContents(res.getString("contents"));
+				rd.setStoreCode(storeCode);
+				rd.setRating(res.getInt("rating"));
+				rd.setPhotoPath(res.getString("PhotoPath"));
+				rd.setIndex(res.getInt("reviewIndex"));
+				rd.setDisplay(res.getString("display"));
+				rd.setDate(res.getString("regDate"));
+				rd.setAnonymous(res.getString("anonymous"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return rd;
+	}
+	
+	public String getNickname(String userID) {
+		String ret ="";
+		
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM userTbl where userID = " + userID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				ret = res.getString("userName");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return ret;
 	}
 }

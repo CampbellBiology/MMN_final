@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@page import="DB.*" %>    
+<%@page import="java.util.*" %>    
+<%@page import="DataClass.*" %>    
+    
 <!Doctype html>
 <html lang="ko">
 
@@ -7,6 +12,14 @@
     <meta charset="UTF-8">
     <title>MMN-태그페이지</title>
     <link rel="stylesheet" href="../CSS/style_TagPage_0414.css">
+    
+    <%
+		String userID = "aabb";
+    	int tagID = 1;
+    	DB_Conn db = new DB_Conn();
+    	ArrayList<storeByTagDataPrint> list = db.getStoreListByTag(tagID, userID);
+    	int lim = Math.min(10, list.size());
+    %>
 </head>
 
 <body>
@@ -17,321 +30,78 @@
             </div>
         </div>
 
-
+<%
+		for(int i=1;i<=lim;i++){
+			int storeCode = list.get(i-1).getStoreCode();
+%>
         <!-- 태그리스트 1묶음 -->
-        <div id="tagList1" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/1.jpg" class="store_img">
+        <div id="tagList<%=i%>" class="taglist">
+            <div id="store_photo<%=i%>" class="store_photo">
+                <img src="../UI/storeImg/<%=i%>.jpg" class="store_img">
             </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
+            <div id="store_info<%=i%>" class="store_info">
+                <div id="store_details<%=i%>" class="store_details">
                     <div class="first_row">
-                        <div class="index">1.</div>
-                        <div class="store_name">삼겹천국</div>
+                        <div class="index"><%=i%>.</div>
+                        <div class="store_name"><%=list.get(i-1).getStoreName()%></div>
                     </div>
                     <div class="second_row">
-                        <div class="score">4.5</div>
-                        <div class="store_category">구이/고기</div>
+                        <div class="score"><%=list.get(i-1).getAverageRating()%></div>
+                        <div class="store_category"><%=list.get(i-1).getCateName()%></div>
                     </div>
-                    <div class="store_addr">부산광역시 사상구 덕포동 뫄뫄뫄모마뫄모뫄뫄</div>
+                    <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
+                <div class="store_keep"><img src="<%=list.get(i-1).isWatchlist() == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
                     <div class="content">
-                        <h4>hyuni</h4>
-                        <p>천안 호두과자 맛집 - 선물용 호두과자를 산다면 바로 여기서! -원조답게 할머니 사진이 게시되어 있고, 백년가게 인증을 받...</p>
+                        <h4><%=list.get(i-1).getNickName() %></h4>
+                        <p><%=list.get(i-1).getRd().getContents() %></p>
                     </div>
                 </div>
                 <div class="more_info"> >더 알아보기 </div>
             </div>
         </div>
         <!-- 태그리스트 1묶음 -->
-
-
-        <!-- 2번 태그리스트 -->
-        <div id="tagList2" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">2.</div>
-                        <div class="store_name">톤쇼우</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">4.5</div>
-                        <div class="store_category">일식/돈까스</div>
-                    </div>
-                    <div class="store_addr">ㅁㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹ</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-
-
-        <!-- 3번 태그리스트 -->
-        <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">3.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-         <!-- 4번 태그리스트 -->
-         <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">4.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-         <!-- 5번 태그리스트 -->
-         <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">5.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-         <!-- 6번 태그리스트 -->
-         <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">6.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-         <!-- 3번 태그리스트 -->
-         <div id="tagList7" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">7.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-         <!-- 8번 태그리스트 -->
-         <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">8.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-
-         <!-- 9번 태그리스트 -->
-         <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">9.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
-
-
-         <!-- 10번 태그리스트 -->
-         <div id="tagList3" class="taglist">
-            <div id="store_photo1" class="store_photo">
-                <img src="../UI/storeImg/2.jpg" class="store_img">
-            </div>
-            <div id="store_info1" class="store_info">
-                <div id="store_details1" class="store_details">
-                    <div class="first_row">
-                        <div class="index">10.</div>
-                        <div class="store_name">동적으로 받아오기</div>
-                    </div>
-                    <div class="second_row">
-                        <div class="score">평점</div>
-                        <div class="store_category">카테고리</div>
-                    </div>
-                    <div class="store_addr">주소</div>
-                    <div class="watchlist_title">함 무볼까</div>
-                </div>
-                <div class="store_keep"><img src="../UI/UI/keep_btn.png" width="100px"></div>
-                <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
-                    <div class="content">
-                        <h4>닉네임</h4>
-                        <p>리뷰 내용</p>
-                    </div>
-                </div>
-                <div class="more_info"> >더 알아보기 </div>
-            </div>
-        </div>
+        <%
+		}
+        %>
 
     </main>
+    
+    <script>
+    function sendRequest(sc) {
+		var httpRequest;
+		function createRequest() {
+			if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+											// 오페라 등
+				return new XMLHttpRequest();
+			} else { // 익스플로러 6과 그 이하의 버전
+				return new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		}
+		function receiveResponse() {
+			// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+			if (httpRequest.readyState == XMLHttpRequest.DONE
+					&& httpRequest.status == 200) {
+				document.getElementById("text").innerHTML = httpRequest.responseText;
+			}
+		}
+		httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+		httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+															// 상태를 파악함.
+		// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+		httpRequest.open("POST", "../../watchlistAddOrDelete.jsp", true);
+		httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		httpRequest.send("userId=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
+		}
+    </script>
+    
+    
+	<script type="text/javascript" src="../js/project03.js"></script>
+    
 </body>
 
 </html>

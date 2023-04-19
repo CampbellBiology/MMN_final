@@ -49,7 +49,7 @@
 <!-- ifrmae으로 다른 html넣기 -->
   <iframe src="Main_0414.html" width="100%" height="2000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="main_page"></iframe>
   <iframe src="Store.html" width="100%" height="3000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="store_page"></iframe>
-  <iframe src="TagPage_0414.html" width="100%" height="4200px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="tag_page"></iframe>
+  <iframe src="TagPage_0414.jsp" width="100%" height="4200px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="tag_page"></iframe>
 
 
   <!-- <button id="show">팝업열기</button> -->
@@ -60,7 +60,6 @@
         <img src="../UI/UI/close1.png" class="close" width="30px" height="30px">
       </button>
       <div class="popup">
-					<input type="text" id="userID" name="userID" value="<%=userID%>">
 					<%
 					int cnt = 0;
 					for (int i = 0; i < lim; i++) {

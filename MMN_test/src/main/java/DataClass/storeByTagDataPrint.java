@@ -2,16 +2,30 @@ package DataClass;
 
 import DB.DB_Conn;
 
-public class storeByTagDataPrint {
+public class storeByTagDataPrint implements Comparable<storeByTagDataPrint>{
 	String storeImgPath;
 	String storeName;
 	String cateName;
-	String review;
+	String addr;
+	String nickName;
+	reviewData rd;
 	int storeCode;
 	int tagID;
 	boolean watchlist;
 	double averageRating;
-	
+
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
 	public String getStoreImgPath() {
 		return storeImgPath;
 	}
@@ -30,11 +44,12 @@ public class storeByTagDataPrint {
 	public void setCateName(String cateName) {
 		this.cateName = cateName;
 	}
-	public String getReview() {
-		return review;
+	
+	public reviewData getRd() {
+		return rd;
 	}
-	public void setReview(String review) {
-		this.review = review;
+	public void setRd(reviewData rd) {
+		this.rd = rd;
 	}
 	public int getStoreCode() {
 		return storeCode;
@@ -60,4 +75,15 @@ public class storeByTagDataPrint {
 	public void setAverageRating(double averageRating) {
 		this.averageRating = averageRating;
 	}
+	
+	@Override
+    public int compareTo(storeByTagDataPrint store) {
+        if(store.getAverageRating() < averageRating) {
+            return -1;
+        }
+        else if(store.getAverageRating() > averageRating) {
+            return 1;
+        }
+        return 0;
+    }
 }
