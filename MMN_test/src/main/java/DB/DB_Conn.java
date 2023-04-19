@@ -771,7 +771,7 @@ public class DB_Conn {
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
-			String sql = "SELECT * FROM userTbl where userID = " + userID;
+			String sql = "SELECT * FROM userTbl where userID = '" + userID+"'";
 			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 

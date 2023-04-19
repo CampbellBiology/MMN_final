@@ -1,29 +1,29 @@
-package Controller;
-
-import java.util.ArrayList;
-
-import DB.DB_Conn;
-import DataClass.watchlistData;
-
-public class Main {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		DB_Conn db = new DB_Conn();
-		
-		db.addWatchlistInfo("aabb", 2);
-		db.addWatchlistInfo("aabb", 1);
-		db.addWatchlistInfo("aabb", 3);
-		db.addWatchlistInfo("aabb", 4);
-		db.addWatchlistInfo("aabb", 5);
-		
-//		db.deleteWatchlistInfo("aabb", 2);
-		
-//		ArrayList <watchlistData> wdl = db.getWatchListInfo("aabb");
+//package Controller;
+//
+//import java.util.ArrayList;
+//
+//import DB.DB_Conn;
+//import DataClass.watchlistData;
+//
+//public class Main {
+//
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		DB_Conn db = new DB_Conn();
 //		
-//		for(watchlistData wd:wdl) {
-//			System.out.println(wd.getStoreCode());
-//		}
-	}
-
-}
+//		db.addWatchlistInfo("aabb", 2);
+//		db.addWatchlistInfo("aabb", 1);
+//		db.addWatchlistInfo("aabb", 3);
+//		db.addWatchlistInfo("aabb", 4);
+//		db.addWatchlistInfo("aabb", 5);
+//		
+////		db.deleteWatchlistInfo("aabb", 2);
+//		
+////		ArrayList <watchlistData> wdl = db.getWatchListInfo("aabb");
+////		
+////		for(watchlistData wd:wdl) {
+////			System.out.println(wd.getStoreCode());
+////		}
+//	}
+//
+//}

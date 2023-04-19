@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-// 리스트에서 객체 중복 제거하는 클래스
+// 리스트에서 중복되는 객체를 제거하는 클래스
 public class DeduplicationUtils {
 	public static <T> List<T> deduplication(final List<T> list,Function<? super T,?>key){
    		return list.stream().filter(deduplication(key))

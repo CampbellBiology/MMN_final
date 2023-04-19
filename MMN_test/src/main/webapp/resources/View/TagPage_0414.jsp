@@ -35,6 +35,7 @@
 			int storeCode = list.get(i-1).getStoreCode();
 %>
         <!-- 태그리스트 1묶음 -->
+        <article id="art">
         <div id="tagList<%=i%>" class="taglist">
             <div id="store_photo<%=i%>" class="store_photo">
                 <img src="../UI/storeImg/<%=i%>.jpg" class="store_img">
@@ -64,6 +65,8 @@
                 <div class="more_info"> >더 알아보기 </div>
             </div>
         </div>
+        
+        </article>
         <!-- 태그리스트 1묶음 -->
         <%
 		}
@@ -98,6 +101,25 @@
 		httpRequest.send("userId=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
 		}
     </script>
+   
+    <script>
+var count = 0;
+//스크롤 바닥 감지
+window.onscroll = function(e) {
+  //추가되는 임시 콘텐츠
+  //window height + window scrollY 값이 document height보다 클 경우,
+  if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+  	//실행할 로직 (콘텐츠 추가)
+      count++;
+      var addContent = document.getElementById("art").innerHTML;
+      alert(addContent);
+      //article에 추가되는 콘텐츠를 append
+      $('article').append(addContent);
+  }
+};
+
+
+</script>
     
     
 	<script type="text/javascript" src="../js/project03.js"></script>
