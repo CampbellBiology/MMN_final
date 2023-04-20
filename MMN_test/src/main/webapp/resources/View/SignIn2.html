@@ -6,11 +6,12 @@
     <title>MMN-가입하기</title>
 
     <link rel="stylesheet" href="../CSS/style_signIn.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 
 <body>
     <main>
-        <form method="post" action ="join">
+        <form method="post" action="join">
             <div id="leftside">
                 <div id="logo"><img src="../UI/UI/text_logo.png" width="300px"></div>
                 <div id="maintext">회원가입</div>
@@ -41,14 +42,34 @@
                 <input type="text" id="user_email" class="txtbox" name="user_email"><br>
                 <div id="email_noti" class="noti"></div>
                 <div id="blank"></div>
-            
+
+                <div id="formText">프로필 사진 <span class="subtext">(jpg, png파일 1개만 등록 가능합니다.)</span></div>
+                <div class="filebox">
+
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="user_photo" name="user_photo"
+                        accept=".jpg, .png"><br>
+                    <label for="file">파일찾기</label>
+                    <input type="file" id="file">
+                    <div id="photo_noti" class="noti"></div>
+                    <div id="blank"></div>
+                </div>
+
 
                 <button type="button" class="btn" id="cancel"></button>
                 <button type="submit" class="btn" id="submit"></button>
-            </div>    
+            </div>
         </form>
     </main>
     <br>
+
+
+    <script>
+        $("#file").on('change', function () {
+            var fileName = $("#file").val();
+            $(".upload-name").val(fileName);
+        });	
+    </script>
+
 
 </body>
 
