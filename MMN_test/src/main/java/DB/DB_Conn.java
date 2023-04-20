@@ -721,6 +721,7 @@ public class DB_Conn {
 				tld.setStoreImagePath(sd.getStoreImgPath());
 				tld.setStoreName(sd.getStoreName());
 				tld.setReviewContent(rd.getContents());
+				tld.setStoreCode(sd.getStoreCode());
 				
 				ret.add(tld);
 			}
@@ -843,7 +844,7 @@ public class DB_Conn {
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
-			String sql = "SELECT * FROM userTbl where userID = " + userID;
+			String sql = "SELECT * FROM userTbl where userID = '" + userID + "'";
 			stmt = conn.createStatement();
 			res = stmt.executeQuery(sql);
 

@@ -9,8 +9,10 @@
 	System.out.println(query);
 	
 	for(int i=0;i<sr.getStoreInfo().size();i++){
+		out.println("<a href=\"../../Store.jsp?storeCode="+sr.getStoreInfo().get(i).getStoreCode()+"\">");
 		out.println(sr.getStoreInfo().get(i).getStoreName());
+		out.println("</a>");
 		
-		System.out.println(sr.getStoreInfo().get(i).getStoreName());
+		System.out.println("검색결과 : "+sr.getStoreInfo().get(i).getStoreName());
 	}
 %>

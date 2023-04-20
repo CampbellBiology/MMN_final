@@ -6,8 +6,11 @@
 	request.setCharacterEncoding("utf-8");
 	String query = request.getParameter("query");
 	searchResult sr = new searchResult(query);
-
+	
 	for(int i=0;i<sr.getTagInfo().size();i++){
-		out.println(sr.getTagInfo().get(i).getTagName());
+		String str = "<a href=\"TagPage_0414.jsp?tagID="+sr.getTagInfo().get(i).getTagId()+"\">";
+		String str2 = "</a>";
+		String tmp = str + sr.getTagInfo().get(i).getTagName() + str2;
+		out.println(tmp);
 	}
 %>

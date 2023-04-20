@@ -81,3 +81,7 @@
 .storeSet.hover figcaption {
   top: 80px;
 }
+
+.sec{
+	display:none;
+}

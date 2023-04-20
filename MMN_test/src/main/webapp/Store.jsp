@@ -43,13 +43,17 @@
 			rtdCntList = _db.rtdCntfindAll();
 
 			System.out.println("size : " + storeList.size());
-			storeData sd = storeList.get(0);
+			int storeCode = Integer.parseInt(request.getParameter("storeCode")==null?"0":request.getParameter("storeCode"));
+			storeData sd = _db.getStoreData(storeCode);
+			
+			System.out.println(sd.getStoreName());
+			
 			String storeImgPath = sd.getStoreImgPath();
 
 			Collections.sort(rtdCntList);
 
-			String userID = "aabb";
-			int storeCode = sd.getStoreCode();
+			String userID = (String)session.getAttribute("member");
+			System.out.println(userID);
 
 			boolean flag = _db.haveWatchlist(userID, storeCode);
 			%>
@@ -80,9 +84,10 @@
 						<p id="text"></p>
 
 					</div>
+					
 					<div id="store_detail"><%="가게 시작 시간 : " + sd.getOpenAt() + "<br>가게 마감 시간 : " + sd.getCloseAt() + "<br> 마지막 주문 가능 시간 : "
 		+ (sd.getLastOrder() == null ? "정보 없음" : sd.getLastOrder()) + "<br>가게 주차 여부 : "
-		+ (sd.getParking().equals("Y") ? "주차 가능" : "주차 불가") + "<br> 휴무일 : "
+		+ (sd.getParking()==null ?"주차 정보 없음":sd.getParking().equals("1")?"주차 가능" : "주차 불가") + "<br> 휴무일 : "
 		+ (sd.getOffDays() == null ? "정보 없음" : sd.getOffDays()) + "<br> 주소 : " + sd.getAddr() + "<br> 전화번호 : "
 		+ sd.getPhone() + "<br> 홈페이지 : " + (sd.getWeb() == null ? "정보 없음" : sd.getWeb()) + "<br> 브레이크 타임 : "
 		+ (sd.getBreakStart() == null ? "정보 없음" : sd.getBreakStart() + " - " + sd.getBreakEnd())%><br>

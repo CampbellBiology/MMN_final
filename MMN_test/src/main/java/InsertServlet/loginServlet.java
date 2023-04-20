@@ -1,6 +1,7 @@
 package InsertServlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -70,18 +71,25 @@ public class loginServlet extends HttpServlet {
 			// 로그인 후 띄울 화면을 설정하기 위한 코드
 			String context = request.getContextPath();
 
+			
+			
+			//로그인 실패 시 alert 매서드 타게 함
 			if (res == 0) {
 				System.out.println("마스터 계정 로그인 성공");
-				response.sendRedirect(context + "/loginSuccess.jsp");
+				response.sendRedirect(context + "/resources/View/Main_Main.jsp");
+//				response.sendRedirect(context + "/loginSuccess.jsp");
 			} else if (res == 1) {
 				System.out.println("일반 계정 로그인 성공");
 				response.sendRedirect(context + "/resources/View/Main_Main.jsp");
 			} else if (res == 2) {
 				System.out.println("비밀번호를 다시 확인 해주세요");
-				response.sendRedirect(context + "/loginFailure.jsp");
+				alert(response, context);
+//				response.sendRedirect(context + "/loginFailure.jsp");
 			} else {
+				
 				System.out.println("아이디가 잘못 됐습니다.");
-				response.sendRedirect(context + "/loginFailure.jsp");
+				alert(response, context);
+//				response.sendRedirect(context + "/loginFailure.jsp");
 			}
 
 		} catch (Exception e) {
@@ -98,5 +106,27 @@ public class loginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	
+	
+	//로그인 실패 시 뜨는 alert 매서드
+	public static void alert(HttpServletResponse response, String msg) {
+	    try {
+	    	response.setCharacterEncoding("UTF-8");
+	    	response.setContentType("text/html; charset=UTF-8");
+			PrintWriter w = response.getWriter();
+			w.write("<script>alert('"+ "Check ID or PW."+"');history.go(-1);</script>\" charset=\"utf-8\" </script>");
+			w.flush();
+			w.close();
+	    } catch(Exception e) {
+			e.printStackTrace();
+	    }
+	}
+	
+	
 
 }
+
+
+
+

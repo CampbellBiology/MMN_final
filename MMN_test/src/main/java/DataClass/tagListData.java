@@ -5,7 +5,14 @@ public class tagListData implements Comparable<tagListData>{
 	String storeName;
 	double averageRating;
 	String reviewContent;
+	int storeCode;
 	
+	public int getStoreCode() {
+		return storeCode;
+	}
+	public void setStoreCode(int storeCode) {
+		this.storeCode = storeCode;
+	}
 	public String getStoreImagePath() {
 		return storeImagePath;
 	}

@@ -356,3 +356,15 @@ li {
     height: 50px;
     display: inline-block;
 }
+
+#keepBtn{
+	width: 100px;
+	height: 100px;
+	border: none;
+	background: #ffffff
+}
+
+#keepImg{
+	width: 100px;
+	height: 100px;
+}

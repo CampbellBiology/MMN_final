@@ -22,6 +22,7 @@
   <link href="../CSS/storeDetail.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick.css">
   <link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick-theme.css">
+   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 
 
@@ -69,7 +70,7 @@
                       </div><hr>
                       <div id="search_store">
                         <div class="search_title">가게</div>
-                        <div id="storeInfo"></div>
+                        <div><a id="storeInfo"></a></div>
                       </div>
                     </div>
               </div>
@@ -101,7 +102,7 @@
       	int lim = Math.min(15, tdList.size());
       	for(int i=0;i<lim;i++){
       %>
-      <button class="bttn-material-flat bttn-md bttn-primary">#<%= tdList.get(i).getTagName() %></button>
+      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>">#<%= tdList.get(i).getTagName() %></a></button>
       
       <%	
       }
@@ -112,9 +113,14 @@
 
   <!-- 태그 리스트 부분 -->
   
+  <article>
+  
+  </article>
+  
+  <div id="sec1" class="sec">
   <%
   	lim = Math.min(10, lim);
-  	for(int i=0;i<lim; i++){
+  	for(int i=0;i<Math.min(4,lim); i++){
   		
   %>
   <section>
@@ -136,13 +142,13 @@
 				%>
 
                   <!-- 가게 한 덩이 -->
-                  <figure class="storeSet" style="background:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                  <figure class="storeSet" style="background-image:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
                     <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
                     <figcaption>
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="#"></a>
+                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -161,6 +167,108 @@
 <%
   	}
 %>
+  </div>
+
+  <div id="sec2" class="sec"> 
+<%
+  	for(int i=4;i<Math.min(7,lim); i++){
+  		
+  %>
+  <section>
+    <div class="container">
+      <div class="popup-wrap">
+        <div class="popup">
+          <div class="popup-head"><span class="head-title">#<%= tdList.get(i).getTagName() %></span></div>
+          <div class="popup-body">
+            <div class="body-content">
+              <div class="body-contentbox">
+
+                <section id="test" class="test">
+
+				<%
+					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
+					int lim2 = Math.min(10, tlbt.getTldList().size());
+					for(int j=0;j<lim2;j++){
+					
+				%>
+
+                  <!-- 가게 한 덩이 -->
+                  <figure class="storeSet" style="background-image:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                    <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
+                    <figcaption>
+                      <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
+                      <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
+                    </figcaption>
+                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
+                  </figure>
+                  <!-- 가게 한 덩이 -->
+				<%
+					}
+				%>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+<%
+  	}
+%>
+</div>
+
+  <div id="sec3" class="sec">
+<%
+  	for(int i=7;i<Math.min(10,lim); i++){
+  		
+  %>
+  <section>
+    <div class="container">
+      <div class="popup-wrap">
+        <div class="popup">
+          <div class="popup-head"><span class="head-title">#<%= tdList.get(i).getTagName() %></span></div>
+          <div class="popup-body">
+            <div class="body-content">
+              <div class="body-contentbox">
+
+                <section id="test" class="test">
+
+				<%
+					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
+					int lim2 = Math.min(10, tlbt.getTldList().size());
+					for(int j=0;j<lim2;j++){
+					
+				%>
+
+                  <!-- 가게 한 덩이 -->
+                  <figure class="storeSet" style="background-image:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                    <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
+                    <figcaption>
+                      <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
+                      <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
+                    </figcaption>
+                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
+                  </figure>
+                  <!-- 가게 한 덩이 -->
+				<%
+					}
+				%>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+<%
+  	}
+%>
+  </div>
 
 
   <!-- 슬라이드 CSS 라이브러리 스크립트 -->
@@ -190,7 +298,7 @@
    
 
 <script>
-		function sendRequestTag() {
+		function sendRequestTag(tagID) {
 			var httpRequest;
 			function createRequest() {
 				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
@@ -204,7 +312,9 @@
 				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
 				if (httpRequest.readyState == XMLHttpRequest.DONE
 						&& httpRequest.status == 200) {
-					document.getElementById("tagInfo").innerText = httpRequest.responseText;
+					document.getElementById("tagInfo").innerHTML=httpRequest.responseText;
+			//		d1.insertAdjacentHTML('afterbegin', '\''+httpRequest.responseText+'\'');
+			//		document.getElementById("tagInfo").innerHtml = '<a id="tagInfo" href="TagPage_0414.jsp">dd</a>'//httpRequest.responseText;
 				}
 			}
 			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
@@ -220,7 +330,7 @@
 		</script>
 		
 		<script>
-		function sendRequestStore() {
+		function sendRequestStore(storeCode) {
 			var httpRequest;
 			function createRequest() {
 				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
@@ -234,7 +344,7 @@
 				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
 				if (httpRequest.readyState == XMLHttpRequest.DONE
 						&& httpRequest.status == 200) {
-					document.getElementById("storeInfo").innerText = httpRequest.responseText;
+					document.getElementById("storeInfo").innerHTML = httpRequest.responseText;
 					
 				}
 			}
@@ -249,6 +359,39 @@
 			httpRequest.send("query="+query); // Http 요청을 보냄.
 			}
 		</script>
+		
+		<script>
+var count = 0;
+
+if(count == 0){
+	var addContent = document.getElementById("sec1").innerHTML;
+      $('article').append(addContent);
+}
+
+//스크롤 바닥 감지
+window.onscroll = function(e) {
+	
+	if(count == 3)
+		return;
+	
+  //추가되는 임시 콘텐츠
+  //window height + window scrollY 값이 document height보다 클 경우,
+  if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+  	//실행할 로직 (콘텐츠 추가)
+      count++;
+  	if(count == 1)
+  		return;
+      var addContent;
+      
+      addContent = document.getElementById("sec"+count).innerHTML;
+
+      //article에 추가되는 콘텐츠를 append
+      $('article').append(addContent);
+  }
+};
+
+
+</script>
 
   <!-- template 라이브러리 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
