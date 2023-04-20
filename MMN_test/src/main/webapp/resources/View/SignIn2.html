@@ -11,7 +11,8 @@
 
 <body>
     <main>
-        <form method="post" action="join">
+    
+        <form method="post" action="join" onsubmit="return mySubmit()">
             <div id="leftside">
                 <div id="logo"><img src="../UI/UI/text_logo.png" width="300px"></div>
                 <div id="maintext">회원가입</div>
@@ -24,12 +25,12 @@
                 <div id="blank"></div>
 
                 <div id="formText">비밀번호</div>
-                <input type="text" id="user_pw" class="txtbox" name="user_pw" onfocusout="joinPW()"><br>
+                <input type="password" id="user_pw" class="txtbox" name="user_pw" onfocusout="joinPW()"><br>
                 <div id="pw_noti" class="noti"></div>
                 <div id="blank"></div>
 
                 <div id="formText">비밀번호 확인</div>
-                <input type="text" id="pw_confirm" class="txtbox" onfocusout="joinPWConfirm()"><br>
+                <input type="password" id="pw_confirm" class="txtbox" onfocusout="joinPWConfirm()"><br>
                 <div id="PWConfirm_noti" class="noti"></div>
                 <div id="blank"></div>
 
@@ -55,7 +56,7 @@
                 </div>
 
 
-                <button type="button" class="btn" id="cancel"></button>
+                <button type="button" class="btn" id="cancel" onClick="cancel_join()"></button>
                 <button type="submit" class="btn" id="submit"></button>
             </div>
         </form>
