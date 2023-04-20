@@ -219,3 +219,7 @@ p {
 .more_info:hover{
   color:#E17305;
 }
+
+.art{
+	display:none;
+}

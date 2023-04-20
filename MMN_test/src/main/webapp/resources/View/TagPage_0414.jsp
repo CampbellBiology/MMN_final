@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <title>MMN-태그페이지</title>
     <link rel="stylesheet" href="../CSS/style_TagPage_0414.css">
+ <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     
     <%
 		String userID = "aabb";
@@ -29,13 +30,19 @@
                 <div id="headerTitle">태그 제목 동적으로 받아오기</div>
             </div>
         </div>
-
+        
+        <article>
+        
+        
+        </article>
+        
+ <div id="art1" class = "art">
 <%
-		for(int i=1;i<=lim;i++){
+		for(int i=1;i<=Math.min(4, lim);i++){
 			int storeCode = list.get(i-1).getStoreCode();
 %>
+       
         <!-- 태그리스트 1묶음 -->
-        <article id="art">
         <div id="tagList<%=i%>" class="taglist">
             <div id="store_photo<%=i%>" class="store_photo">
                 <img src="../UI/storeImg/<%=i%>.jpg" class="store_img">
@@ -66,12 +73,101 @@
             </div>
         </div>
         
-        </article>
+       
         <!-- 태그리스트 1묶음 -->
         <%
 		}
         %>
-
+ </div>
+ 
+ <div id="art2" class = "art">
+<%
+		for(int i=5;i<=Math.min(lim,7);i++){
+			int storeCode = list.get(i-1).getStoreCode();
+%>
+       
+        <!-- 태그리스트 1묶음 -->
+        <div id="tagList<%=i%>" class="taglist">
+            <div id="store_photo<%=i%>" class="store_photo">
+                <img src="../UI/storeImg/<%=i%>.jpg" class="store_img">
+            </div>
+            <div id="store_info<%=i%>" class="store_info">
+                <div id="store_details<%=i%>" class="store_details">
+                    <div class="first_row">
+                        <div class="index"><%=i%>.</div>
+                        <div class="store_name"><%=list.get(i-1).getStoreName()%></div>
+                    </div>
+                    <div class="second_row">
+                        <div class="score"><%=list.get(i-1).getAverageRating()%></div>
+                        <div class="store_category"><%=list.get(i-1).getCateName()%></div>
+                    </div>
+                    <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
+                    <div class="watchlist_title">함 무볼까</div>
+                </div>
+                <div class="store_keep"><img src="<%=list.get(i-1).isWatchlist() == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="review">
+                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
+                    <div class="content">
+                        <h4><%=list.get(i-1).getNickName() %></h4>
+                        <p><%=list.get(i-1).getRd().getContents() %></p>
+                    </div>
+                </div>
+                <div class="more_info"> >더 알아보기 </div>
+            </div>
+        </div>
+        
+       
+        <!-- 태그리스트 1묶음 -->
+        <%
+		}
+        %>
+ </div>
+ 
+ <div id="art3" class = "art">
+<%
+		for(int i=8;i<=Math.min(10, lim);i++){
+			int storeCode = list.get(i-1).getStoreCode();
+%>
+       
+        <!-- 태그리스트 1묶음 -->
+        <div id="tagList<%=i%>" class="taglist">
+            <div id="store_photo<%=i%>" class="store_photo">
+                <img src="../UI/storeImg/<%=i%>.jpg" class="store_img">
+            </div>
+            <div id="store_info<%=i%>" class="store_info">
+                <div id="store_details<%=i%>" class="store_details">
+                    <div class="first_row">
+                        <div class="index"><%=i%>.</div>
+                        <div class="store_name"><%=list.get(i-1).getStoreName()%></div>
+                    </div>
+                    <div class="second_row">
+                        <div class="score"><%=list.get(i-1).getAverageRating()%></div>
+                        <div class="store_category"><%=list.get(i-1).getCateName()%></div>
+                    </div>
+                    <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
+                    <div class="watchlist_title">함 무볼까</div>
+                </div>
+                <div class="store_keep"><img src="<%=list.get(i-1).isWatchlist() == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="review">
+                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
+                    <div class="content">
+                        <h4><%=list.get(i-1).getNickName() %></h4>
+                        <p><%=list.get(i-1).getRd().getContents() %></p>
+                    </div>
+                </div>
+                <div class="more_info"> >더 알아보기 </div>
+            </div>
+        </div>
+        
+       
+        <!-- 태그리스트 1묶음 -->
+        <%
+		}
+        %>
+ </div>
+ 
     </main>
     
     <script>
@@ -104,15 +200,30 @@
    
     <script>
 var count = 0;
+
+if(count == 0){
+	var addContent = document.getElementById("art1").innerHTML;
+
+      $('article').append(addContent);
+}
+
 //스크롤 바닥 감지
 window.onscroll = function(e) {
+	
+	if(count == 3)
+		return;
+	
   //추가되는 임시 콘텐츠
   //window height + window scrollY 값이 document height보다 클 경우,
   if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
   	//실행할 로직 (콘텐츠 추가)
       count++;
-      var addContent = document.getElementById("art").innerHTML;
-      alert(addContent);
+  	if(count == 1)
+  		return;
+      var addContent;
+      
+      addContent = document.getElementById("art"+count).innerHTML;
+
       //article에 추가되는 콘텐츠를 append
       $('article').append(addContent);
   }
