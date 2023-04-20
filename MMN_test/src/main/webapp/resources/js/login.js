@@ -38,8 +38,4 @@ function cancel_login() {
     document.querySelector('#user_pw').value = null;
     document.querySelector('#id_noti').style.display = "none";
     document.querySelector('#pw_noti').style.display = "none";
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/origin/master

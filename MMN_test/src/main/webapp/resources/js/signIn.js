@@ -146,8 +146,4 @@ function logCN() {
         document.querySelector('#CN').style.backgroundColor="white"; 
         document.querySelector('#CNBox').style.backgroundColor="white"; 
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/origin/master
