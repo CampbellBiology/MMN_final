@@ -380,58 +380,16 @@ hr {
 
 #store_page {
     display: block;
+<<<<<<< HEAD
+}
+
+#tag_page {
+    display: none;
+=======
+>>>>>>> refs/remotes/origin/master
 }
 
 #tag_page {
     display: none;
 }
 
-#keepImg0{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg1{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg2{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg3{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg4{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg5{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg6{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg7{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg8{
-	width: 30px;
-	height: 30px;
-}
-
-#keepImg9{
-	width: 30px;
-	height: 30px;
-}
