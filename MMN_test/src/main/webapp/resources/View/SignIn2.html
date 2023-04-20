@@ -19,27 +19,27 @@
             <div id="form">
                 <div id="blank"></div>
                 <div id="formText">아이디</div>
-                <input type="text" id="user_id" class="txtbox" name="user_id"><br>
+                <input type="text" id="user_id" class="txtbox" name="user_id" onfocusout="joinID()"><br>
                 <div id="id_noti" class="noti"></div>
                 <div id="blank"></div>
 
                 <div id="formText">비밀번호</div>
-                <input type="text" id="user_pw" class="txtbox" name="user_pw"><br>
+                <input type="text" id="user_pw" class="txtbox" name="user_pw" onfocusout="joinPW()"><br>
                 <div id="pw_noti" class="noti"></div>
                 <div id="blank"></div>
 
                 <div id="formText">비밀번호 확인</div>
-                <input type="text" id="pw_confirm" class="txtbox"><br>
+                <input type="text" id="pw_confirm" class="txtbox" onfocusout="joinPWConfirm()"><br>
                 <div id="PWConfirm_noti" class="noti"></div>
                 <div id="blank"></div>
 
                 <div id="formText">이름(별명)</div>
-                <input type="text" id="user_name" class="txtbox" name="user_name"><br>
+                <input type="text" id="user_name" class="txtbox" name="user_name" onfocusout="joinName()"><br>
                 <div id="name_noti" class="noti"></div>
                 <div id="blank"></div>
 
                 <div id="formText">이메일</div>
-                <input type="text" id="user_email" class="txtbox" name="user_email"><br>
+                <input type="text" id="user_email" class="txtbox" name="user_email" onfocusout="joinEmail()"><br>
                 <div id="email_noti" class="noti"></div>
                 <div id="blank"></div>
 
@@ -62,15 +62,12 @@
     </main>
     <br>
 
-
+    <script type="text/javascript" src="../js/signIn.js"></script>
     <script>
         $("#file").on('change', function () {
             var fileName = $("#file").val();
             $(".upload-name").val(fileName);
         });	
     </script>
-
-
 </body>
-
 </html>
