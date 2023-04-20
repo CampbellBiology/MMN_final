@@ -21,12 +21,28 @@ public class searchResult {
 
 		query = query.trim();
 
-		for (int i = 10; i >= 2; i--) {
-			query = query.replace(space[10 - i], " ");
+		for (int i = 0; i <= 8; i++) {
+			query = query.replace(space[i], " ");
 		}
 
 		calcStoreInfo(query);
 		calcTagInfo(query);
+	}
+
+	public ArrayList<storeData> getStoreInfo() {
+		return storeInfo;
+	}
+
+	public void setStoreInfo(ArrayList<storeData> storeInfo) {
+		this.storeInfo = storeInfo;
+	}
+
+	public ArrayList<tagData> getTagInfo() {
+		return tagInfo;
+	}
+
+	public void setTagInfo(ArrayList<tagData> tagInfo) {
+		this.tagInfo = tagInfo;
 	}
 
 	public void calcStoreInfo(String query) {

@@ -8,15 +8,15 @@
 #loginasdf {
     position: absolute;
     right: 15%;
-    /* display: block; */
-    display:none;
+    display: block;
+    /* display:none; */
 }
 
 #signupasdf {
     position: absolute;
     right: 7%;
-    /* display: block; */
-    display:none;
+    display: block;
+    /* display:none; */
 }
 
 
@@ -26,8 +26,8 @@
     right:12%;
     border: none;
     background: none;
-    display:block;
-    /* display: none; */
+    /* display:block; */
+    display: none;
 }
 
 /* 로그인 완료 시 display block으로  */
@@ -41,8 +41,8 @@
     border: 3px solid #E17305;
     border-radius: 70%;
     overflow: hidden;
-    display:block;
-    /* display: none; */
+    /* display:block; */
+    display: none;
 }
 
 #profile_photo {
@@ -222,8 +222,14 @@
     /* filter: drop-shadow(2px 2px 2px #ffff00); */
 }
 
-.store_photo {
-    /* background-color: rgb(240, 240, 240); */
+#store_photo{
+    background-color: aliceblue;
+    width: 800px;
+    height: 600px;
+    
+}
+
+/* .store_photo {
     width: 100px;
     height: 100px;
     border-radius: 5px;
@@ -233,7 +239,7 @@
     position: absolute;
     left: 2%;
     overflow: hidden;
-}
+} */
 
 .store_details {
     /* background-color: rgb(220, 220, 220); */
@@ -347,6 +353,8 @@ hr {
 }
 
 
+
+
 /* 가게별 watchlist btn 세팅, display 부분 수정하면 됨 
 /* 킵리스트 버튼, 킵 상태일 때가 디폴트 킵 해제했을 때 .star에 display none주기 */
 /* .star가 더 위에 있음 */
@@ -371,11 +379,11 @@ hr {
 }
 
 #store_page {
-    display: none;
+    display: block;
 }
 
 #tag_page {
-    display: block;
+    display: none;
 }
 
 #keepImg0{

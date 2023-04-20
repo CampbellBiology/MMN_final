@@ -68,7 +68,23 @@
 
 
 
+    .search_btn {
+      width: 80px;
+      height: 62px;
+      color: #fff;
+      font-weight: 500; 
+      background-color: #E17305;
+      border: #E17305;
+      border-radius: 5px;
+      font-weight: 400;
+      font-size: 18px;
+    }
 
+    .search_btn:hover {
+     color: #fff;
+      background-color: #e78523;
+      border-color: #e78523;
+    }
 
 
     #search_window {

@@ -1,8 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+    <%@page import="DataClass.*" %>
+    <%@page import="DB.*" %>
+    <%@page import="java.util.*" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
@@ -47,22 +54,24 @@
               <!-- Email address input-->
               <div class="row">
                 <div class="col">
-                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" />
+                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" />
                   <!-- <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
                                         <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div> -->
                 </div>
                 <div class="col-auto">
                   <!-- <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">검색</button> -->
-                  <button class="search_btn" id="search_btn" height="60px">검색</button>
+                  <button class="search_btn" id="search_btn">검색</button>
                   </div>
-                    <!-- <div id="search_window">
+                   	<div id="search_window">
                       <div id="search_tag">
                         <div class="search_title">태그</div>
+                        <div id="tagInfo"></div>
                       </div><hr>
                       <div id="search_store">
                         <div class="search_title">가게</div>
+                        <div id="storeInfo"></div>
                       </div>
-                    </div> -->
+                    </div>
               </div>
               
               <!-- 여기 두 줄 지우면 검색 버튼이 비활성화 되어버림 -->
@@ -78,98 +87,67 @@
   </header>
 
 
+	<%
+		DB_Conn db = new DB_Conn();
+		ArrayList <tagData> tdList = db.getTagDataList();
+		Collections.sort(tdList);
+	%>
+
   <!-- 태그 부분 -->
   <section class="features-icons bg-light text-center">
     <div id="tag_area">
       <div id="titleasdf">#태그</div>
-      <button class="bttn-material-flat bttn-md bttn-primary">#비오는날</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#족발</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#가족모임</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#연말회식</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#asdf</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㅁㄴㅇㄹ</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㅁㄴㅇㄹ</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㅁㅁㅁㅁ</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㄴㄴㄴㄴㄴㄴㄴㄴㄴ</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㅁㄴㅇ</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㅁㅁㅁㅁ</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#태그최대15개</button>
-      <button class="bttn-material-flat bttn-md bttn-primary">#ㅁㄴㅇ</button>
+      <% 
+      	int lim = Math.min(15, tdList.size());
+      	for(int i=0;i<lim;i++){
+      %>
+      <button class="bttn-material-flat bttn-md bttn-primary">#<%= tdList.get(i).getTagName() %></button>
+      
+      <%	
+      }
+      %>
     </div>
   </section>
 
 
   <!-- 태그 리스트 부분 -->
+  
+  <%
+  	lim = Math.min(10, lim);
+  	for(int i=0;i<lim; i++){
+  		
+  %>
   <section>
     <div class="container">
       <div class="popup-wrap">
         <div class="popup">
-          <div class="popup-head"><span class="head-title">#태그명</span></div>
+          <div class="popup-head"><span class="head-title">#<%= tdList.get(i).getTagName() %></span></div>
           <div class="popup-body">
             <div class="body-content">
               <div class="body-contentbox">
 
                 <section id="test" class="test">
 
+				<%
+					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
+					int lim2 = Math.min(10, tlbt.getTldList().size());
+					for(int j=0;j<lim2;j++){
+					
+				%>
+
                   <!-- 가게 한 덩이 -->
-                  <figure class="storeSet">
-                    <div class="store_score">4.5</div>
+                  <figure class="storeSet" style="background:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                    <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
                     <figcaption>
-                      <h3>여기에 가게이름</h3>
-                      <p>대표리뷰뫄뫄뫄 최대 20자까지</p>
+                      <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
+                      <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
                     <a href="#"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
-
-                  <figure class="storeSet">
-                    <div class="store_score">4.4</div>
-                    <figcaption>
-                      <h3>가게 각 10개</h3>
-                      <p>리뷰는 첫 번째로 등록된 리뷰</p>
-                    </figcaption>
-                    <a href="#"></a>
-                  </figure>
-
-                  <figure class="storeSet">
-                    <div class="store_score">4.5</div>
-                    <figcaption>
-                      <h3>여기에 가게이름</h3>
-                      <p>대표리뷰뫄뫄뫄 최대 20자까지</p>
-                    </figcaption>
-                    <a href="#"></a>
-                  </figure>
-
-                  <figure class="storeSet">
-                    <div class="store_score">4.5</div>
-                    <figcaption>
-                      <h3>여기에 가게이름</h3>
-                      <p>대표리뷰뫄뫄뫄 최대 20자까지</p>
-                    </figcaption>
-                    <a href="#"></a>
-                  </figure>
-
-                  <figure class="storeSet">
-                    <div class="store_score">4.5</div>
-                    <figcaption>
-                      <h3>여기에 가게이름</h3>
-                      <p>대표리뷰뫄뫄뫄 최대 20자까지</p>
-                    </figcaption>
-                    <a href="#"></a>
-                  </figure>
-
-                  <figure class="storeSet">
-                    <div class="store_score">4.5</div>
-                    <figcaption>
-                      <h3>여기에 가게이름</h3>
-                      <p>대표리뷰뫄뫄뫄 최대 20자까지</p>
-                    </figcaption>
-                    <a href="#"></a>
-                  </figure>
-
-
-
-
+				<%
+					}
+				%>
                 </section>
               </div>
             </div>
@@ -180,40 +158,9 @@
     </div>
   </section>
 
-
-
-  <section>
-    <div class="container">
-      <div class="popup-wrap">
-        <div class="popup">
-          <div class="popup-head"><span class="head-title">#태그리스트10개</span></div>
-          <div class="popup-body">
-            <div class="body-content">
-              <div class="body-contentbox">
-
-                <section id="test2" class="test">
-
-                  <div class="store_photo" id="store_photo11"></div>
-                  <div class="store_photo" id="store_photo12"></div>
-                  <div class="store_photo" id="store_photo13"></div>
-                  <div class="store_photo" id="store_photo14"></div>
-                  <div class="store_photo" id="store_photo15"></div>
-                  <div class="store_photo" id="store_photo16"></div>
-                  <div class="store_photo" id="store_photo17"></div>
-                  <div class="store_photo" id="store_photo18"></div>
-                  <div class="store_photo" id="store_photo19"></div>
-                  <div class="store_photo" id="store_photo20"></div>
-
-                </section>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
+<%
+  	}
+%>
 
 
   <!-- 슬라이드 CSS 라이브러리 스크립트 -->
@@ -239,6 +186,69 @@
       }
     );
   </script>
+  
+   
+
+<script>
+		function sendRequestTag() {
+			var httpRequest;
+			function createRequest() {
+				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+												// 오페라 등
+					return new XMLHttpRequest();
+				} else { // 익스플로러 6과 그 이하의 버전
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			function receiveResponse() {
+				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+				if (httpRequest.readyState == XMLHttpRequest.DONE
+						&& httpRequest.status == 200) {
+					document.getElementById("tagInfo").innerText = httpRequest.responseText;
+				}
+			}
+			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+																// 상태를 파악함.
+			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+			httpRequest.open("POST", "searchTag.jsp", true);
+			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			var query = document.getElementById('search').value;
+			if(query=='')query='ghp_t75CmxWfvccKn9S8UkAR0AqEPHguza04jL2';
+			httpRequest.send("query="+query); // Http 요청을 보냄.
+			}
+		</script>
+		
+		<script>
+		function sendRequestStore() {
+			var httpRequest;
+			function createRequest() {
+				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+												// 오페라 등
+					return new XMLHttpRequest();
+				} else { // 익스플로러 6과 그 이하의 버전
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			function receiveResponse() {
+				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+				if (httpRequest.readyState == XMLHttpRequest.DONE
+						&& httpRequest.status == 200) {
+					document.getElementById("storeInfo").innerText = httpRequest.responseText;
+					
+				}
+			}
+			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+																// 상태를 파악함.
+			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+			httpRequest.open("POST", "searchStore.jsp", true);
+			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			var query = document.getElementById('search').value;
+			if(query=='')query='ghp_t75CmxWfvccKn9S8UkAR0AqEPHguza04jL2';
+			httpRequest.send("query="+query); // Http 요청을 보냄.
+			}
+		</script>
 
   <!-- template 라이브러리 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

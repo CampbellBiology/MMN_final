@@ -18,21 +18,23 @@
             <div id="form">
                 <div id="blank"></div>
                 <div id="formText">아이디</div>
-                <input type="text" id="user_id" class="txtbox" name="user_id"><br>
+                <input type="text" id="user_id" class="txtbox" name="user_id" onfocusout="logID()"><br>
                 <div id="id_noti" class="noti"></div>
                 <div id="blank"></div>
 
                 <div id="formText">비밀번호</div>
-                <input type="text" id="user_pw" class="txtbox" name="user_pw"><br>
+                <input type="text" id="user_pw" class="txtbox" name="user_pw" onfocusout="logPW()"><br>
                 <div id="pw_noti" class="noti"></div>
                 <div id="blank"></div>
 
-                <button type="button" class="btn" id="cancel"></button>
+                <button type="button" class="btn" id="cancel" onClick="cancel_login()"></button>
                 <button type="submit" class="btn" id="submit"></button>
             </div>    
         </form>
     </main>
     <br>
+
+    <script type="text/javascript" src="../js/login.js"></script>
 
 </body>
 

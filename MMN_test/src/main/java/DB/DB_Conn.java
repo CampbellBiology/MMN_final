@@ -17,6 +17,7 @@ import DataClass.rtdCntData;
 import DataClass.storeByTagDataPrint;
 import DataClass.storeData;
 import DataClass.tagData;
+import DataClass.tagListData;
 import DataClass.watchlistData;
 
 public class DB_Conn {
@@ -699,6 +700,48 @@ public class DB_Conn {
 		return ret;
 	}
 	
+	public ArrayList<tagListData> getTagListByTag(int tagID) {
+		ArrayList<tagListData> ret = new ArrayList<>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tag_storeTbl where tagID = " + tagID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				tagListData tld = new tagListData();
+				int storeCode = res.getInt("storeCode");
+				
+				storeData sd = getStoreData(storeCode);
+				reviewData rd = getReviewByStoreCode(storeCode);
+				
+				tld.setAverageRating(getAverageRating(storeCode));
+				tld.setStoreImagePath(sd.getStoreImgPath());
+				tld.setStoreName(sd.getStoreName());
+				tld.setReviewContent(rd.getContents());
+				
+				ret.add(tld);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		Collections.sort(ret);
+
+		return ret;
+	}
+	
 	public boolean haveWatchlist(String userID, int storeCode) {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -835,6 +878,40 @@ public class DB_Conn {
 
 			while (res.next()) {
 				ret = res.getString("tagName");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return ret;
+	}
+	
+	public ArrayList<tagData> getTagDataList() {
+		ArrayList<tagData> ret=new ArrayList<>();
+		
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tagTbl";
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				tagData tmp = new tagData();
+				tmp.setTagId(res.getInt("tagID"));
+				tmp.setTagName(res.getString("tagName"));
+				tmp.setTagViews(res.getInt("tagView"));
+				
+				ret.add(tmp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

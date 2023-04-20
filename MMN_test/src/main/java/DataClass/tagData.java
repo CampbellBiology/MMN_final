@@ -1,9 +1,10 @@
 package DataClass;
 
-public class tagData {
+public class tagData  implements Comparable<tagData>{
 	int tagId;
 	String tagName;
 	int tagViews;
+	
 	public int getTagId() {
 		return tagId;
 	}
@@ -22,4 +23,15 @@ public class tagData {
 	public void setTagViews(int tagViews) {
 		this.tagViews = tagViews;
 	}
+	
+	@Override
+    public int compareTo(tagData td) {
+        if(td.tagViews < tagViews) {
+            return -1;
+        }
+        else if(td.tagViews > tagViews) {
+            return 1;
+        }
+        return 0;
+    }
 }
