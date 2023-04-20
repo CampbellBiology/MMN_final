@@ -1,6 +1,7 @@
 package InsertServlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,6 +53,13 @@ public class joinServlet extends HttpServlet {
 			// 삽입할 회원가입 정보를 저장할 객체다.
 			Insert_joinData _Data = new Insert_joinData();
 
+			//필수값 체크
+			if(user_id=="" || user_pw=="" || user_name=="" || user_email=="") {
+				System.out.println("필수값 누락");
+				alert(response, "msg");
+			} else {
+			// DB에 정보 넣기
+
 			_Data.userID = user_id;
 			_Data.userPW = user_pw;
 			_Data.userName = user_name;
@@ -59,7 +67,7 @@ public class joinServlet extends HttpServlet {
 			_Data.isMaster = "N";
 
 			// 데이터베이스에 회원가입 자료들을 삽입한다.
-			_DB.Insert_UserData(_Data);
+			_DB.Insert_UserData(_Data); }
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,6 +83,20 @@ public class joinServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 
+	}
+
+		//회원가입 실패 시 뜨는 alert 매서드
+	public static void alert(HttpServletResponse response, String msg) {
+	    try {
+	    	response.setCharacterEncoding("UTF-8");
+	    	response.setContentType("text/html; charset=UTF-8");
+			PrintWriter w = response.getWriter();
+			w.write("<script>alert('"+ "Check ID/PW/NAME/EMAIL"+"');history.go(-1);</script>\" charset=\"utf-8\" </script>");
+			w.flush();
+			w.close();
+	    } catch(Exception e) {
+			e.printStackTrace();
+	    }
 	}
 
 }
