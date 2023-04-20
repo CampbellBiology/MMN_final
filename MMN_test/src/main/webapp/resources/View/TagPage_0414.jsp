@@ -27,7 +27,7 @@
     <main>
         <div id="header">
             <div id="headerImage">
-                <div id="headerTitle">태그 제목 동적으로 받아오기</div>
+                <div id="headerTitle"><%= db.getTagName(tagID) %></div>
             </div>
         </div>
         
