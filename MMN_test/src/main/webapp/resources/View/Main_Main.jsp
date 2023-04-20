@@ -48,8 +48,8 @@
   </nav>
 
 <!-- ifrmae으로 다른 html넣기 -->
-  <iframe src="Main_0414.html" width="100%" height="2000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="main_page"></iframe>
-  <iframe src="Store.html" width="100%" height="3000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="store_page"></iframe>
+  <iframe src="Main_0414.jsp" width="100%" height="2000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="main_page"></iframe>
+  <iframe src="../../Store.jsp" width="100%" height="3000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="store_page"></iframe>
   <iframe src="TagPage_0414.jsp" width="100%" height="4200px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="tag_page"></iframe>
 
 
