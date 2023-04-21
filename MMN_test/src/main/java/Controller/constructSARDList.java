@@ -7,7 +7,7 @@ import DB.DB_Conn;
 import DataClass.storeAverageRatingData;
 import DataClass.storeData;
 
-// 데이터클래스 storeAverageRating 의 리스트를 만든다. 
+// 데이터클래스 storeAverageRating 의 리스트를 만든다. (가게별 평균평점)
 public class constructSARDList {
 	
 	// 데이터클래스 storeAverageRating의 리스트이다.
