@@ -64,6 +64,8 @@ public class DB_Conn {
 		}
 	}
 
+	// 1.회원가입
+	// db에서 회원정보를 삽입
 	public void Insert_UserData(Insert_joinData _Data) {
 		PreparedStatement pstmt = null; // SQL실행객체
 
@@ -101,6 +103,7 @@ public class DB_Conn {
 		}
 	}
 
+	// 2. 로그인 정보 매칭 확인
 	// 0 : 마스터계정 로그인 성공 1 : 일반계정 로그인 성공 2: 비밀번호 다름 3: 없는 아이디
 	public int loginMathcing(loginData _data) {
 		try {
@@ -113,7 +116,9 @@ public class DB_Conn {
 			String userPW = null;
 			String isMaster = null;
 
+			// 아이디가 존재하면
 			while (res.next()) {
+				// DB의 패스워드와 마스터여부를 가져와서 비교한다.
 				userPW = res.getString("userPW");
 				isMaster = res.getString("isMaster");
 			}
@@ -144,7 +149,9 @@ public class DB_Conn {
 		return 12;
 	}
 
+	//3. 스토어정보 hashmap 만들기
 	// HashMap인 store_map을 만들어간다.
+	// DB에서 스토어테이블의 각각의 컬럼 정보를 가져온다.
 	public void constructStoreMap() {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -189,6 +196,8 @@ public class DB_Conn {
 		}
 	}
 
+	//4. 메뉴 hashmap 만들기
+	//파라미터 가게코드
 	// HashMap 인 menu_map을 만들어간다.
 	public void constructMenuMap(int store) {
 		Statement stmt = null;
@@ -224,6 +233,9 @@ public class DB_Conn {
 		}
 	}
 
+	// 5. 가장많이 먹은 음식 카운트 (후보 1)
+	// tmp는 음식 먹은 횟수
+	// RtdCnt ReviewTargetData Count
 	// HashMap인 rtdCnt_map을 만든다.
 	public void constructRtdCnt_map() {
 		Statement stmt = null;
@@ -268,6 +280,7 @@ public class DB_Conn {
 		}
 	}
 
+	//6. 푸드코드에 맞는 메뉴명 리턴.
 	// foodCode가 주어졌을 때 음식 이름을 리턴한다.
 	public String getFoodName(int foodCode) {
 		Statement stmt = null;
@@ -299,7 +312,8 @@ public class DB_Conn {
 		return foodName;
 	}
 
-	// 평균평점을 리턴하는 함수
+	
+	//7.  평균평점을 리턴하는 함수
 	public double getAverageRating(int storeCode) {
 		// 평점의 합
 		int ratingSum = 0;
@@ -342,21 +356,23 @@ public class DB_Conn {
 		return ((double) ratingSum) / ((double) cnt);
 	}
 
-	// HashMap인 store_map을 ArrayList로 바꿔준다.
+	
+	//8. HashMap인 store_map을 ArrayList로 바꿔준다.
 	public ArrayList<storeData> storefindAll() {
 		return new ArrayList<>(store_map.values());
 	}
 
-	// HashMap인 menu_map을 ArrayList로 바꿔준다.
+	//9. HashMap인 menu_map을 ArrayList로 바꿔준다.
 	public ArrayList<menuData> menufindAll() {
 		return new ArrayList<>(menu_map.values());
 	}
 
-	// HashMap인 rtdCnt_map을 ArrayList로 바꿔준다.
+	//10. HashMap인 rtdCnt_map을 ArrayList로 바꿔준다.
 	public ArrayList<rtdCntData> rtdCntfindAll() {
 		return new ArrayList<>(rtdCnt_map.values());
 	}
 
+	//11. 가게 코드로 가게정보 가져와서 클래스에 담는다.
 	public storeData getStoreData(int storeCode) {
 		storeData sd = new storeData();
 
@@ -402,7 +418,8 @@ public class DB_Conn {
 		return sd;
 	}
 
-	// 메뉴 검색을 통해 storeData ArrayList를 가져온다.
+	//12. 메인 페이지에서 메뉴 검색을 할 때 storeData ArrayList를 가져온다.(자동완성 & 가게정보 가져오기)
+	//query가 검색한 내용
 	public ArrayList<storeData> getMenuInfo(String query) {
 		ArrayList<storeData> list = new ArrayList<storeData>();
 		String[] tmp = query.split(" ");
@@ -410,6 +427,7 @@ public class DB_Conn {
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
+			//like가 sql문에서 특정단어가 포함된 단어로 검색.
 			String sql = "SELECT * FROM menuTbl WHERE foodName LIKE \"%";
 			for (int i = 0; i < tmp.length; i++) {
 				sql += tmp[i] + "%";
@@ -437,15 +455,17 @@ public class DB_Conn {
 
 		return list;
 	}
-
-	// 가게검색을 통해 storeData ArrayList를 가져온다.
+	
+	// 13. 메인페이지에서 가게검색을 할 때 storeData ArrayList를 가져온다.(자동완성 & 가게정보 가져오기)
 	public ArrayList<storeData> getStoreInfo(String query) {
 		ArrayList<storeData> list = new ArrayList<storeData>();
+		//공백마다 여러개의 단어로 검색 가능, And 검색(둘 다 포함)
 		String[] tmp = query.split(" ");
 
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
+			//like가 sql문에서 특정단어가 포함된 단어로 검색.
 			String sql = "SELECT * FROM storeTbl WHERE storeName LIKE \"%";
 			for (int i = 0; i < tmp.length; i++) {
 				sql += tmp[i] + "%";
@@ -492,7 +512,7 @@ public class DB_Conn {
 		return list;
 	}
 
-	// 태그검색을 통해 tagData ArrayList를 가져온다.
+	// 14. 메인페이지에서 태그검색을 할 때 tagData ArrayList를 가져온다.(자동완성)
 	public ArrayList<tagData> getTagInfo(String query) {
 		ArrayList<tagData> list = new ArrayList<tagData>();
 		String[] tmp = query.split(" ");
@@ -516,7 +536,6 @@ public class DB_Conn {
 
 				list.add(td);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -533,7 +552,8 @@ public class DB_Conn {
 		return list;
 	}
 
-	// 관심목록에 가게데이터를 추가한다.
+	// 15. 관심목록에 가게데이터를 추가한다.
+	// userID와 storeCode를 기본키로 사용하여 삽입
 	public void addWatchlistInfo(String userID, int storeCode) {
 		PreparedStatement pstmt = null;
 
@@ -565,7 +585,8 @@ public class DB_Conn {
 		}
 	}
 
-	// 관심목록에 가게데이터를 삭제한다.
+	//16. 관심목록에 가게데이터를 삭제한다.
+	// userID와 storeCode를 기본키로 사용하여 삭제
 	public void deleteWatchlistInfo(String userID, int storeCode) {
 
 		PreparedStatement pstmt = null;
@@ -591,7 +612,7 @@ public class DB_Conn {
 		}
 	}
 
-	// 관심목록에 등록된 가게데이터를 가져온다.
+	//17. 해당 유저의 관심목록에 등록된 가게데이터를 ArrayList로 가져온다.
 	public ArrayList<watchlistData> getWatchListInfo(String userID) {
 		ArrayList<watchlistData> list = new ArrayList<watchlistData>();
 
@@ -625,7 +646,7 @@ public class DB_Conn {
 		return list;
 	}
 
-	// 카테고리 코드에 맞는 카테고리 이름을 가져온다.
+	//18. 카테고리 코드에 맞는 카테고리 이름을 가져온다.
 	public String getCategoryName(int cateCode) {
 		String ret = "";
 		Statement stmt = null;
@@ -655,6 +676,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//19. 태그페이지에서 태그별 가게정보를 표시한다.
 	public ArrayList<storeByTagDataPrint> getStoreListByTag(int tagID, String userID) {
 		ArrayList<storeByTagDataPrint> ret = new ArrayList<>();
 
@@ -666,8 +688,10 @@ public class DB_Conn {
 			res = stmt.executeQuery(sql);
 
 			while (res.next()) {
+				//ArrayList에 storeByTagDataPrint방식으로 추가하기 위한 객체
 				storeByTagDataPrint sbdp = new storeByTagDataPrint();
 				int storeCode = res.getInt("storeCode");
+				//가게정보 중 일부(이미지경로, 업종 코드 등)를 가져오기 위한 객체
 				storeData sd = getStoreData(storeCode);
 
 				sbdp.setStoreCode(storeCode);
@@ -701,6 +725,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//20. 메인페이지에서 가게이미지 hover했을 때 가게정보를 띄워준다.
 	public ArrayList<tagListData> getTagListByTag(int tagID) {
 		ArrayList<tagListData> ret = new ArrayList<>();
 
@@ -744,6 +769,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//21. 관심목록 null 체크
 	public boolean haveWatchlist(String userID, int storeCode) {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -773,6 +799,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//22. 태그페이지에서 리뷰의 일부를 표시하기 위한 데이터를 가져온다.
 	public reviewData getReviewByStoreCode(int storeCode) {
 		reviewData rd = new reviewData();
 
@@ -810,6 +837,7 @@ public class DB_Conn {
 		return rd;
 	}
 
+	//23. 태그페이지에서 유저명을 표시하기 위한 데이터를 가져온다.
 	public String getNickname(String userID) {
 		String ret = "";
 
@@ -839,6 +867,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//24. 태그페이지에서 유저프로필 사진을 표시하기 위한 데이터를 가져온다.
 	public String getUserImagePath(String userID) {
 		String ret = "";
 
@@ -868,6 +897,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//25. 태그페이지의 태그제목 표시를 위한 데이터를 가져온다.
 	public String getTagName(int tagID) {
 		String ret = "";
 
@@ -897,6 +927,7 @@ public class DB_Conn {
 		return ret;
 	}
 
+	//26. 태그페이지에서 정렬을 위한 데이터를 가져온다.
 	public ArrayList<tagData> getTagDataList() {
 		ArrayList<tagData> ret = new ArrayList<>();
 
@@ -931,11 +962,13 @@ public class DB_Conn {
 		return ret;
 	}
 
-	// 리뷰내용 db에 입력/저장하는 메소드
+	//27. 가게페이지에서 리뷰내용 db에 입력/저장하는 메소드(리뷰데이터)
+	//userid로 username 추출해서 표시 예정
 	public void Insert_ReviewData(reviewData _Data) {
 		PreparedStatement pstmt = null; // SQL실행객체
 
 		try {
+			//anonymous으로 리뷰작성 시 익명 체크 시 value값으로 null체크하여 1(true), 체크 안한 경우 null값으로 디폴트로 0입력
 			if (_Data.anonymous == null) {
 				String sql = "insert into reviewtbl(storeCode, userId, contents, rating, photoPath)"
 						+ " VALUES(?,?,?,?,null)";
@@ -985,7 +1018,7 @@ public class DB_Conn {
 		}
 	}
 
-	// 메뉴리스트와 태그리스트를 DB에 입력/저장하는 메소드
+	//28. 가게페이지에서 메뉴리스트와 태그리스트를 DB에 입력/저장하는 메소드
 	public void Insert_List(String menuList, String uid, String tagList, String review_store) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
@@ -994,7 +1027,9 @@ public class DB_Conn {
 		String[] tli = tagList.split(",");
 		String msql, tsql;
 		try {
+			//메뉴 리스트 입력
 			for (int i = 0; i < mli.length; i++) {
+				//해당 유저가 가장 최근에 작성한 리뷰데이터에 메뉴정보가 입력되도록 order by로 정렬하여 데이터 입력
 				msql = "insert into reviewtargettbl(_index, foodCode) values ((select reviewtbl.reviewIndex from reviewtbl where userId='"
 						+ uid + "' "
 						+ "order by regDate desc limit 0, 1), (select menutbl.foodCode from menutbl where (menutbl.foodName = '"
@@ -1003,7 +1038,7 @@ public class DB_Conn {
 				pstmt.executeUpdate();
 
 			}
-
+			//태그 리스트 입력
 			for (int i = 0; i < tli.length; i++) {
 				tsql = "insert into tag_storetbl(storeCode, tagID) values ((select tagtbl.tagID from tagtbl where tagName = '"
 						+ tli[i] + "'), " + review_store + ")";
@@ -1023,6 +1058,7 @@ public class DB_Conn {
 		}
 	}
 
+	//29. 가게페이지에서 리뷰내용 출력을 위한 정보 조회하는 메소드(리뷰 tbl)
 	/*
 	 * index; public String storeCode; public String userID; public String contents;
 	 * public String date; public String rating; public String display; public
@@ -1031,7 +1067,6 @@ public class DB_Conn {
 	// reviewData
 	// int _index, String _contents, String _regDate, String _rating, String
 	// _anonymous, String _photoPath
-	// 리뷰내용 출력을 위한 정보 조회하는 메소드(리뷰 tbl)
 	public ArrayList<String> get_ReviewData(int i) {
 		ArrayList<String> arr = new ArrayList<>();
 		Statement stmt = null;
@@ -1040,7 +1075,7 @@ public class DB_Conn {
 		try {
 			// 리뷰내용조회 쿼리문
 			String sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from reviewtbl order by regDate desc limit "
-					+ i + ", 5";
+					+ i + ", 1";
 
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
@@ -1064,10 +1099,10 @@ public class DB_Conn {
 				case "5":
 					arr.add("억수로 마싯다");
 					break;
-				case "3":
+				case "4":
 					arr.add("갠찮드라");
 					break;
-				case "1":
+				case "3":
 					arr.add("영 파이다");
 					break;
 				default:
@@ -1093,7 +1128,8 @@ public class DB_Conn {
 		return arr;
 	}
 
-	// 리뷰내용 출력을 위한 정보 조회하는 메소드(menu list), (제거)storeCode와 reviewIndex
+	//30. 리뷰내용 출력을 위해 리뷰인덱스 받아서 리뷰타겟(메뉴)를 가져온다.(menu list)
+	//기록) (제거)storeCode와 reviewIndex
 	public ArrayList<String> get_ReviewTarget(int ri) {
 		ArrayList<String> arr = new ArrayList<>();
 		Statement stmt = null;
@@ -1142,8 +1178,8 @@ public class DB_Conn {
 	 * reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex =
 	 * (select count(*) from mmn.reviewtbl where rating = 3);
 	 */
-
-	// 리뷰 개수 카운트하는 함수
+	
+	//31. 리뷰 개수 카운트하는 함수
 	public int get_review_count_All() {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -1172,7 +1208,9 @@ public class DB_Conn {
 		}
 		return reviewcount;
 	}
-
+	
+	//32~34. 평점별 리뷰 개수 카운트
+	//32. great
 	public int get_review_count_great() {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -1180,11 +1218,11 @@ public class DB_Conn {
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql_all = "SELECT reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex = (select count(*) from mmn.reviewtbl where rating = 5)";
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 5";
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql_all);
 			while (res.next()) {
-				reviewcount = res.getInt("reviewIndex");
+				reviewcount = res.getInt("count");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1201,7 +1239,7 @@ public class DB_Conn {
 		}
 		return reviewcount;
 	}
-
+	//33. good
 	public int get_review_count_good() {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -1209,11 +1247,11 @@ public class DB_Conn {
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql_all = "SELECT reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex = (select count(*) from mmn.reviewtbl where rating = 4)";
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 4";
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql_all);
 			while (res.next()) {
-				reviewcount = res.getInt("reviewIndex");
+				reviewcount = res.getInt("count");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1230,7 +1268,7 @@ public class DB_Conn {
 		}
 		return reviewcount;
 	}
-
+	//34. bad
 	public int get_review_count_bad() {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -1238,11 +1276,11 @@ public class DB_Conn {
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql_all = "SELECT reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex = (select count(*) from mmn.reviewtbl where rating = 3)";
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 3";
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql_all);
 			while (res.next()) {
-				reviewcount = res.getInt("reviewIndex");
+				reviewcount = res.getInt("count");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1260,6 +1298,7 @@ public class DB_Conn {
 		return reviewcount;
 	}
 
+	//35. 가게페이지에서 가게별 가장많이 먹은 메뉴를 보여주기 위한 메뉴 개수를 카운트하여 리턴
 	// td.setTagId(res.getInt("tagID"));
 	// td.setTagName(res.getString("tagName"));
 	// td.setTagViews(res.getInt("tagView"));
@@ -1293,6 +1332,7 @@ public class DB_Conn {
 		return max_menu;
 	}
 
+	//36. 가게페이지에서 가장많이 사용한 태그명을 3개 추출
 	public ArrayList<String> get_tagCount() {
 		ArrayList<String> max_tag = new ArrayList<>();
 		Statement stmt = null;
