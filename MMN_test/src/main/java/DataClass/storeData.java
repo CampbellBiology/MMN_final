@@ -1,5 +1,6 @@
 package DataClass;
 
+//가게정보 표시를 위한 객체
 public class storeData{
 	private int storeCode;
 	private String storeName;
