@@ -40,6 +40,8 @@ public class loginServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
+		//로그인시 DB로 데이터를 조회하여 데이별 결과 출력
+		//로그인 실패시 alert
 		try {
 			// 유저 아이디
 			String user_id = request.getParameter("user_id");
