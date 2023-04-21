@@ -1,5 +1,6 @@
 package DataClass;
 
+//리뷰내용에 대한 객체
 public class reviewData {
 	public int index;
 	public String index2;
