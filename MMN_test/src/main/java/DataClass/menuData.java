@@ -1,5 +1,6 @@
 package DataClass;
 
+//메뉴정보에 대한 객체
 public class menuData {
 	int storeCode;
 	int foodCode;
