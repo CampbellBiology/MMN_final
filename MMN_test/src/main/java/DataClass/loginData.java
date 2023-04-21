@@ -1,5 +1,6 @@
 package DataClass;
 
+//로그인에 사용하는 객체
 public class loginData {
 	public static String userID;
 	public static String userPW;
@@ -13,6 +14,7 @@ public class loginData {
 		loginData.loginStatus = loginStatus;
 	}
 
+	//로그인 상태 조회
 	public static int isLoginStatus() {
 		if (loginStatus == 0 || loginStatus == 1) {
 			System.out.println("로그인 중입니다.");
