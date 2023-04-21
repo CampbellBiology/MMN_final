@@ -1,5 +1,6 @@
 package DataClass;
 
+//태그 정보에 대한 객체
 public class tagData  implements Comparable<tagData>{
 	int tagId;
 	String tagName;
@@ -24,6 +25,7 @@ public class tagData  implements Comparable<tagData>{
 		this.tagViews = tagViews;
 	}
 	
+	//태그뷰 수에 따라 내림차순 정렬
 	@Override
     public int compareTo(tagData td) {
         if(td.tagViews < tagViews) {
