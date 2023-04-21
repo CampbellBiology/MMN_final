@@ -8,7 +8,7 @@ import DataClass.storeData;
 import DataClass.watchlistData;
 import DataClass.watchlistStoreDataPrint;
 
-// 중복된 값이 들어가면 안됨 => 해결(데이터베이스에 기본키를 줌)
+// 중복된 값이 들어가면 안됨 => 해결(데이터베이스에 외래키 2개를 기본키로 사용)
 // 로그인 된 상태에서 관심목록을 불러옴 => 해결(loginServlet.java 에 watchlist 객체를 생성)
 // 로그아웃된 후 클리어
 // 데이터베이스에 같은 값을 여러번 넣을 수 있다. 그러니 중복체크를 조심해야 한다. => 해결(데이터베이스에 기본키를 줌)
@@ -16,6 +16,7 @@ import DataClass.watchlistStoreDataPrint;
 // 관심목록 컨트롤러
 public class watchlist {
 	ArrayList<watchlistData> wdList;
+	// 스토어 데이터 중 일부만을 보여주는 리스트(가게이름, 평점, 주소 등)
 	ArrayList<watchlistStoreDataPrint> wsdpList;
 
 	public ArrayList<watchlistData> getWdList() {
@@ -34,6 +35,7 @@ public class watchlist {
 		this.wsdpList = wsdpList;
 	}
 
+	//메인 페이지에서 유저아이디를 이용하여 관심목록 출력
 	public watchlist(String userID) {
 		if (loginData.isLoginStatus() == 1) {
 			DB_Conn _db = new DB_Conn();
