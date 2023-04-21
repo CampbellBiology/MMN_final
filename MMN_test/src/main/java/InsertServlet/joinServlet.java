@@ -38,6 +38,8 @@ public class joinServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 
+		//회원가입 시 필수정보를 체크하여 DB에 삽입
+		//필수 값이 null이라면 alert
 		try {
 			// 유저 아이디
 			String user_id = request.getParameter("user_id");
@@ -53,7 +55,7 @@ public class joinServlet extends HttpServlet {
 			// 삽입할 회원가입 정보를 저장할 객체다.
 			Insert_joinData _Data = new Insert_joinData();
 
-			//필수값 체크
+			//필수값 null 체크
 			if(user_id=="" || user_pw=="" || user_name=="" || user_email=="") {
 				System.out.println("필수값 누락");
 				alert(response, "msg");
