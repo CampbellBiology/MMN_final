@@ -1,5 +1,6 @@
 package DataClass;
 
+//가게별 평균평점에 대한 객체
 public class storeAverageRatingData implements Comparable<storeAverageRatingData>{
 	int storeCode;
 	double avgRating;
