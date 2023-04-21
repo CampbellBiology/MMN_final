@@ -1,5 +1,6 @@
 package DataClass;
 
+//메인 페이지에서 가게이미지 hover시 사용하는 객체
 public class tagListData implements Comparable<tagListData>{
 	String storeImagePath;
 	String storeName;
@@ -38,6 +39,7 @@ public class tagListData implements Comparable<tagListData>{
 		this.reviewContent = reviewContent;
 	}
 	
+	//평점에 따라 내림차순 정렬
 	@Override
     public int compareTo(tagListData tld) {
         if(tld.getAverageRating() < averageRating) {
