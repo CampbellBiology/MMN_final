@@ -1,7 +1,6 @@
 package DataClass;
 
-import DB.DB_Conn;
-
+//태그 페이지 표시를 위한 가게정보 객체
 public class storeByTagDataPrint implements Comparable<storeByTagDataPrint>{
 	String storeImgPath;
 	String storeName;
