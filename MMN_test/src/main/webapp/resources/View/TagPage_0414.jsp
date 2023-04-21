@@ -15,8 +15,10 @@
  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     
     <%
-		String userID = "aabb";
-    	int tagID = Integer.parseInt(request.getParameter("tagID"));
+    	String null_userID = (String)session.getAttribute("memberID");
+		String userID = null_userID==null?"":null_userID;
+    	String null_tagID = request.getParameter("tagID");
+    	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);
     	DB_Conn db = new DB_Conn();
     	ArrayList<storeByTagDataPrint> list = db.getStoreListByTag(tagID, userID);
     	int lim = Math.min(10, list.size());

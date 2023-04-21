@@ -89,6 +89,7 @@
 
 
 	<%
+		String userID = (String)session.getAttribute("memberID");
 		DB_Conn db = new DB_Conn();
 		ArrayList <tagData> tdList = db.getTagDataList();
 		Collections.sort(tdList);

@@ -132,7 +132,7 @@
 			Collections.sort(rtdCntList);
 			String keep_btn_path = "resources/UI/UI/keep_btn.png";
 			String keep_btn_sel_path = "resources/UI/UI/keep_btn_sel.png";
-			String userID = (String)session.getAttribute("member");
+			String userID = (String)session.getAttribute("memberID");
 			System.out.println(userID);
 
 			boolean flag = _db.haveWatchlist(userID, storeCode);

@@ -12,7 +12,5 @@
 		out.println("<a href=\"../../Store.jsp?storeCode="+sr.getStoreInfo().get(i).getStoreCode()+"\">");
 		out.println(sr.getStoreInfo().get(i).getStoreName());
 		out.println("</a>");
-		
-		System.out.println("검색결과 : "+sr.getStoreInfo().get(i).getStoreName());
 	}
 %>

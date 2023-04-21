@@ -19,7 +19,7 @@
 
 	<%
 	DB_Conn _db = new DB_Conn();
-	_db.constructMenuMap();
+	_db.constructMenuMap(1);
 	ArrayList<menuData> list = _db.menufindAll();
 	%>
 	<select name="menu">

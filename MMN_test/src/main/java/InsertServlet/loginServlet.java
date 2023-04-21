@@ -65,7 +65,7 @@ public class loginServlet extends HttpServlet {
 			// 세션 객체를 얻는다.
 			HttpSession session = request.getSession();
 			// member 속성에 유저 아이디를 넣는다. 이걸로 유저가 로그인 중인지 체크한다.
-			session.setAttribute("member", _Data.userID);
+			session.setAttribute("memberID", _Data.userID);
 
 			// 유저의 관심목록 객체를 생성한다.
 			watchlist _watchlist = new watchlist(_Data.userID);
