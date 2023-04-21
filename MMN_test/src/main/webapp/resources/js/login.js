@@ -1,3 +1,6 @@
+let newId = false;
+let newPw = false;
+
 function logID() {
     let ID_txtbx = document.querySelector('#user_id');
     let regID = /^[a-z0-9-_]{5,20}$/;
@@ -10,7 +13,8 @@ function logID() {
         document.querySelector('#id_noti').style.display = "block";
         document.querySelector('#id_noti').innerHTML = "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.";
     }
-    else { document.querySelector('#id_noti').style.display = "none"; }
+    else { document.querySelector('#id_noti').style.display = "none"; 
+    newId=true}
 }
 
 function logPW() {
@@ -28,6 +32,7 @@ function logPW() {
     }
     else {
         document.querySelector('#pw_noti').style.display = "none";
+        newPw=true
     }
 
 }
@@ -39,3 +44,15 @@ function cancel_login() {
     document.querySelector('#id_noti').style.display = "none";
     document.querySelector('#pw_noti').style.display = "none";
 }
+
+function mySubmit() {
+	
+	if(newId==false || newPw==false || newPw_confirm==false) {
+		alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
+		return false;
+	} else {
+		alert("로그인 성공");
+		return true;
+	}
+}
+

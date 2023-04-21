@@ -1,4 +1,3 @@
-
 let newId = false;
 let newPw = false;
 let newPw_confirm  = false;
