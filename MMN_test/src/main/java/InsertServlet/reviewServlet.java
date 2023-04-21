@@ -42,6 +42,7 @@ public class reviewServlet extends HttpServlet {
 		//리뷰데이터 모델클래스.
 		reviewData sd = new reviewData();
 
+		//리뷰페이지에서 리뷰 내용을 가져와 DB에 입력
 		// 각 페이지가 아직 연결되지 않아 세션가져오기 어려움
 		// 임시로 아이디 입력칸 생성
 		try {
@@ -56,10 +57,8 @@ public class reviewServlet extends HttpServlet {
 			String review_text = request.getParameter("review_text");
 			String review_score = request.getParameter("score_result"); // request.getParameter("score_review");
 
+			/*
 			//받아온 결과 출력.
-			//true: value, false: null(익명체크)
-			System.out.println("no: "+review_noname);
-			
 			System.out.println("menu: "+menuListView);
 			System.out.println("tag: "+tagListView);
 			
@@ -67,7 +66,10 @@ public class reviewServlet extends HttpServlet {
 			System.out.println("id: "+review_id);
 			System.out.println("text: "+review_text);
 			System.out.println("score: "+review_score);
-
+			//true: value, false: null(익명체크)
+			System.out.println("no: "+review_noname);
+			*/
+			
 			//데이터 등록
 			sd.setStoreCode(review_store);
 			sd.setUserId(review_id);
