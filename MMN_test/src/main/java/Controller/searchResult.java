@@ -6,11 +6,12 @@ import DB.DB_Conn;
 import DataClass.storeData;
 import DataClass.tagData;
 
+//검색한 내용에 대한 가게 정보 데이터
 public class searchResult {
 	DB_Conn db;
 	ArrayList<storeData> storeInfo;
 	ArrayList<tagData> tagInfo;
-
+// 2부터 10까지의 공백
 	String[] space = { "          ", "         ", "        ", "       ", "      ", "     ", "    ", "   ", "  " };
 
 	public searchResult(String query) {
@@ -44,7 +45,8 @@ public class searchResult {
 	public void setTagInfo(ArrayList<tagData> tagInfo) {
 		this.tagInfo = tagInfo;
 	}
-
+	
+	//가게정보에 메뉴정보를 추가
 	public void calcStoreInfo(String query) {
 		storeInfo = db.getStoreInfo(query);
 		ArrayList<storeData> tmp = db.getMenuInfo(query);
