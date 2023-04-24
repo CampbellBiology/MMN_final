@@ -291,7 +291,7 @@
 								<ul id="lists_tag"></ul>
 								<div id="create_tag1" class="create_tag">
 									<input type="text" id="id_input_tagName" onblur="input_blur()"
-										placeholder="ex.#비오는날"> <a href="javascript:tag_del()">x</a>
+										placeholder="ex) 비오는날"> <a href="javascript:tag_del()">x</a>
 								</div>
 								<!-- <div id="create_tag2" class="create_tag">
 									<button type="button">추가아이콘</button>
