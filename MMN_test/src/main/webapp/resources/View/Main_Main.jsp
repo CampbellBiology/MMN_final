@@ -36,7 +36,7 @@
   <!-- Navigation-->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="#!"><img src="../UI/UI/logo_MMN(2).png" width="100px"></a>
+      <a class="navbar-brand" href="javascript:brandClick();" id="brand"><img src="../UI/UI/logo_MMN(2).PNG" width="100px"></a>
       <a class="btn btn-primary" href="Login2.html" id="loginasdf" style="display:<%=userID!=null?"none":"block"%>">로그인</a>
       <button type="button" id="watchlist_button" style="display:<%=userID==null?"none":"block"%>" onclick="sendRequest2()"><img src="../UI/UI/watchlist_active.png" height="50px"></button>
       <a class="btn btn-primary" href="#signup" id="signupasdf" style="display:<%=userID!=null?"none":"block"%>">회원가입</a>
@@ -50,7 +50,6 @@
   <iframe src="Main_0414.jsp" width="100%" height="5000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="main_page"></iframe>
   <iframe src="../../Store.jsp" width="100%" height="8000px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" id="store_page"></iframe>
   <iframe src="TagPage_0414.jsp" width="100%" height="5000px" frameborder="0" style="border:0; overflow:hidden;" allowfullscreen="" aria-hidden="false" tabindex="0" id="tag_page"></iframe>
-
 
   <!-- <button id="show">팝업열기</button> -->
   <div class="background">

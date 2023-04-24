@@ -375,7 +375,7 @@ hr {
 /* ifram으로 불러온 html */
 /* 페이지 전환될 때마다 각각 display none이거나 block */
 #main_page {
-    display: none;
+    display: block;
 }
 
 #store_page {
@@ -383,7 +383,7 @@ hr {
 }
 
 #tag_page {
-    display: block;
+    display: none;
 }
 
 /* #tag_page {

@@ -34,3 +34,8 @@ function offHover(ii) {
 		keepImg.src = "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/star_yellow.png";
 	}
 }
+
+function brandClick(){
+	var doc1 = document.getElementById("main_page");
+	doc1.src="Main_0414.jsp";
+}
