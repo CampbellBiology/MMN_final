@@ -575,7 +575,7 @@
 			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
 			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
 			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			httpRequest.send("userId=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
+			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
 			}
 		</script>
 		

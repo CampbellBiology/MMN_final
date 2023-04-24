@@ -196,7 +196,7 @@
 		// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
 		httpRequest.open("POST", "../../watchlistAddOrDelete.jsp", true);
 		httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		httpRequest.send("userId=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
+		httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
 		}
     </script>
    
@@ -210,14 +210,14 @@ if(count == 0){
 }
 
 //스크롤 바닥 감지
-window.onscroll = function(e) {
+window.parent.onscroll = function(e) {
 	
 	if(count == 3)
 		return;
 	
   //추가되는 임시 콘텐츠
   //window height + window scrollY 값이 document height보다 클 경우,
-  if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+  if((window.parent.innerHeight + window.parent.scrollY) >= document.body.offsetHeight) {
   	//실행할 로직 (콘텐츠 추가)
       count++;
   	if(count == 1)

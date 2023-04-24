@@ -331,8 +331,8 @@ hr {
 
 /* 킵리스트에 가게 0개일 때 display block, 1개 이상이면 display none */
 .list_none {
-    display: none;
-    /* display: block; */
+  /*   display: none; */
+    display: block;
     width: 275px;
     height: 450px;
     margin: 0 auto;
@@ -379,14 +379,63 @@ hr {
 }
 
 #store_page {
+    display: none;
+}
+
+#tag_page {
     display: block;
 }
 
-#tag_page {
+/* #tag_page {
     display: none;
+} */
+
+#keepImg0{
+	width: 30px;
+	height: 30px;
 }
 
-#tag_page {
-    display: none;
+#keepImg1{
+	width: 30px;
+	height: 30px;
 }
 
+#keepImg2{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg3{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg4{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg5{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg6{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg7{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg8{
+	width: 30px;
+	height: 30px;
+}
+
+#keepImg9{
+	width: 30px;
+	height: 30px;
+}

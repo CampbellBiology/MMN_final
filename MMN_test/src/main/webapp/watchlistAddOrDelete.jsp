@@ -12,7 +12,7 @@
 	<%
 		DB_Conn db = new DB_Conn();
 	
-		String userID = request.getParameter("userId");
+		String userID = request.getParameter("userID");
 		int storeCode = Integer.parseInt(request.getParameter("storeCode"));
 
 		boolean res = db.haveWatchlist(userID, storeCode);
