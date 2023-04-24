@@ -39,7 +39,7 @@
       <a class="navbar-brand" href="javascript:brandClick();" id="brand"><img src="../UI/UI/logo_MMN(2).PNG" width="100px"></a>
       <a class="btn btn-primary" href="Login2.html" id="loginasdf" style="display:<%=userID!=null?"none":"block"%>">로그인</a>
       <button type="button" id="watchlist_button" style="display:<%=userID==null?"none":"block"%>" onclick="sendRequest2()"><img src="../UI/UI/watchlist_active.png" height="50px"></button>
-      <a class="btn btn-primary" href="#signup" id="signupasdf" style="display:<%=userID!=null?"none":"block"%>">회원가입</a>
+      <a class="btn btn-primary" href="SignIn2.html" id="signupasdf" style="display:<%=userID!=null?"none":"block"%>">회원가입</a>
 
       <!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
       <div id="profile"style="display:<%=userID==null?"none":"block"%>"><img src="<%= db.getUserImagePath(userID) %>" id="profile_photo"></div>
@@ -59,46 +59,7 @@
         <img src="../UI/UI/close1.png" class="close" width="30px" height="30px">
       </button>
       <div class="popup" id="popup">
-					<%
-					int cnt = 0;
-					for (int i = 0; i < lim; i++) {
-						if (arr[i] != null) {
-							cnt++;
-							
-							int storeCode = arr[i].getStoreCode();
-							
-							boolean flag = db.haveWatchlist(userID, storeCode);
-					%>
-						
-					<div id="store<%=i%>" class="store">
-			          <div class="keep_icon">
-			          	<img src="<%=flag==true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/star_yellow.png":
-			          		"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/star_gray.png" %>" 
-			          		id="keepImg<%=i%>" onclick = "sendRequest(<%=storeCode %>); keepClick(<%=i%>);" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)">
-			          </div>
-			          <div class="store_photo" style="background:url(<%=arr[i].getStoreImagePath()%>) no-repeat; background-size: 100%;"></div>
-			          <div class="store_details">
-			            <div class="store_name"><span class="subject">가게명: </span><span class="gray"><%=arr[i].getStoreName()%></span></div><hr>
-			            <div class="store_score"><span class="subject">평점: </span><span class="gray"><%=arr[i].getAverageRating()%></span></div><hr>
-			            <div class="store_category"><span class="subject">업종분류: </span><span class="gray"><%=arr[i].getCateName()%></span></div><hr>
-			            <div class="store_address"><span class="subject">주소: </span><span class="gray"><%=arr[i].getAddr()%></span></div>
-			          </div>
-			        </div>
-								
-					<%
-					}
-					}
-
-					System.out.println("cnt : " + cnt);
-
-					if (cnt == 0) {
-					%>
 					
-					<img src="../UI/UI/뭐뭇나_List_none.png" class="list_none"
-						id="list_none">
-					<%
-					}
-					%>
 
 					<button type="button" id="close">팝업닫기</button>
 			</div>

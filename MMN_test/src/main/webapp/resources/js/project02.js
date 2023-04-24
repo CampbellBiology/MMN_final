@@ -39,3 +39,11 @@ function brandClick(){
 	var doc1 = document.getElementById("main_page");
 	doc1.src="Main_0414.jsp";
 }
+
+function forPopup(storeCode){
+	var doc1 = document.getElementById("main_page");
+	doc1.src= "../../Store.jsp?storeCode="+storeCode;
+//	var doc1 = document.getElementById("a_store"+ii);
+	
+//	doc1.href="../../Store.jsp?storeCode="+storeCode;
+}

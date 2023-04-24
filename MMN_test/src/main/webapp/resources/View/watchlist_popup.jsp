@@ -20,6 +20,7 @@
 		for(int i=0;i<lim;i++){
 			int storeCode = wdList.get(i).getStoreCode();
 			watchlistStoreDataPrint wsdp = new watchlistStoreDataPrint(db.getStoreData(storeCode));
+			out.println("<a onclick=\"forPopup("+storeCode+")\">");
 			out.println("<div id=\"store"+i+"\" class=\"store\">");
 			out.println("<div class=\"keep_icon\">");
 			out.println("<img src=\"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/star_yellow.png\"");
@@ -33,6 +34,7 @@
 			out.println("<div class=\"store_address\"><span class=\"subject\">주소: </span><span class=\"gray\">"+wsdp.getAddr()+"</span></div>");
 			out.println("</div>");
 			out.println("</div>");
+			out.println("</a>");
 		}
 	}
 %>

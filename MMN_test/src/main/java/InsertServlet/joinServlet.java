@@ -69,7 +69,12 @@ public class joinServlet extends HttpServlet {
 			_Data.isMaster = "N";
 
 			// 데이터베이스에 회원가입 자료들을 삽입한다.
-			_DB.Insert_UserData(_Data); }
+			_DB.Insert_UserData(_Data); 
+
+			String context = request.getContextPath();
+			response.sendRedirect(context + "/resources/View/Main_Main.jsp");
+			
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

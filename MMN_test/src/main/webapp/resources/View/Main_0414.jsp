@@ -103,7 +103,7 @@
       	int lim = Math.min(15, tdList.size());
       	for(int i=0;i<lim;i++){
       %>
-      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>">#<%= tdList.get(i).getTagName() %></a></button>
+      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()">#<%= tdList.get(i).getTagName() %></a></button>
       
       <%	
       }
@@ -149,7 +149,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
+                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -200,7 +200,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
+                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -250,7 +250,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
+                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -391,6 +391,9 @@ window.onscroll = function(e) {
   }
 };
 
+function goTop(){
+	parent.window.scroll(0,0);
+}
 
 </script>
 
@@ -398,6 +401,7 @@ window.onscroll = function(e) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/scripts.js"></script>
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
 
 </body>
 
