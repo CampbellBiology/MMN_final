@@ -336,123 +336,137 @@
 				</div>
 			</form>
 			<div id="blank">여백</div>
-			<div id="show_review">
-				<div id="first_line">
-					<div id="review_title">리뷰</div>
-					<%
-					//각 리뷰 별 계산하는 함수 불러오기.
-					int review_count_All = _db.get_review_count_All();
-					int review_count_great = _db.get_review_count_great();
-					int review_count_good = _db.get_review_count_good();
-					int review_count_bad = _db.get_review_count_bad();
-					%>
-					<div id="review_sort">
-						<ul>
-							<li><a href = "javascript:">전체</a><span id="score_all" class="show_score"> <!-- (12) -->
-									<%=review_count_All%>
-							</span></li>
-							<li><a>억수로 마싯다</a><span id="score_great" class="show_score">
-									<!-- (12) --> <%=review_count_great%>
-							</span></li>
-							<li><a>갠찮드라</a><span id="score_good" class="show_score"> <!-- (12) -->
-									<%=review_count_good%>
-							</span></li>
-							<li><a>영 파이다</a><span id="score_bad" class="show_score"> <!-- (12) -->
-									<%=review_count_bad%>
-							</span></li>
-						</ul>
-					</div>
-				</div>
-
-				<%
-				//리뷰정보tbl (reviewIndex, contents, regDate, rating, anonymous) (추가, reviewImage)
-				//유저정보tbl (userImagePath, userName)
-				//menutargettbl 먹은 음식 리스트
-				//1. 리뷰 인덱스 찾기 2. 메뉴코드 조회하여 메뉴명 알아내기(리뷰tbl-> 리뷰타겟tbl-> 메뉴tbl)
-				//db에서 
-				//? = _db.findUser()
-				//int storeCode = sd.getStoreCode();
-				/*
-				arr.add(res.getString("reviewIndex"));
-				arr.add(res.getString("contents"));
-				arr.add(res.getString("regDate"));
-				arr.add(res.getString("rating"));
-				arr.add(res.getString("anonymous"));
-				*/
-				for (int review = 0; review < 5; review++) {
-					//리뷰정보를 리스트로 가져오는 함수실행.
-					//reviewIndex, contents, regDate, rating, anonymous, photoPath
-					ArrayList<String> rd = _db.get_ReviewData(review);
-					//reviewIndex, userId, contents, regDate, rating, anonymous, photoPath
-					int review_in = Integer.parseInt(rd.get(0));
-					String review_id = rd.get(1);
-					String review_con = rd.get(2);
-					String review_date = rd.get(3);
-					String review_rat = rd.get(4);
-					String review_ano = rd.get(5);
-					String review_photo = rd.get(6);
-					if (review_ano.equals("1")) {
-						review_id = "익명";
-					}
-					//메뉴정보 리스트를 가져오는 함수실행.
-					//파라미터로 (제거)storeCode와 review_index
-					ArrayList<String> menuList = _db.get_ReviewTarget(review_in);
-				%>
-				<div id="review_profile">
-					프로필 사진
-					<%=review_photo%>
-					<!-- userid? username? -->
-					<span id="review_userid"> <%=review_id%>
-					</span>
-				</div>
-				<div id="review_detail">
-					<div id="second_line">
-						<div id="reg_date">
-							<!-- 23.03.30 -->
-							<%=review_date%>
-						</div>
-						<div id="show_rate">
-							<!-- 억수로 마싯다-->
-							<%=review_rat%>
-						</div>
-					</div>
-
-					<div id="third_line">
-						<div id="WIA_title">먹은 음식:</div>
-						<%
-						for (int menu = 0; menu < menuList.size(); menu++) {
-						%>
-						<div id="WIA_contents">
-							<!-- 동적으로 추가-->
-							<%=menuList.get(menu)%>
-						</div>
-						<%
-						}
-						%>
-					</div>
-
-					<div id="forth_line">
-						<div id="riview_contents">
-							<!-- 리뷰 내용이 될 부분<br>뫄뫄뫄뫄-->
-							<%=review_con%>
-						</div>
-					</div>
-
-					<div id="fifth_line">
-						<div id="show_images">
-							이미지 넣는 부분<br>
-							<div id="show_image1" class="show_images"></div>
-							<div id="show_image2" class="show_images"></div>
-							<div id="show_image3" class="show_images"></div>
-							<div id="show_image4" class="show_images"></div>
-							<div id="show_image5" class="show_images"></div>
-						</div>
-					</div>
-				</div>
-				<div id="blank">여백</div>
-				<%
+			<!-- 0424 리뷰 표시 -->
+			<%
+			String strSort = null;
+			try{
+				//세션받아오기
+				strSort = (String) session.getAttribute("test");
+				//세션 설정 안한 처음 부를 땐 null 반환
+				if(strSort==null){
+					strSort = "";
 				}
-				%>
+				//원하는 데이터를 받았으니 세션 종료시키기
+				session.removeAttribute("test");
+				session.invalidate();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			%>
+			<form method="post" id="review_form2" action="reviewSortServlet">
+				<div id="show_review">
+					<div id="first_line">
+						<div id="review_title">리뷰</div>
+						<%
+						//각 리뷰 별 계산하는 함수 불러오기.
+						int review_count_All = _db.get_review_count_All();
+						int review_count_great = _db.get_review_count_great();
+						int review_count_good = _db.get_review_count_good();
+						int review_count_bad = _db.get_review_count_bad();
+						%>
+						<div id="review_sort">
+							<input type="text" id="review_SortText" name="review_SortTexted">
+							<ul>
+								<li><a href="javascript:sortAll()">전체</a> <span
+									id="score_all" class="show_score"> <!-- (12) --> <%=review_count_All%>
+								</span></li>
+								<li><a href="javascript:sortGreat()">억수로 마싯다</a> <span
+									id="score_great" class="show_score"> <!-- (12) --> <%=review_count_great%>
+								</span></li>
+								<li><a href="javascript:sortGood()">갠찮드라</a> <span
+									id="score_good" class="show_score"> <!-- (12) --> <%=review_count_good%>
+								</span></li>
+								<li><a href="javascript:sortBad()">영 파이다</a> <span
+									id="score_bad" class="show_score"> <!-- (12) --> <%=review_count_bad%>
+								</span></li>
+							</ul>
+						</div>
+					</div>
+
+					<%
+					for (int review = 0; review < 5; review++) {
+						//리뷰정보를 리스트로 가져오는 함수실행.
+
+						//reviewIndex, contents, regDate, rating, anonymous, photoPath
+						ArrayList<String> rd = _db.get_ReviewData(review, strSort);
+						//reviewIndex, userId, contents, regDate, rating, anonymous, photoPath
+						try{
+							int review_in = Integer.parseInt(rd.get(0));
+							String review_id = rd.get(1);
+							String review_con = rd.get(2);
+							String review_date = rd.get(3);
+							String review_rat = rd.get(4);
+							String review_ano = rd.get(5);
+							if (review_ano.equals("1")) {
+								review_id = "익명";
+							}
+							String review_photo = rd.get(6);
+							
+							//메뉴정보 리스트를 가져오는 함수실행.
+							//파라미터로 (제거)storeCode와 review_index
+							ArrayList<String> menuList = _db.get_ReviewTarget(review_in);
+						
+					%>
+					<div id="review_profile">
+						프로필 사진
+						<%=review_photo%>
+						<!-- userid? username? -->
+						<span id="review_userid"> <%=review_id%>
+						</span>
+					</div>
+					<div id="review_detail">
+						<div id="second_line">
+							<div id="reg_date">
+								<!-- 23.03.30 -->
+								<%=review_date%>
+							</div>
+							<div id="show_rate">
+								<!-- 억수로 마싯다-->
+								<%=review_rat%>
+							</div>
+						</div>
+
+						<div id="third_line">
+							<div id="WIA_title">먹은 음식:</div>
+							<%
+							for (int menu = 0; menu < menuList.size(); menu++) {
+							%>
+							<div id="WIA_contents">
+								<!-- 동적으로 추가-->
+								<%=menuList.get(menu)%>
+							</div>
+							<%
+							}
+							%>
+						</div>
+
+						<div id="forth_line">
+							<div id="riview_contents">
+								<!-- 리뷰 내용이 될 부분<br>뫄뫄뫄뫄-->
+								<%=review_con%>
+							</div>
+						</div>
+
+						<div id="fifth_line">
+							<div id="show_images">
+								이미지 넣는 부분<br>
+								<div id="show_image1" class="show_images"></div>
+								<div id="show_image2" class="show_images"></div>
+								<div id="show_image3" class="show_images"></div>
+								<div id="show_image4" class="show_images"></div>
+								<div id="show_image5" class="show_images"></div>
+							</div>
+						</div>
+					</div>
+					<div id="blank">여백</div>
+					<%
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+					}
+					%>
+				</div>
+			</form>
 
 
 				<!-- 여기서부터
@@ -827,6 +841,30 @@
 			        return false;
 			    };
 			};
+			
+			//0421
+			//리뷰 정렬 클릭마다 내용 변경.
+			//전체 클릭시 최신순으로 5개 출력.
+			function sortAll(){
+				document.getElementById("review_SortText").value = null;
+				document.getElementById("review_form2").submit();
+			}
+			//억수로 마싯다 클릭시 평점 5인 리뷰 5개 출력.
+			function sortGreat(){
+				document.getElementById("review_SortText").value = 5;
+				document.getElementById("review_form2").submit();
+			}
+			//갠찮드라 클릭시 평점 4인 리뷰 5개 출력.
+			function sortGood(){
+				document.getElementById("review_SortText").value = 4;
+				document.getElementById("review_form2").submit();
+			}
+			//영 파이다 클릭시 평점 3인 리뷰 5개 출력.
+
+			function sortBad(){
+				document.getElementById("review_SortText").value = 3;
+				document.getElementById("review_form2").submit();
+			}
 		</script>
 
 		<script type="text/javascript" src="resources/js/project01.js"></script>
