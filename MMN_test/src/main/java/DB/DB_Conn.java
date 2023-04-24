@@ -1067,16 +1067,31 @@ public class DB_Conn {
 	// reviewData
 	// int _index, String _contents, String _regDate, String _rating, String
 	// _anonymous, String _photoPath
-	public ArrayList<String> get_ReviewData(int i) {
+	public ArrayList<String> get_ReviewData(int i, String strSort) {
 		ArrayList<String> arr = new ArrayList<>();
 		Statement stmt = null;
 		ResultSet res = null;
 
+		// 리뷰내용조회 쿼리문
+		String sql = "";
 		try {
-			// 리뷰내용조회 쿼리문
-			String sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from reviewtbl order by regDate desc limit "
-					+ i + ", 1";
-
+			switch(strSort) {
+				case "5":
+					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = 5 order by regDate desc limit "
+							+ i + ", 1";
+					break;
+				case "4":
+					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = 4 order by regDate desc limit "
+							+ i + ", 1";
+					break;
+				case "3":
+					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = 3 order by regDate desc limit "
+							+ i + ", 1";
+					break;
+				default:
+					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from reviewtbl order by regDate desc limit "
+							+ i + ", 1";
+			}
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
 			// select문 실행 명령어
