@@ -202,7 +202,7 @@
 				</div>
 
 				<div id="review_btn">
-					<input type="button" value="리뷰 작성하기">
+					<input id="review_write" type="button" value="리뷰 작성하기" onclick="writeClick()">
 				</div>
 			</div>
 			<hr>
@@ -210,7 +210,7 @@
 			<!-- 0417 이 페이지 작업중 -->
 			<!-- 사용하는 id나 name -->
 			<!--  -->
-			<form method="post" id="review_form" action="review">
+			<form method="post" id="review_form" action="review" style="display: none">
 				<div id="create_riview">
 					<div id="first_row">
 						<!-- 가게코드 저장 -->
@@ -365,7 +365,7 @@
 						int review_count_bad = _db.get_review_count_bad();
 						%>
 						<div id="review_sort">
-							<input type="text" id="review_SortText" name="review_SortTexted">
+							<input type="text" id="review_SortText" name="review_SortTexted" style="display: none">
 							<ul>
 								<li><a href="javascript:sortAll()">전체</a> <span
 									id="score_all" class="show_score"> <!-- (12) --> <%=review_count_All%>
@@ -832,6 +832,12 @@
 				} else {
 					console.log("Value already missing in tag list");
 				}
+			}
+			
+			//리뷰 작성하기 버튼을 클릭했을 때 작성 페이지 보이도록
+			function writeClick(){
+				document.getElementById("review_write").style.display = "none";
+				document.getElementById("review_form").style.display = "block";
 			}
 			
 			//등록하기 버튼을 클릭했을 때 submit처리.
