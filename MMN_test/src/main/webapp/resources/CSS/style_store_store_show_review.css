@@ -25,7 +25,7 @@
     border: 1px solid black;
 }
 
-#review_title {
+/* #review_title {
     text-align: left;
     background-color: rgb(126, 126, 247);
     width: 200px;
@@ -35,7 +35,7 @@
     color: rgb(0, 0, 0);
     font-weight: 400;
 
-}
+} */
 
 #review_sort {
     background-color: blueviolet;
