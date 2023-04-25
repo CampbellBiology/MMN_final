@@ -54,8 +54,8 @@ public class reviewData {
 
 	// 사진 등록 문제가 해결되지 않았음으로 디폴트 null로 설정.
 	public void setPhotoPath(String _photoPath) {
-		// photoPath = _photoPath;
-		photoPath = null;
+		photoPath = _photoPath;
+	//	photoPath = null;
 	}
 	
 
@@ -95,8 +95,8 @@ public class reviewData {
 	}
 
 	// 사진 등록 문제가 해결되지 않았음으로 디폴트 null로 설정.
-	public String getPhotoPath(String _photoPath) {
+	public String getPhotoPath() {
 		// photoPath = _photoPath;
-		return photoPath = null;
+		return photoPath;// = null;
 	}
 }

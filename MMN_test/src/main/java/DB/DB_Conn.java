@@ -701,7 +701,7 @@ public class DB_Conn {
 				sbdp.setStoreName(sd.getStoreName());
 				sbdp.setTagID(tagID);
 				sbdp.setWatchlist(haveWatchlist(userID, storeCode));
-				sbdp.setRd(getReviewByStoreCode(storeCode));
+				sbdp.setRd(getReviewByStoreCode(storeCode).get(0));
 				sbdp.setAddr(sd.getAddr());
 				sbdp.setNickName(getNickname(userID));
 
@@ -741,12 +741,12 @@ public class DB_Conn {
 				int storeCode = res.getInt("storeCode");
 
 				storeData sd = getStoreData(storeCode);
-				reviewData rd = getReviewByStoreCode(storeCode);
+				ArrayList<reviewData> rd = getReviewByStoreCode(storeCode);
 
 				tld.setAverageRating(getAverageRating(storeCode));
 				tld.setStoreImagePath(sd.getStoreImgPath());
 				tld.setStoreName(sd.getStoreName());
-				tld.setReviewContent(rd.getContents());
+				tld.setReviewContent(rd.get(0).getContents());
 				tld.setStoreCode(sd.getStoreCode());
 
 				ret.add(tld);
@@ -800,8 +800,8 @@ public class DB_Conn {
 	}
 
 	//22. 태그페이지에서 리뷰의 일부를 표시하기 위한 데이터를 가져온다.
-	public reviewData getReviewByStoreCode(int storeCode) {
-		reviewData rd = new reviewData();
+	public ArrayList<reviewData> getReviewByStoreCode(int storeCode) {
+		ArrayList<reviewData> rdList = new ArrayList<>();
 
 		Statement stmt = null;
 		ResultSet res = null;
@@ -811,6 +811,7 @@ public class DB_Conn {
 			res = stmt.executeQuery(sql);
 
 			while (res.next()) {
+				reviewData rd = new reviewData();
 				rd.setUserId(res.getString("userID"));
 				rd.setContents(res.getString("contents"));
 				rd.setStoreCode(""+storeCode);
@@ -820,6 +821,8 @@ public class DB_Conn {
 				rd.setDisplay(res.getString("display"));
 				rd.setDate(res.getString("regDate"));
 				rd.setAnonymous(res.getString("anonymous"));
+				
+				rdList.add(rd);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -834,7 +837,7 @@ public class DB_Conn {
 			}
 		}
 
-		return rd;
+		return rdList;
 	}
 
 	//23. 태그페이지에서 유저명을 표시하기 위한 데이터를 가져온다.
