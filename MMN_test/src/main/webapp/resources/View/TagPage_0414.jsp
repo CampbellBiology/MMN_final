@@ -16,7 +16,12 @@
     
     <%
     	String null_userID = (String)session.getAttribute("memberID");
-		String userID = null_userID==null?"":null_userID;
+    	
+    	System.out.println("TagPage_0414.jsp loginData userID:"+loginData.userID);
+    	System.out.println("TagPage_0414.jsp null_userID:"+null_userID);
+    	
+		String userID = loginData.userID;
+    	System.out.println("TagPage_0414.jsp tagID : "+request.getParameter("tagID"));
     	String null_tagID = request.getParameter("tagID");
     	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);
     	DB_Conn db = new DB_Conn();
@@ -42,6 +47,7 @@
 <%
 		for(int i=1;i<=Math.min(4, lim);i++){
 			int storeCode = list.get(i-1).getStoreCode();
+			
 %>
        
         <!-- 태그리스트 1묶음 -->
@@ -62,7 +68,7 @@
                     <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="<%=list.get(i-1).isWatchlist() == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
@@ -106,7 +112,7 @@
                     <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="<%=list.get(i-1).isWatchlist() == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
@@ -150,7 +156,7 @@
                     <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="<%=list.get(i-1).isWatchlist() == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>

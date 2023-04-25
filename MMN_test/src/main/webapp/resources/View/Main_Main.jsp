@@ -23,7 +23,8 @@
 <body>
 <%
 	DB_Conn db = new DB_Conn();
-	String userID = (String)session.getAttribute("memberID");
+	String userID = loginData.userID;
+	System.out.println("Main_Main.jsp userID:"+userID);
 	watchlist wl = new watchlist(userID);
 	watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
 

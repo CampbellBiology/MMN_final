@@ -89,7 +89,10 @@
 
 
 	<%
-		String userID = (String)session.getAttribute("memberID");
+		String userID = loginData.userID;
+	
+		System.out.println("Main_0414.jsp userID:"+userID);
+	
 		DB_Conn db = new DB_Conn();
 		ArrayList <tagData> tdList = db.getTagDataList();
 		Collections.sort(tdList);
