@@ -17,7 +17,7 @@
     <%
     	String userID = (String)session.getAttribute("memberID");
     	
-    	System.out.println("TagPage_0414.jsp null_userID:"+userID);
+    	System.out.println("TagPage_0414.jsp userID:"+userID);
     	
     	System.out.println("TagPage_0414.jsp tagID : "+request.getParameter("tagID"));
     	String null_tagID = request.getParameter("tagID");
