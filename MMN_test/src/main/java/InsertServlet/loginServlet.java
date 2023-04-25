@@ -67,14 +67,10 @@ public class loginServlet extends HttpServlet {
 			// member 속성에 유저 아이디를 넣는다. 이걸로 유저가 로그인 중인지 체크한다.
 			session.setAttribute("memberID", _Data.userID);
 
-			// 유저의 관심목록 객체를 생성한다.
-			watchlist _watchlist = new watchlist(_Data.userID);
 
 			// 로그인 후 띄울 화면을 설정하기 위한 코드
 			String context = request.getContextPath();
 
-			
-			
 			//로그인 실패 시 alert 매서드 타게 함
 			if (res == 0) {
 				System.out.println("마스터 계정 로그인 성공");

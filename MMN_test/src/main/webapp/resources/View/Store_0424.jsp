@@ -43,8 +43,10 @@
 			Collections.sort(rtdCntList);
 			String keep_btn_path = "resources/UI/UI/keep_btn.png";
 			String keep_btn_sel_path = "resources/UI/UI/keep_btn_sel.png";
-			String userID = loginData.userID;
-			System.out.println("Store.jsp userID : " + userID);
+			String userID = (String)session.getAttribute("memberID");
+			System.out.println("Store_0424.jsp userID : " + userID);
+			
+			ArrayList<reviewData> rdList = _db.getReviewByStoreCode(storeCode);
 			
 			boolean flag = _db.haveWatchlist(userID, storeCode);
 			%>
@@ -236,6 +238,49 @@
             </script> -->
 
             <!-- 슬라이드 CSS 라이브러리 스크립트 -->
+            
+            <script>
+            function init() {
+//            	var backgroundURL = [ "../UI/UI/keep_btn.png", "../UI/storeImgSub/1-2.jpg",
+//            			"../UI/storeImgSub/1-1.jpg", "../UI/storeImgSub/2-1.jpg",
+//            			"../UI/storeImgSub/2-2.jpg", "../UI/storeImgSub/2-23jpg",
+//            			"../UI/storeImgSub/3-1.jpg", "../UI/storeImgSub/3-2.jpg",
+//            			"../UI/storeImgSub/3-3.jpg", "../UI/storeImgSub/4-1.jpg",
+//            			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
+//            			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
+
+            	 var backgroundURL = [<%=rdList.get(0).getPhotoPath()%>];
+
+            	var tag = "";
+
+            	// 배열 길이만큼 div를 동적으로 생성함
+            	for (i = 0; i < backgroundURL.length; i++) {
+	               	 backgroundURL[i] = "http://192.168.250.44"+backgroundURL[i];
+            		tag += "<img id=" + backgroundURL[i]
+            				+ " class='colorBox' onclick='colorSet(this)'>";
+            	}
+
+            	// 만들어진 div에 클래스명과 onclick함수 부여
+            	var colorBox = document.getElementById("colorList");
+            	document.getElementById("colorList").innerHTML = tag;
+
+            	// colorBox.style.backgroundSize = "100%";
+            	// colorBox.style.backgroundRepeat = "no-repeat";
+
+            	// 만들어진 div들을 List로 담기
+            	var colorBoxList = document.getElementsByClassName("colorBox");
+
+            	// 각 배열 요소에 백그라운드 url 부여
+            	for (i = 0; i < colorBoxList.length; i++) {
+            		// colorBoxList[i].style.backgroundImage = colorBoxList[i].id;
+            		var str = colorBoxList[i].id;
+            		//alert(str);
+            		colorBoxList[i].src = str;
+            	}
+
+            }
+            </script>
+            
             <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
             <script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
             <script src="../js/store.js" type="text/javascript" charset="ansi"></script>

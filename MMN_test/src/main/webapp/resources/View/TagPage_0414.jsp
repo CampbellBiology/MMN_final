@@ -15,12 +15,10 @@
  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     
     <%
-    	String null_userID = (String)session.getAttribute("memberID");
+    	String userID = (String)session.getAttribute("memberID");
     	
-    	System.out.println("TagPage_0414.jsp loginData userID:"+loginData.userID);
-    	System.out.println("TagPage_0414.jsp null_userID:"+null_userID);
+    	System.out.println("TagPage_0414.jsp null_userID:"+userID);
     	
-		String userID = loginData.userID;
     	System.out.println("TagPage_0414.jsp tagID : "+request.getParameter("tagID"));
     	String null_tagID = request.getParameter("tagID");
     	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);

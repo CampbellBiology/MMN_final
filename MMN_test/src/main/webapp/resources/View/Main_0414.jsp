@@ -89,7 +89,7 @@
 
 
 	<%
-		String userID = loginData.userID;
+		String userID = (String)session.getAttribute("memberID");
 	
 		System.out.println("Main_0414.jsp userID:"+userID);
 	
