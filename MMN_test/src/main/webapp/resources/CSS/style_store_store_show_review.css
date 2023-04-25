@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
 
 * {
@@ -8,11 +8,11 @@
 
 /* 리뷰 보여주는 영역 */
 
-#show_review {
+/*#show_review {
     display: flex;
     /* position: absolute;
     top: 2000px; */
-    border: 1px solid lightcoral;
+ /*   border: 1px solid lightcoral;
 }
 
 #first_line {
@@ -36,7 +36,7 @@
     font-weight: 400;
 
 } */
-
+/*
 #review_sort {
     background-color: blueviolet;
     width: 600px;
@@ -48,4 +48,4 @@
     height: 30px;
     background-color: blue;
     display: inline-block;
-}
+}*/

@@ -152,7 +152,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
+                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -203,7 +203,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
+                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -253,7 +253,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="../../Store.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
+                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%

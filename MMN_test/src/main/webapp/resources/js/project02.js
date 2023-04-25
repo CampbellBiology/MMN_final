@@ -42,7 +42,7 @@ function brandClick(){
 
 function forPopup(storeCode){
 	var doc1 = document.getElementById("main_page");
-	doc1.src= "../../Store.jsp?storeCode="+storeCode;
+	doc1.src= "Store_0424.jsp?storeCode="+storeCode;
 //	var doc1 = document.getElementById("a_store"+ii);
 	
 //	doc1.href="../../Store.jsp?storeCode="+storeCode;

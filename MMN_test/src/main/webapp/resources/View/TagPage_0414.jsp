@@ -52,14 +52,14 @@
        
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
-            <div id="store_photo<%=i%>" class="store_photo"><a href="../../Store.jsp?storeCode=<%=storeCode%>">
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>">
                 <img src="../UI/storeImg/<%=i%>.jpg" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
                 <div id="store_details<%=i%>" class="store_details">
                     <div class="first_row">
                         <div class="index"><%=i%>.</div>
-                        <div class="store_name"><a href="../../Store.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
+                        <div class="store_name"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
                     </div>
                     <div class="second_row">
                         <div class="score"><%=list.get(i-1).getAverageRating()%></div>
@@ -77,7 +77,7 @@
                         <p><%=list.get(i-1).getRd().getContents() %></p>
                     </div>
                 </div>
-                <div class="more_info"><a href="../../Store.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
+                <div class="more_info"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
             </div>
         </div>
         
@@ -96,14 +96,14 @@
        
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
-            <div id="store_photo<%=i%>" class="store_photo"><a href="../../Store.jsp?storeCode=<%=storeCode%>">
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>">
                 <img src="../UI/storeImg/<%=i%>.jpg" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
                 <div id="store_details<%=i%>" class="store_details">
                     <div class="first_row">
                         <div class="index"><%=i%>.</div>
-                        <div class="store_name"><a href="../../Store.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
+                        <div class="store_name"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
                     </div>
                     <div class="second_row">
                         <div class="score"><%=list.get(i-1).getAverageRating()%></div>
@@ -121,7 +121,7 @@
                         <p><%=list.get(i-1).getRd().getContents() %></p>
                     </div>
                 </div>
-                <div class="more_info"><a href="../../Store.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
+                <div class="more_info"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
             </div>
         </div>
         
@@ -140,14 +140,14 @@
        
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
-            <div id="store_photo<%=i%>" class="store_photo"><a href="../../Store.jsp?storeCode=<%=storeCode%>">
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>">
                 <img src="../UI/storeImg/<%=i%>.jpg" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
                 <div id="store_details<%=i%>" class="store_details">
                     <div class="first_row">
                         <div class="index"><%=i%>.</div>
-                        <div class="store_name"><a href="../../Store.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
+                        <div class="store_name"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
                     </div>
                     <div class="second_row">
                         <div class="score"><%=list.get(i-1).getAverageRating()%></div>
@@ -165,7 +165,7 @@
                         <p><%=list.get(i-1).getRd().getContents() %></p>
                     </div>
                 </div>
-                <div class="more_info"><a href="../../Store.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
+                <div class="more_info"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
             </div>
         </div>
         

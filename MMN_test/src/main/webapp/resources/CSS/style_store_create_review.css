@@ -1,4 +1,5 @@
-/*
+
+
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
 
@@ -9,20 +10,20 @@
 
 
 /* 여기서부터 리뷰 생성 */
-/*
+
 #create_riview {
     width: 1100px;
     height: 790px;
     /* position: absolute;
     top: 900px;
     left: 0px; */
- /*   border: 1px solid rgb(255, 123, 0);
+    border: 1px solid rgb(255, 123, 0);
     text-align: center;
     display: none;
     margin-bottom: 50px;
 
     /* display: flex; */
-/*}
+}
 
 #review_store_name {
     width: 1050px;
@@ -31,11 +32,11 @@
     margin: 20px;
     /* top: 790px;
     left: 260px; */
-/*    text-align: left;
+    text-align: left;
     font-size: 32px;
     font-weight: 600;
     /* background-color: rgb(225, 255, 184); */
- /*   padding-left: 10px;
+    padding-left: 10px;
     padding-bottom: 10px;
     border: 1px solid gray;
     border-style: none none solid none;
@@ -49,7 +50,7 @@
     color: gray;
     /* background-color: aliceblue; */
 }
-/*
+
 #review_whatIAte {
     width: 300px;
     height: 30px;
@@ -59,19 +60,19 @@
     /* position: relative;
     top: 30px;
     left: 30px; */
-/*    font-weight: 400;
+    font-weight: 400;
     text-align: left;
     font-size: 20px;
     /* background-color: rgb(230, 203, 255); */
 }
 
 /* 셀렉트박스 커스텀 */
-/*
+
 .selectBox {
     /* position: relative;
     top: 40px;
     left: 30px; */
- /*   display: flex;
+    display: flex;
     margin-top: 10px;
     margin-left: 30px;
     width: 250px;
@@ -119,7 +120,7 @@
 
 /* 여기까지 셀렉트 박스 커스텀 */
 
-/*#show_whatIAte {
+#show_whatIAte {
     width: 550px;
     display: flex;
     margin-left: 30px;
@@ -129,7 +130,7 @@
     /* background-color: rgb(240, 182, 121); */
 }
 
-/*ul {
+ul {
     list-style: none;
     padding-left: 0;
     margin-left: 0px;
@@ -160,12 +161,12 @@
 
 /* 여기서부터 평점 */
 
-/*#score_title {
+#score_title {
     width: 400px;
     height: 50px;
     /* background-color: rgb(152, 152, 152); */
 
-   /* font-weight: 400;
+    font-weight: 400;
     text-align: left;
     font-size: 20px;
     position: relative;
@@ -182,7 +183,7 @@
     left: 600px;
     text-align: left;
     /* background-color: rgb(255, 102, 0); */
-/*}
+}
 
 
 .score {
@@ -214,7 +215,7 @@
     color: rgb(255, 123, 0);
     border: 1px solid rgb(255, 123, 0);
     /* border-radius: 5px; */
-/*    cursor: pointer;
+    cursor: pointer;
     background-color: rgb(255, 255, 255);
     text-shadow: 1px 1px 1px 0px gray;
     margin-right: 10px;
@@ -230,7 +231,7 @@
 
 
 /* 클릭 상태 색깔 유지는 자바스크립트로 하기 */
-/*.score_btn:focus {
+.score_btn:focus {
     background-color: rgb(255, 102, 0);
     color: white;
     box-shadow: 2px 2px 2px gray;
@@ -239,12 +240,12 @@
 
 /* 여기서부터 태그 */
 
-/*#add_tag_title {
+#add_tag_title {
     /* position: absolute;
     top: 30px;
     left: 30px; */
 
- /*   display: flex;
+    display: flex;
     margin-left: 30px;
 
     font-weight: 400;
@@ -257,7 +258,7 @@
     top: 340px;
     left: 30px; */
     /* background-color: #848484; */
-/*    width: 950px;
+    width: 950px;
     display: flex;
     margin-left: 30px;
     margin-top: 10px;
@@ -328,14 +329,14 @@
 
 
 /* 여기서부터 리뷰 */
-/*#review_title {
+#review_title {
     font-weight: 400;
     text-align: left;
     font-size: 20px;
     /* position: relative;
     top: 410px;
     left: 30px; */
-/*    display: flex;
+    display: flex;
     margin-left: 30px;
     margin-top: 30px;
 }
@@ -367,11 +368,11 @@
 
 /* 여기서부터 이미지 등록 */
 
-/*#image_info_title {
+#image_info_title {
     /* position: relative;
     top: 590px;
     left: 30px; */
- /*   display: flex;
+    display: flex;
     margin-left: 30px;
     margin-top: 30px;
     
@@ -393,7 +394,7 @@
     /* position: relative;
     top: 620px;
     left: 25px; */
-/*    display: flex;
+    display: flex;
     margin-left: 30px;
     margin-top: -20px;
 }
@@ -456,7 +457,6 @@
 
 
 /* 클릭 상태 색깔 유지는 자바스크립트로 하기 */
-/*
 .review_button:focus {
     background-color: rgb(255, 102, 0);
     color: white;
@@ -489,6 +489,6 @@
     background: url(../UI/UI/ceroAD.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}*/
+}
 
 
