@@ -23,9 +23,11 @@
 </head>
 
 <body>
-
-
-			<%
+    <!-- <header>
+        <div id="header"><img src="../UI/UI/eventBanner2.png" id="event_banner"></div>
+    </header> -->
+    
+    <%
 			DB_Conn _db = new DB_Conn();
 			_db.constructStoreMap();
 			_db.constructRtdCnt_map();
@@ -48,10 +50,7 @@
 			
 			boolean flag = _db.haveWatchlist(userID, storeCode);
 			%>
-
-    <!-- <header>
-        <div id="header"><img src="../UI/UI/eventBanner2.png" id="event_banner"></div>
-    </header> -->
+    
     <main>
         <div id="body">
             <div id="store">
@@ -103,7 +102,7 @@
                 <div id="store_photo">
 
                     <!-- 큰 이미지 -->
-                    <div id="mainImage" style ="background-image:url(http://192.168.250.44<%=sd.getStoreImgPath()%>)">
+                     <div id="mainImage" style ="background-image:url(http://192.168.250.44<%=sd.getStoreImgPath()%>)">
                     </div>
 
                     <!-- 작은 이미지들, 선택하면 큰 이미지가 바뀜 -->
@@ -206,19 +205,117 @@
             <!-- 여기서부터 리뷰 보여주는 영역 -->
             <div id="show_review">
                 <div id="first_line">
-                    <div id="review_title">리뷰</div>
+                    <div id="review_title2">뭐뭇노 회원들의 소중한 리뷰</div>
                     <div id="review_sort">
-                            <div class="score_btn">전체<span id="score_all" class="show_score">(12)</span></div>
-                            <div class="score_btn">억수로 마싯다<span id="score_great" class="show_score">(12)</span></div>
-                            <div class="score_btn">갠찮드라<span id="score_good" class="show_score">(12)</span></div>
-                            <div class="score_btn">영 파이다<span id="score_bad" class="show_score">(12)</span></div>
+                        <div id="score_btn2" class="score_btn2-1">전체<span id="score_all2" class="show_score2"> (12)
+                            </span>
+                        </div>
+                        <div id="score_btn2" class="score_btn2-2">억수로 마싯다<span id="score_great2" class="show_score2">
+                                (12)
+                            </span></div>
+                        <div id="score_btn2" class="score_btn2-3">갠찮드라<span id="score_good2" class="show_score2"> (12)
+                            </span></div>
+                        <div id="score_btn2" class="score_btn2-4">영 파이다<span id="score_bad2" class="show_score2"> (12)
+                            </span></div>
                     </div>
                 </div>
+            </div>
 
-                <div id="review_profile_box">
-                    <div id="review_profile_photo"></div>
-                    <div id="nickname">제니 뫄뫄</div>
+            <div id="review_wrap">
+                <!-- 리뷰 한 덩이 시작 -->
+                <div class="review_contents">
+                    <div class="review_profile_box">
+                        <div class="review_profile_photo"></div>
+                        <div class="nickname">jennie123</div>
+                    </div>
+
+                    <div class="reg_date">등록일: 22.02.01.12:59</div>
+                    <div class="show_rate">억수로 마싯다</div>
+
+                    <div class="WIA_title"><span class="highlight">닉네임</span>님이 먹은 음식</div>
+                    <div class="WIA_container">
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
+                        <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
+                        <div class="WIA_contents">그 외 n개</div>
+                    </div>
+
+                    <div class="riview_contents">리뷰 내용이 될 부분 asdf<br>aaav<br>aaav<br>aaav</div>
+
+                    <div class="show_images"><br>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                    </div>
                 </div>
+                <!-- 리뷰 한 덩이 끝-->
+
+                <!-- 리뷰 한 덩이 시작 -->
+                <div class="review_contents">
+                    <div class="review_profile_box">
+                        <div class="review_profile_photo"></div>
+                        <div class="nickname">jennie123</div>
+                    </div>
+
+                    <div class="reg_date">등록일: 22.02.01.12:59</div>
+                    <div class="show_rate">영 파이다</div>
+
+                    <div class="WIA_title"><span class="highlight">닉네임</span>님이 먹은 음식</div>
+                    <div class="WIA_container">
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
+                        <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
+                        <div class="WIA_contents">그 외 n개</div>
+                    </div>
+
+                    <div class="riview_contents">리뷰 내용이 될 부분 asdf</div>
+
+                    <div class="show_images"><br>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                    </div>
+                </div>
+                <!-- 리뷰 한 덩이 끝-->
+
+                <!-- 리뷰 한 덩이 시작 -->
+                <div class="review_contents">
+                    <div class="review_profile_box">
+                        <div class="review_profile_photo"></div>
+                        <div class="nickname">jennie123</div>
+                    </div>
+
+                    <div class="reg_date">등록일: 22.02.01.12:59</div>
+                    <div class="show_rate">별로드라</div>
+
+                    <div class="WIA_title"><span class="highlight">닉네임</span>님이 먹은 음식</div>
+                    <div class="WIA_container">
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
+                        <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
+                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
+                        <div class="WIA_contents">그 외 n개</div>
+                    </div>
+
+                    <div class="riview_contents">리뷰 내용이 될 부분 asdf<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav
+                    </div>
+
+                    <div class="show_images"><br>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                        <div class="show_images2"></div>
+                    </div>
+                </div>
+                <!-- 리뷰 한 덩이 끝-->
+             
             </div>
 
 
@@ -240,48 +337,28 @@
             </script> -->
 
             <!-- 슬라이드 CSS 라이브러리 스크립트 -->
+            <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+            <script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
             
-            <script>
-            function init() {
-//            	var backgroundURL = [ "../UI/UI/keep_btn.png", "../UI/storeImgSub/1-2.jpg",
-//            			"../UI/storeImgSub/1-1.jpg", "../UI/storeImgSub/2-1.jpg",
-//            			"../UI/storeImgSub/2-2.jpg", "../UI/storeImgSub/2-23jpg",
-//            			"../UI/storeImgSub/3-1.jpg", "../UI/storeImgSub/3-2.jpg",
-//            			"../UI/storeImgSub/3-3.jpg", "../UI/storeImgSub/4-1.jpg",
-//            			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
-//            			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
+            <script src="../js/store.js" type="text/javascript" charset="ansi"></script>
+		<script type="text/javascript" src="../js/project01.js"></script>
+            <script type="text/javascript">
+            
+            
+                $(document).on('ready', function () {
 
-            	 var backgroundURL = [<%=rdList.size()==0?"":rdList.get(0).getPhotoPath()%>];
-
-            	var tag = "";
-
-            	// 배열 길이만큼 div를 동적으로 생성함
-            	for (i = 0; i < backgroundURL.length; i++) {
-	               	 backgroundURL[i] = "http://192.168.250.44"+backgroundURL[i];
-            		tag += "<img id=" + backgroundURL[i]
-            				+ " class='colorBox' onclick='colorSet(this)'>";
-            	}
-
-            	// 만들어진 div에 클래스명과 onclick함수 부여
-            	var colorBox = document.getElementById("colorList");
-            	document.getElementById("colorList").innerHTML = tag;
-
-            	// colorBox.style.backgroundSize = "100%";
-            	// colorBox.style.backgroundRepeat = "no-repeat";
-
-            	// 만들어진 div들을 List로 담기
-            	var colorBoxList = document.getElementsByClassName("colorBox");
-
-            	// 각 배열 요소에 백그라운드 url 부여
-            	for (i = 0; i < colorBoxList.length; i++) {
-            		// colorBoxList[i].style.backgroundImage = colorBoxList[i].id;
-            		var str = colorBoxList[i].id;
-            		//alert(str);
-            		colorBoxList[i].src = str;
-            	}
-
-            }
+                    $(".center").slick({
+                        dots: true,
+                        infinite: true,
+                        centerMode: true,
+                        slidesToShow: 7,
+                        slidesToScroll: 3
+                    });
+                });
             </script>
+
+
+            <!-- 메인 이미지 -->
             
             <script>
 		function sendRequest() {
@@ -310,12 +387,86 @@
 			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
 			}
 		</script>
-            
-            <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-            <script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
-            <script src="../js/store.js" type="text/javascript" charset="ansi"></script>
-		<script type="text/javascript" src="../js/project01.js"></script>
-          
+            <script>
+                var selectedColor;
+
+                window.onload = function () {
+                    init();
+                }
+
+                function init() {
+//                	var backgroundURL = [ "../UI/UI/keep_btn.png", "../UI/storeImgSub/1-2.jpg",
+//                			"../UI/storeImgSub/1-1.jpg", "../UI/storeImgSub/2-1.jpg",
+//                			"../UI/storeImgSub/2-2.jpg", "../UI/storeImgSub/2-23jpg",
+//                			"../UI/storeImgSub/3-1.jpg", "../UI/storeImgSub/3-2.jpg",
+//                			"../UI/storeImgSub/3-3.jpg", "../UI/storeImgSub/4-1.jpg",
+//                			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
+//                			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
+
+                	 var backgroundURL = [<%=rdList.size()==0?"":rdList.get(0).getPhotoPath()%>];
+
+                	var tag = "";
+
+                	// 배열 길이만큼 div를 동적으로 생성함
+                	for (i = 0; i < backgroundURL.length; i++) {
+    	               	 backgroundURL[i] = "http://192.168.250.44"+backgroundURL[i];
+                		tag += "<img id=" + backgroundURL[i]
+                				+ " class='colorBox' onclick='colorSet(this)'>";
+                	}
+
+                	// 만들어진 div에 클래스명과 onclick함수 부여
+                	var colorBox = document.getElementById("colorList");
+                	document.getElementById("colorList").innerHTML = tag;
+
+                	// colorBox.style.backgroundSize = "100%";
+                	// colorBox.style.backgroundRepeat = "no-repeat";
+
+                	// 만들어진 div들을 List로 담기
+                	var colorBoxList = document.getElementsByClassName("colorBox");
+
+                	// 각 배열 요소에 백그라운드 url 부여
+                	for (i = 0; i < colorBoxList.length; i++) {
+                		// colorBoxList[i].style.backgroundImage = colorBoxList[i].id;
+                		var str = colorBoxList[i].id;
+                		//alert(str);
+                		colorBoxList[i].src = str;
+                	}
+
+                }
+
+                function colorSet(colorPick) {
+                    // document.querySelector("body").style.backgroundImage = colorPick.id;
+
+                    //메인으로 보여줄 div에 백그라운드 url 동적으로 부여
+                    document.getElementById("mainImage").style.backgroundImage = `url(${colorPick.id})`;
+
+
+                    // 셀렉트된 div의 url 가져오기
+                    if (selectedColor != null) {
+                        document.getElementById(selectedColor).className = document.getElementById(selectedColor).className.replace(" selected", "");
+                    }
+                    document.getElementById(colorPick.id).className += " selected";
+                    selectedColor = colorPick.id;
+                } 
+            </script>
+
+            <script>
+                function show_create_review() {
+                    document.getElementById("create_riview").style.display = "block";
+                    document.getElementById("show_btn").style.display = "none";
+                    document.getElementById("remove_btn").style.display = "block";
+                }
+
+                function remove_create_review() {
+                    document.getElementById("create_riview").style.display = "none";
+                    document.getElementById("show_btn").style.display = "block";
+                    document.getElementById("remove_btn").style.display = "none";
+                }
+
+                function cancel_create_review() {
+                    alert("작성된 리뷰 내용이 초기화될 수 있습니다. 리뷰 작성을 취소하시겠습니까?");
+                }
+            </script>
 
     </main>
 
