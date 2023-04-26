@@ -146,7 +146,7 @@
 				%>
 
                   <!-- 가게 한 덩이 -->
-                  <figure class="storeSet" style="background-image:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                  <figure class="storeSet" style="background-image:url(http://192.168.250.44<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
                     <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
                     <figcaption>
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
@@ -197,7 +197,7 @@
 				%>
 
                   <!-- 가게 한 덩이 -->
-                  <figure class="storeSet" style="background-image:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                  <figure class="storeSet" style="background-image:url(http://192.168.250.44<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
                     <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
                     <figcaption>
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
@@ -247,7 +247,7 @@
 				%>
 
                   <!-- 가게 한 덩이 -->
-                  <figure class="storeSet" style="background-image:url(<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
+                  <figure class="storeSet" style="background-image:url(http://192.168.250.44<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
                     <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
                     <figcaption>
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>

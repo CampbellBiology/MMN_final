@@ -103,7 +103,7 @@
                 <div id="store_photo">
 
                     <!-- 큰 이미지 -->
-                    <div id="mainImage" style ="background-image:url(<%=sd.getStoreImgPath()%>)">
+                    <div id="mainImage" style ="background-image:url(http://192.168.250.44<%=sd.getStoreImgPath()%>)">
                     </div>
 
                     <!-- 작은 이미지들, 선택하면 큰 이미지가 바뀜 -->

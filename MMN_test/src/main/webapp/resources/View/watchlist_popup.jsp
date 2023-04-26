@@ -26,7 +26,7 @@
 			out.println("id=\"keepImg"+ i +"\" onclick = \"sendRequest("+storeCode+"); keepClick("+i+");\" onmouseover=\"onHover("+i+")\" onmouseout=\"offHover("+i+")\">");
 			out.println("</div>");
 			out.println("<a onclick=\"forPopup("+storeCode+")\">");
-			out.println("<div class=\"store_photo\" style=\"background:url("+wsdp.getStoreImagePath()+") no-repeat; background-size: 100%;\"></div>");
+			out.println("<div class=\"store_photo\" style=\"background:url(http://192.168.250.44"+wsdp.getStoreImagePath()+") no-repeat; background-size: 100%;\"></div>");
 			out.println("<div class=\"store_details\">");
 			out.println("<div class=\"store_name\"><span class=\"subject\">가게명: </span><span class=\"gray\">"+wsdp.getStoreName()+"</span></div><hr>");
 			out.println("<div class=\"store_score\"><span class=\"subject\">평점: </span><span class=\"gray\">"+wsdp.getAverageRating()+"</span></div><hr>");
