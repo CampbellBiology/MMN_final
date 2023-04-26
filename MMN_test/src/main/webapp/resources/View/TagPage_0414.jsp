@@ -46,12 +46,15 @@
 		for(int i=1;i<=Math.min(4, lim);i++){
 			int storeCode = list.get(i-1).getStoreCode();
 			
+			System.out.println("TagPage_0414 storeImagePath : " + list.get(i-1).getStoreImgPath());
+			System.out.println("TagPage_0414 userImagePath ID : " + list.get(i-1).getRd().getUserId());
+			System.out.println("TagPage_0414 userImagePath : " + db.getUserImagePath(list.get(i-1).getRd().getUserId()));
 %>
        
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
-            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>">
-                <img src="../UI/storeImg/<%=i%>.jpg" class="store_img"></a>
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>" onclick="goTop()">
+                <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
                 <div id="store_details<%=i%>" class="store_details">
@@ -69,10 +72,10 @@
                 <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:100%;" id="profile_photo"></div>
                     <div class="content">
-                        <h4><%=list.get(i-1).getNickName() %></h4>
-                        <p><%=list.get(i-1).getRd().getContents() %></p>
+                        <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
+                        <p><%=list.get(i-1).getRd().getContents()%></p>
                     </div>
                 </div>
                 <div class="more_info"><a href="Store_0424.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
@@ -234,6 +237,11 @@ window.parent.onscroll = function(e) {
       $('article').append(addContent);
   }
 };
+
+
+function goTop(){
+	parent.window.scroll(0,0);
+}
 
 
 </script>
