@@ -88,7 +88,7 @@
 
 
     #search_window {
-        display: block;
+        display: none;
         position: absolute;
         z-index: 1;
         width: 33.1rem;
