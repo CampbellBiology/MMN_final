@@ -6,7 +6,7 @@
 
 <%
 	DB_Conn db=new DB_Conn();
-	String userID = loginData.userID;
+	String userID = request.getParameter("userID");
 	ArrayList <watchlistData> wdList = db.getWatchListInfo(userID);
 	
 	System.out.println("리스트 개수: " + wdList.size());

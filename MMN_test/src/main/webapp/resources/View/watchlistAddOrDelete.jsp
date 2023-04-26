@@ -13,8 +13,9 @@
 	<%
 		DB_Conn db = new DB_Conn();
 	
-		System.out.println("watchlistAddOrDelete " + "session:"+session.getAttribute("memberID"));
+		System.out.println("watchlistAddOrDelete session1:"+session.getAttribute("memberID"));
 		String userID = (String)session.getAttribute("memberID");
+		System.out.println("watchlistAddOrDelete session2:"+session.getAttribute("memberID"));
 		int storeCode = Integer.parseInt(request.getParameter("storeCode"));
 
 		System.out.println("watchlistAddOrDelete " + userID + "/" + storeCode);

@@ -351,7 +351,7 @@ public class DB_Conn {
 
 		// 가게코드가 storeCode인 리뷰가 하나도 없다면 음수를 리턴한다.
 		if (cnt == 0)
-			return -1;
+			return 0.0;
 
 		return ((double) ratingSum) / ((double) cnt);
 	}
