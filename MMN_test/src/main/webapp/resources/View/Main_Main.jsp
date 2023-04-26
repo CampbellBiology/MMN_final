@@ -43,7 +43,7 @@
       <a class="btn btn-primary" href="SignIn2.html" id="signupasdf" style="display:<%=userID!=null?"none":"block"%>">회원가입</a>
 
       <!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-      <div id="profile"style="display:<%=userID==null?"none":"block"%>"><img src="<%= db.getUserImagePath(userID) %>" id="profile_photo"></div>
+      <div id="profile"style="display:<%=userID==null?"none":"block"%>"><img src="http://192.168.250.44<%= db.getUserImagePath(userID) %>" id="profile_photo"></div>
     </div>
   </nav>
 
