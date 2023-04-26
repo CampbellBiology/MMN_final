@@ -251,7 +251,7 @@
 //            			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
 //            			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
 
-            	 var backgroundURL = [<%=rdList.get(0).getPhotoPath()%>];
+            	 var backgroundURL = [<%=rdList.size()==0?"":rdList.get(0).getPhotoPath()%>];
 
             	var tag = "";
 
