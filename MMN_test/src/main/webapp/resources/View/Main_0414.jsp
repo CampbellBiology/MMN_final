@@ -106,7 +106,7 @@
       	int lim = Math.min(15, tdList.size());
       	for(int i=0;i<lim;i++){
       %>
-      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()">#<%= tdList.get(i).getTagName() %></a></button>
+      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()" class="a">#<%= tdList.get(i).getTagName() %></a></button>
       
       <%	
       }
