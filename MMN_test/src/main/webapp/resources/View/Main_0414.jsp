@@ -55,7 +55,7 @@
               <!-- Email address input-->
               <div class="row">
                 <div class="col">
-                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" />
+                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" onfocus="window_open()" onblur="window_close()" />
                   <!-- <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
                                         <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div> -->
                 </div>
@@ -299,6 +299,29 @@ function goTop(){
 	parent.window.scroll(0,0);
 }
 
+</script>
+
+<script>
+
+//검색창에 포커스 있을 때 검색결과창 보이게 함
+function window_open() {
+var r_window = document.getElementById('search_window');
+
+	r_window.style.display ="block";
+}
+
+//검색창에 포커스 없을 때 검색결과창 닫기
+function window_close() {
+	var r_window = document.getElementById('search_window');
+	var query = document.getElementById('search').value;
+
+	r_window.style.display ="none";
+	
+	//근데 검색 결과가 있으면 검색결과창 유지-> 키워드 클릭으로 페이지 이동 가능하게
+	if(query!=='') {
+		r_window.style.display ="block";
+	}
+}
 </script>
 
   <!-- template 라이브러리 -->
