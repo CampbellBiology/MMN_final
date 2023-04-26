@@ -119,12 +119,10 @@
   
   <article>
   
-  </article>
-  
   <div id="sec1" class="sec">
   <%
   	lim = Math.min(10, lim);
-  	for(int i=0;i<Math.min(4,lim); i++){
+  	for(int i=0;i<lim; i++){
   		
   %>
   <section>
@@ -173,110 +171,9 @@
   	}
 %>
   </div>
-
-  <div id="sec2" class="sec"> 
-<%
-  	for(int i=4;i<Math.min(7,lim); i++){
-  		
-  %>
-  <section>
-    <div class="container">
-      <div class="popup-wrap">
-        <div class="popup">
-          <div class="popup-head"><span class="head-title">#<%= tdList.get(i).getTagName() %></span></div>
-          <div class="popup-body">
-            <div class="body-content">
-              <div class="body-contentbox">
-
-                <section id="test" class="test">
-
-				<%
-					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
-					int lim2 = Math.min(10, tlbt.getTldList().size());
-					System.out.println("tlbt: " + tlbt.getTldList().size());
-					for(int j=0;j<lim2;j++){
-					
-				%>
-
-                  <!-- 가게 한 덩이 -->
-                  <figure class="storeSet" style="background-image:url(http://192.168.250.44<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
-                    <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
-                    <figcaption>
-                      <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
-                      <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
-                    </figcaption>
-                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
-                  </figure>
-                  <!-- 가게 한 덩이 -->
-				<%
-					}
-				%>
-                </section>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-<%
-  	}
-%>
-</div>
-
-  <div id="sec3" class="sec">
-<%
-  	for(int i=7;i<Math.min(10,lim); i++){
-  		
-  %>
-  <section>
-    <div class="container">
-      <div class="popup-wrap">
-        <div class="popup">
-          <div class="popup-head"><span class="head-title">#<%= tdList.get(i).getTagName() %></span></div>
-          <div class="popup-body">
-            <div class="body-content">
-              <div class="body-contentbox">
-
-                <section id="test" class="test">
-
-				<%
-					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
-					int lim2 = Math.min(10, tlbt.getTldList().size());
-					
-					System.out.println("tlbt: " + tlbt.getTldList().size());
-					for(int j=0;j<lim2;j++){
-					
-				%>
-
-                  <!-- 가게 한 덩이 -->
-                  <figure class="storeSet" style="background-image:url(http://192.168.250.44<%=tlbt.getTldList().get(j).getStoreImagePath()%>)">
-                    <div class="store_score"><%= tlbt.getTldList().get(j).getAverageRating() %></div>
-                    <figcaption>
-                      <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
-                      <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
-                    </figcaption>
-                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
-                  </figure>
-                  <!-- 가게 한 덩이 -->
-				<%
-					}
-				%>
-                </section>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-<%
-  	}
-%>
-  </div>
+  
+  </article>
+  
 
 
   <!-- 슬라이드 CSS 라이브러리 스크립트 -->
