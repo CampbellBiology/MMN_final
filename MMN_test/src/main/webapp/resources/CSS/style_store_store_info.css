@@ -107,6 +107,11 @@
 
 }
 
+#keepImg{
+	width: 70px;
+	height: 70px
+}
+
 .keep_btn {
     width: 70px;
     height: 70px;
