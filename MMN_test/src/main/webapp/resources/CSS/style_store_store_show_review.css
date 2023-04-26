@@ -95,21 +95,30 @@
 
 /* 리뷰 1개당 단위 */
 
+.review_wrap {
+    display: flex;
+}
+
 .review_contents {
     border: 1px solid lightcoral;
     /* border-radius: 5px; */
     width: 1100px;
-    height: 250px;
-    position: absolute;
-    top: 100px;
+    min-height: 380px;
+    position: relative;
+    top: -380px;
     left: 0px;
+    margin-bottom: 50px;
+
+    /* position: absolute;
+    top: 100px;
+    left: 0px; */
 }
 
 
 .review_profile_box {
     width: 150px;
     height: 150px;
-    position: absolute;
+    position: relative;
     top: 40px;
     left: 40px;
     /* background-color: blueviolet; */
@@ -127,8 +136,8 @@
 }
 
 .nickname {
-    position: absolute;
-    top: 165px;
+    position: relative;
+    top: 5px;
     left: 2px;
     width: 150px;
     text-align: center;
@@ -139,15 +148,17 @@
 }
 
 .reg_date {
-    position: absolute;
-    top: 20px;
-    left: 300px;
+    position: relative;
+    top: -120px;
+    left: 270px;
+    text-align: left;
     color:rgb(170, 170, 170);
+    /* background-color: blue; */
 }
 
 .show_rate {
-    position: absolute;
-    top: 20px;
+    position: relative;
+    top: -140px;
     left: 950px;
     width: 120px;
     height: 40px;
@@ -155,21 +166,28 @@
     box-shadow: 2px 2px  gray;
     border-radius: 10px;
     font-size: 18px;
-    padding-top: 10px;
+    font-weight: 600;
+    padding: 10px 5px 0px 5px;
     color: white;
-    font-family: 'Jua', sans-serif;
+    /* font-family: 'Jua', sans-serif; */
 }
 
 .WIA_title {
-    position: absolute;
-    top: 50px;
-    left: 300px;
+    position: relative;
+    top: -150px;
+    left: 270px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.highlight {
+    color:rgb(255, 128, 128);
 }
 
 .WIA_container {
-    position: absolute;
-    top: 80px;
-    left: 300px;
+    position: relative;
+    top: -140px;
+    left: 270px;
     width: 600px;
     height: 40px;
     /* background-color: rgb(244, 231, 255); */
@@ -177,7 +195,7 @@
 
 .WIA_contents {
     max-width: 110px;
-    height: 30px;
+    height: 25px;
     border: 1px solid lightcoral;
     border-radius: 5px;
     display: inline-block;
@@ -191,12 +209,31 @@
 }
 
 .riview_contents {
-    position: absolute;
-    top: 130px;
-    left: 300px;
+    position: relative;
+    top: -120px;
+    left: 270px;
 
-    width: 600px;
-    height: 50px;
+    width: 635px;
+    min-height: 30px;
     font-size: 15px;
-    border: 2px solid rgb(221, 221, 221);
+    border: 1px solid rgb(221, 221, 221);
+    background-color: antiquewhite;
+    display: flex;
+}
+
+.show_images {
+    display: flex;
+    position: relative;
+    top: -80px;
+    left: 270px;
+    width: 650px;
+    height: 100px;
+}
+
+.show_images2 {
+    display: inline-block;
+    border: 1px solid rgb(255, 208, 208);
+    width: 120px;
+    height: 120px;
+    margin-right: 15px;
 }
