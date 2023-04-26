@@ -41,8 +41,6 @@
 			_db.constructMenuMap(review_store);
 			ArrayList<menuData> list = _db.menufindAll();
 			Collections.sort(rtdCntList);
-			String keep_btn_path = "resources/UI/UI/keep_btn.png";
-			String keep_btn_sel_path = "resources/UI/UI/keep_btn_sel.png";
 			String userID = (String)session.getAttribute("memberID");
 			System.out.println("Store_0424.jsp userID : " + userID);
 			
@@ -62,7 +60,11 @@
                     <div id="store_name"><%=sd.getStoreName()%></div>
                     <div id="store_keep">
                         <button class="store_keep">
-                            <img src="../UI/UI/keep_btn.png" class="keep_btn">
+<img src="<%=flag == true
+		? "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png"%>"
+								id="keepImg" onclick="keepClick();sendRequest();"
+								onmouseover="onHover()" onmouseout="offHover()">
                         </button>
                     </div>
                     <div id="store_detail">
@@ -281,9 +283,38 @@
             }
             </script>
             
+            <script>
+		function sendRequest() {
+			var httpRequest;
+			function createRequest() {
+				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+												// 오페라 등
+					return new XMLHttpRequest();
+				} else { // 익스플로러 6과 그 이하의 버전
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			function receiveResponse() {
+				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+				if (httpRequest.readyState == XMLHttpRequest.DONE
+						&& httpRequest.status == 200) {
+					document.getElementById("text").innerHTML = httpRequest.responseText;
+				}
+			}
+			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+																// 상태를 파악함.
+			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
+			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
+			}
+		</script>
+            
             <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
             <script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
             <script src="../js/store.js" type="text/javascript" charset="ansi"></script>
+		<script type="text/javascript" src="../js/project01.js"></script>
           
 
     </main>
