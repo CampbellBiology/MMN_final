@@ -6,7 +6,7 @@ public class reviewData {
 	public String index2;
 	public String storeCode;
 	public String userID;
-	public String contents;
+	public String contents="";
 	public String date;
 	public String rating;
 	public String display;

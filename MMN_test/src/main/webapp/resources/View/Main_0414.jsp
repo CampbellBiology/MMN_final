@@ -141,6 +141,7 @@
 				<%
 					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
 					int lim2 = Math.min(10, tlbt.getTldList().size());
+					System.out.println("tlbt: " + tlbt.getTldList().size());
 					for(int j=0;j<lim2;j++){
 					
 				%>
@@ -192,6 +193,7 @@
 				<%
 					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
 					int lim2 = Math.min(10, tlbt.getTldList().size());
+					System.out.println("tlbt: " + tlbt.getTldList().size());
 					for(int j=0;j<lim2;j++){
 					
 				%>
@@ -242,6 +244,8 @@
 				<%
 					tagListByTagData tlbt = new tagListByTagData(tdList.get(i).getTagId());
 					int lim2 = Math.min(10, tlbt.getTldList().size());
+					
+					System.out.println("tlbt: " + tlbt.getTldList().size());
 					for(int j=0;j<lim2;j++){
 					
 				%>

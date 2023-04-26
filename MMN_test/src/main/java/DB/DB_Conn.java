@@ -701,7 +701,10 @@ public class DB_Conn {
 				sbdp.setStoreName(sd.getStoreName());
 				sbdp.setTagID(tagID);
 				sbdp.setWatchlist(haveWatchlist(userID, storeCode));
-				sbdp.setRd(getReviewByStoreCode(storeCode).get(0));
+				ArrayList <reviewData> rdList = getReviewByStoreCode(storeCode);
+				reviewData rd = new reviewData();
+				rd.setContents("");
+				sbdp.setRd(rdList.size()==0?rd:rdList.get(0));
 				sbdp.setAddr(sd.getAddr());
 				sbdp.setNickName(getNickname(userID));
 
@@ -741,12 +744,12 @@ public class DB_Conn {
 				int storeCode = res.getInt("storeCode");
 
 				storeData sd = getStoreData(storeCode);
-				ArrayList<reviewData> rd = getReviewByStoreCode(storeCode);
+				ArrayList<reviewData> rdList = getReviewByStoreCode(storeCode);
 
 				tld.setAverageRating(getAverageRating(storeCode));
 				tld.setStoreImagePath(sd.getStoreImgPath());
 				tld.setStoreName(sd.getStoreName());
-				tld.setReviewContent(rd.get(0).getContents());
+				tld.setReviewContent(rdList.size()==0?"":rdList.get(0).getContents());
 				tld.setStoreCode(sd.getStoreCode());
 
 				ret.add(tld);
