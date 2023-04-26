@@ -9,7 +9,7 @@
 	
 	for(int i=0;i<sr.getTagInfo().size();i++){
 		String str = "<a href=\"TagPage_0414.jsp?tagID="+sr.getTagInfo().get(i).getTagId()+"\">";
-		String str2 = "</a>";
+		String str2 = "<br></a>";
 		String tmp = str + sr.getTagInfo().get(i).getTagName() + str2;
 		out.println(tmp);
 	}

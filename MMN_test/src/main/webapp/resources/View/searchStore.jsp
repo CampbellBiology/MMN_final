@@ -11,6 +11,6 @@
 	for(int i=0;i<sr.getStoreInfo().size();i++){
 		out.println("<a href=\"Store_0424.jsp?storeCode="+sr.getStoreInfo().get(i).getStoreCode()+"\">");
 		out.println(sr.getStoreInfo().get(i).getStoreName());
-		out.println("</a>");
+		out.println("<br></a>");
 	}
 %>
