@@ -342,22 +342,7 @@
             
             <script src="../js/store.js" type="text/javascript" charset="ansi"></script>
 		<script type="text/javascript" src="../js/project01.js"></script>
-            <script type="text/javascript">
             
-            
-                $(document).on('ready', function () {
-
-                    $(".center").slick({
-                        dots: true,
-                        infinite: true,
-                        centerMode: true,
-                        slidesToShow: 7,
-                        slidesToScroll: 3
-                    });
-                });
-            </script>
-
-
             <!-- 메인 이미지 -->
             
             <script>
@@ -388,12 +373,7 @@
 			}
 		</script>
             <script>
-                var selectedColor;
-
-                window.onload = function () {
-                    init();
-                }
-
+                
                 function init() {
 //                	var backgroundURL = [ "../UI/UI/keep_btn.png", "../UI/storeImgSub/1-2.jpg",
 //                			"../UI/storeImgSub/1-1.jpg", "../UI/storeImgSub/2-1.jpg",
@@ -434,38 +414,6 @@
 
                 }
 
-                function colorSet(colorPick) {
-                    // document.querySelector("body").style.backgroundImage = colorPick.id;
-
-                    //메인으로 보여줄 div에 백그라운드 url 동적으로 부여
-                    document.getElementById("mainImage").style.backgroundImage = `url(${colorPick.id})`;
-
-
-                    // 셀렉트된 div의 url 가져오기
-                    if (selectedColor != null) {
-                        document.getElementById(selectedColor).className = document.getElementById(selectedColor).className.replace(" selected", "");
-                    }
-                    document.getElementById(colorPick.id).className += " selected";
-                    selectedColor = colorPick.id;
-                } 
-            </script>
-
-            <script>
-                function show_create_review() {
-                    document.getElementById("create_riview").style.display = "block";
-                    document.getElementById("show_btn").style.display = "none";
-                    document.getElementById("remove_btn").style.display = "block";
-                }
-
-                function remove_create_review() {
-                    document.getElementById("create_riview").style.display = "none";
-                    document.getElementById("show_btn").style.display = "block";
-                    document.getElementById("remove_btn").style.display = "none";
-                }
-
-                function cancel_create_review() {
-                    alert("작성된 리뷰 내용이 초기화될 수 있습니다. 리뷰 작성을 취소하시겠습니까?");
-                }
             </script>
 
     </main>
