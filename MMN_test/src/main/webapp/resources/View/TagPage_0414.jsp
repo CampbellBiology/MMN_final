@@ -72,7 +72,7 @@
                 <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
-                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:100%;" id="profile_photo"></div>
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
                     <div class="content">
                         <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
                         <p><%=list.get(i-1).getRd().getContents()%></p>
