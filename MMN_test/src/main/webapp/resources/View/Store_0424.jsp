@@ -369,7 +369,13 @@
 			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
 			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
 			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
+
+			var doc = document.getElementById("keepImg");
+			var src = doc.src;
+			
+			var arr = src.split("/");
+			
+			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>&keepType="+arr[arr.length-1]); // Http 요청을 보냄.
 			}
 		</script>
             <script>

@@ -54,6 +54,8 @@
 			System.out.println("TagPage_0414 storeImagePath : " + list.get(i-1).getStoreImgPath());
 			System.out.println("TagPage_0414 userImagePath ID : " + list.get(i-1).getRd().getUserId());
 			System.out.println("TagPage_0414 userImagePath : " + db.getUserImagePath(list.get(i-1).getRd().getUserId()));
+			
+			boolean flag = db.haveWatchlist(userID, storeCode);
 %>
        
         <!-- 태그리스트 1묶음 -->
@@ -74,8 +76,8 @@
                     <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
-            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="store_keep"><img src="<%=flag == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="keepClick(<%=i%>); sendRequest(<%=storeCode%>,<%=i%>);" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
                     <div class="content">
@@ -98,6 +100,7 @@
 <%
 		for(int i=5;i<=Math.min(lim,7);i++){
 			int storeCode = list.get(i-1).getStoreCode();
+			boolean flag = db.haveWatchlist(userID, storeCode);
 %>
        
         <!-- 태그리스트 1묶음 -->
@@ -118,8 +121,11 @@
                     <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
-            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="store_keep"><img src="<%=flag == true
+                ?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            	:"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png"%>" 
+            		id="keepImg<%=i%>" onclick="keepClick(<%=i%>); sendRequest(<%=storeCode%>,<%=i%>);" 
+            		onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
                     <div class="content">
@@ -142,6 +148,7 @@
 <%
 		for(int i=8;i<=Math.min(10, lim);i++){
 			int storeCode = list.get(i-1).getStoreCode();
+			boolean flag = db.haveWatchlist(userID, storeCode);
 %>
        
         <!-- 태그리스트 1묶음 -->
@@ -162,8 +169,8 @@
                     <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
                     <div class="watchlist_title">함 무볼까</div>
                 </div>
-                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
-            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="store_keep"><img src="<%=flag == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="keepClick(<%=i%>); sendRequest(<%=storeCode%>,<%=i%>);" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
                     <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;"  id="profile_photo"></div>
                     <div class="content">
@@ -185,7 +192,8 @@
     </main>
     
     <script>
-    function sendRequest(sc) {
+    function sendRequest(sc, ii) {
+    	
 		var httpRequest;
 		function createRequest() {
 			if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
@@ -205,10 +213,18 @@
 		httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
 		httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
 															// 상태를 파악함.
+															
+					
 		// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
 		httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
 		httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
+		
+		var doc = document.getElementById("keepImg"+ii);
+		var src = doc.src;
+
+		var arr = src.split("/");
+		
+		httpRequest.send("userID=<%=userID%>&storeCode="+sc+"&keepType="+arr[arr.length - 1]); // Http 요청을 보냄.
 		}
     </script>
    
