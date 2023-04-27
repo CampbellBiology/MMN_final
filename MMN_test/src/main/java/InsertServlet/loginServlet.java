@@ -17,7 +17,7 @@ import DataClass.loginData;
 /**
  * Servlet implementation class loginServlet
  */
-@WebServlet("/resources/View/login")
+@WebServlet("/resources/view_0427/login")
 public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -74,11 +74,11 @@ public class loginServlet extends HttpServlet {
 			//로그인 실패 시 alert 매서드 타게 함
 			if (res == 0) {
 				System.out.println("마스터 계정 로그인 성공");
-				response.sendRedirect(context + "/resources/View/Main_Main.jsp");
+				response.sendRedirect(context + "/resources/view_0427/Main_0427.jsp");
 //				response.sendRedirect(context + "/loginSuccess.jsp");
 			} else if (res == 1) {
 				System.out.println("일반 계정 로그인 성공");
-				response.sendRedirect(context + "/resources/View/Main_Main.jsp");
+				response.sendRedirect(context + "/resources/view_0427/Main_0427.jsp");
 			} else if (res == 2) {
 				System.out.println("비밀번호를 다시 확인 해주세요");
 				alert(response, context);

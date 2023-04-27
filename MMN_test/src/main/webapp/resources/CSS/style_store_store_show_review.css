@@ -97,6 +97,10 @@
 
 .review_wrap {
     display: flex;
+    height: auto;
+    position: relative;
+    top: 0px;
+    
 }
 
 .review_contents {

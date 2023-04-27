@@ -58,7 +58,7 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
-			<a class="navbar-brand" href="javascript:brandClick();" id="brand"><img
+			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
 				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
 				class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
@@ -168,7 +168,7 @@
       	int lim = Math.min(15, tdList.size());
       	for(int i=0;i<lim;i++){
       %>
-      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()" class="a">#<%= tdList.get(i).getTagName() %></a></button>
+      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0427.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()" class="a">#<%= tdList.get(i).getTagName() %></a></button>
       
       <%	
       }
@@ -213,7 +213,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
+                    <a href="Store_0427.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -281,7 +281,7 @@
 						&& httpRequest.status == 200) {
 					document.getElementById("tagInfo").innerHTML=httpRequest.responseText;
 			//		d1.insertAdjacentHTML('afterbegin', '\''+httpRequest.responseText+'\'');
-			//		document.getElementById("tagInfo").innerHtml = '<a id="tagInfo" href="TagPage_0414.jsp">dd</a>'//httpRequest.responseText;
+			//		document.getElementById("tagInfo").innerHtml = '<a id="tagInfo" href="TagPage_0427.jsp">dd</a>'//httpRequest.responseText;
 				}
 			}
 			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
@@ -328,7 +328,7 @@
 		</script>
 		
 		<script>
-<%-- 	function sendRequest2() {
+	function sendRequest2() {
 		var httpRequest;
 		function createRequest() {
 			if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
@@ -353,7 +353,7 @@
 		httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		httpRequest.send("userID=<%=userID%>"); // Http 요청을 보냄.
 		}
-	</script> --%>
+	</script>
 	
 	
 		<script>
@@ -415,7 +415,7 @@ function window_close() {
 }
 </script>
 
-<!--   <script>
+  <script>
     function show() {
       document.querySelector(".background").className = "background show";
     }
@@ -426,13 +426,12 @@ function window_close() {
 
     document.querySelector("#watchlist_button").addEventListener("click", show);
     document.querySelector("#close").addEventListener("click", close);
-  </script> -->
+  </script>
 
   <!-- template 라이브러리 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/scripts.js"></script>
+  <script src="js/project02.js"></script>
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-  <script type="text/javascript" src="../js/header.js"></script>
 
 
 </body>

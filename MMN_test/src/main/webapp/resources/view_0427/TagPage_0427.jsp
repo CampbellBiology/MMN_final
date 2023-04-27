@@ -1,0 +1,292 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@page import="DB.*" %>    
+<%@page import="java.util.*" %>    
+<%@page import="DataClass.*" %>    
+    <%@page import="Controller.*" %>
+    
+<!Doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MMN-태그페이지</title>
+    <link rel="stylesheet" href="../CSS/style_TagPage_0414.css">
+       <link href="../CSS/main_0427.css" rel="stylesheet"/>
+ <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+ 
+ <%
+	DB_Conn db = new DB_Conn();
+	String userID = (String) session.getAttribute("memberID");
+	System.out.println("Main_Main.jsp userID:" + userID);
+	watchlist wl = new watchlist(userID);
+	watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
+	ArrayList <tagData> tdList = db.getTagDataList();
+	Collections.sort(tdList);
+
+	/* int lim = Math.min(wl.getWsdpList().size(), 10);
+ 
+	for (int i = 0; i < lim; i++) {
+		arr[i] = wl.getWsdpList().get(i);
+	} */
+	%>
+	<!-- Navigation-->
+	<nav class="navbar navbar-light bg-light static-top">
+		<div class="container">
+			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
+				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
+				class="btn btn-primary" href="Login2.html" id="loginasdf"
+				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
+			<button type="button" id="watchlist_button"
+				style="display:<%=userID == null ? "none" : "block"%>"
+				onclick="sendRequest2()">
+				<img src="../UI/UI/watchlist_active.png" height="50px">
+			</button>
+			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf"
+				style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
+
+			<!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
+			<div id="profile"
+				style="display:<%=userID == null ? "none" : "block"%>">
+				<img src="http://192.168.250.44<%=db.getUserImagePath(userID)%>"
+					id="profile_photo">
+			</div>
+		</div>
+	</nav>
+
+	<!-- <button id="show">팝업열기</button> -->
+	<section>
+		<div class="background">
+			<div class="window">
+
+	<button id="close">
+					<img src="../UI/UI/close1.png" class="close" width="30px"
+						height="30px">
+				</button>
+				
+			<!--여기에 관심목록 내용 만들어져서 들어감 -->
+				<div class="watchlist_popup" id="watchlist_popup">
+				</div>
+			</div>
+		</div>
+
+  
+    
+    <%
+/*     	String userID = (String)session.getAttribute("memberID"); */
+    	
+    	System.out.println("TagPage_0414.jsp userID:"+userID);
+    	
+    	System.out.println("TagPage_0414.jsp tagID : "+request.getParameter("tagID"));
+    	String null_tagID = request.getParameter("tagID");
+    	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);
+/*     	DB_Conn db = new DB_Conn(); */
+    	
+    	if(null_tagID != null){
+    		db.updateTagView(tagID);
+    	}
+    	
+    	ArrayList<storeByTagDataPrint> list = db.getStoreListByTag(tagID, userID);
+    	int lim = Math.min(10, list.size());
+    %>
+</head>
+
+<body>
+    <main>
+        <div id="header">
+            <div id="headerImage">
+                <div id="headerTitle"><%= db.getTagName(tagID) %></div>
+            </div>
+        </div>
+        
+        <article>
+        
+        
+        </article>
+        
+ <div id="art1" class = "art">
+<%
+		for(int i=1;i<=Math.min(4, lim);i++){
+			int storeCode = list.get(i-1).getStoreCode();
+			
+			System.out.println("TagPage_0414 storeImagePath : " + list.get(i-1).getStoreImgPath());
+			System.out.println("TagPage_0414 userImagePath ID : " + list.get(i-1).getRd().getUserId());
+			System.out.println("TagPage_0414 userImagePath : " + db.getUserImagePath(list.get(i-1).getRd().getUserId()));
+%>
+       
+        <!-- 태그리스트 1묶음 -->
+        <div id="tagList<%=i%>" class="taglist">
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0427.jsp?storeCode=<%=storeCode%>" onclick="goTop()">
+                <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
+            </div>
+            <div id="store_info<%=i%>" class="store_info">
+                <div id="store_details<%=i%>" class="store_details">
+                    <div class="first_row">
+                        <div class="index"><%=i%>.</div>
+                        <div class="store_name"><a href="Store_0427.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
+                    </div>
+                    <div class="second_row">
+                        <div class="score"><%=list.get(i-1).getAverageRating()%></div>
+                        <div class="store_category"><%=list.get(i-1).getCateName()%></div>
+                    </div>
+                    <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
+                    <div class="watchlist_title">함 무볼까</div>
+                </div>
+                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="review">
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
+                    <div class="content">
+                        <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
+                        <p><%=list.get(i-1).getRd().getContents()%></p>
+                    </div>
+                </div>
+                <div class="more_info"><a href="Store_0427.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
+            </div>
+        </div>
+        
+       
+        <!-- 태그리스트 1묶음 -->
+        <%
+		}
+        %>
+ </div>
+ 
+ <div id="art2" class = "art">
+<%
+		for(int i=5;i<=Math.min(lim,7);i++){
+			int storeCode = list.get(i-1).getStoreCode();
+%>
+       
+        <!-- 태그리스트 1묶음 -->
+        <div id="tagList<%=i%>" class="taglist">
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0427.jsp?storeCode=<%=storeCode%>">
+                <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
+            </div>
+            <div id="store_info<%=i%>" class="store_info">
+                <div id="store_details<%=i%>" class="store_details">
+                    <div class="first_row">
+                        <div class="index"><%=i%>.</div>
+                        <div class="store_name"><a href="Store_0427.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
+                    </div>
+                    <div class="second_row">
+                        <div class="score"><%=list.get(i-1).getAverageRating()%></div>
+                        <div class="store_category"><%=list.get(i-1).getCateName()%></div>
+                    </div>
+                    <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
+                    <div class="watchlist_title">함 무볼까</div>
+                </div>
+                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="review">
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
+                    <div class="content">
+                        <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
+                        <p><%=list.get(i-1).getRd().getContents() %></p>
+                    </div>
+                </div>
+                <div class="more_info"><a href="Store_0427.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
+            </div>
+        </div>
+        
+       
+        <!-- 태그리스트 1묶음 -->
+        <%
+		}
+        %>
+ </div>
+ 
+ <div id="art3" class = "art">
+<%
+		for(int i=8;i<=Math.min(10, lim);i++){
+			int storeCode = list.get(i-1).getStoreCode();
+%>
+       
+        <!-- 태그리스트 1묶음 -->
+        <div id="tagList<%=i%>" class="taglist">
+            <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0427.jsp?storeCode=<%=storeCode%>">
+                <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
+            </div>
+            <div id="store_info<%=i%>" class="store_info">
+                <div id="store_details<%=i%>" class="store_details">
+                    <div class="first_row">
+                        <div class="index"><%=i%>.</div>
+                        <div class="store_name"><a href="Store_0427.jsp?storeCode=<%=storeCode%>"><%=list.get(i-1).getStoreName()%></a></div>
+                    </div>
+                    <div class="second_row">
+                        <div class="score"><%=list.get(i-1).getAverageRating()%></div>
+                        <div class="store_category"><%=list.get(i-1).getCateName()%></div>
+                    </div>
+                    <div class="store_addr"><%=list.get(i-1).getAddr()%></div>
+                    <div class="watchlist_title">함 무볼까</div>
+                </div>
+                <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
+            		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
+                <div class="review">
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;"  id="profile_photo"></div>
+                    <div class="content">
+                        <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
+                        <p><%=list.get(i-1).getRd().getContents() %></p>
+                    </div>
+                </div>
+                <div class="more_info"><a href="Store_0427.jsp?storeCode=<%=storeCode%>"> >더 알아보기 </a></div>
+            </div>
+        </div>
+        
+       
+        <!-- 태그리스트 1묶음 -->
+        <%
+		}
+        %>
+ </div>
+ 
+    </main>
+   
+  
+    <script>
+var count = 0;
+
+if(count == 0){
+	var addContent = document.getElementById("art1").innerHTML;
+
+      $('article').append(addContent);
+}
+
+//스크롤 바닥 감지
+window.parent.onscroll = function(e) {
+	
+	if(count == 3)
+		return;
+	
+  //추가되는 임시 콘텐츠
+  //window height + window scrollY 값이 document height보다 클 경우,
+  if((window.parent.innerHeight + window.parent.scrollY) >= document.body.offsetHeight) {
+  	//실행할 로직 (콘텐츠 추가)
+      count++;
+  	if(count == 1)
+  		return;
+      var addContent;
+      
+      addContent = document.getElementById("art"+count).innerHTML;
+
+      //article에 추가되는 콘텐츠를 append
+      $('article').append(addContent);
+  }
+};
+
+
+function goTop(){
+	parent.window.scroll(0,0);
+}
+
+
+</script>
+    
+    
+	<script type="text/javascript" src="../js/project03.js"></script>
+	<script type="text/javascript" src="../js/header.js"></script>
+    
+</body>
+
+</html>

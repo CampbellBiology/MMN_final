@@ -1,0 +1,74 @@
+<!Doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MMN-가입하기</title>
+
+    <link rel="stylesheet" href="../CSS/style_signIn.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+
+<body>
+    <main>
+    
+        <form method="post" action="join" onsubmit="return mySubmit()">
+            <div id="leftside">
+                <div id="logo"><img src="../UI/UI/text_logo.png" width="300px"></div>
+                <div id="maintext">회원가입</div>
+            </div>
+            <div id="form">
+                <div id="blank"></div>
+                <div id="formText">아이디</div>
+                <input type="text" id="user_id" class="txtbox" name="user_id" onfocusout="joinID()"><br>
+                <div id="id_noti" class="noti"></div>
+                <div id="blank"></div>
+
+                <div id="formText">비밀번호</div>
+                <input type="password" id="user_pw" class="txtbox" name="user_pw" onfocusout="joinPW()"><br>
+                <div id="pw_noti" class="noti"></div>
+                <div id="blank"></div>
+
+                <div id="formText">비밀번호 확인</div>
+                <input type="password" id="pw_confirm" class="txtbox" onfocusout="joinPWConfirm()"><br>
+                <div id="PWConfirm_noti" class="noti"></div>
+                <div id="blank"></div>
+
+                <div id="formText">이름(별명)</div>
+                <input type="text" id="user_name" class="txtbox" name="user_name" onfocusout="joinName()"><br>
+                <div id="name_noti" class="noti"></div>
+                <div id="blank"></div>
+
+                <div id="formText">이메일</div>
+                <input type="text" id="user_email" class="txtbox" name="user_email" onfocusout="joinEmail()"><br>
+                <div id="email_noti" class="noti"></div>
+                <div id="blank"></div>
+
+                <div id="formText">프로필 사진 <span class="subtext">(jpg, png파일 1개만 등록 가능합니다.)</span></div>
+                <div class="filebox">
+
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="user_photo" name="user_photo"
+                        accept=".jpg, .png"><br>
+                    <label for="file">파일찾기</label>
+                    <input type="file" id="file">
+                    <div id="photo_noti" class="noti"></div>
+                    <div id="blank"></div>
+                </div>
+
+
+                <button type="button" class="btn" id="cancel" onClick="cancel_join()"></button>
+                <button type="submit" class="btn" id="submit"></button>
+            </div>
+        </form>
+    </main>
+    <br>
+
+    <script type="text/javascript" src="../js/signIn.js"></script>
+    <script>
+        $("#file").on('change', function () {
+            var fileName = $("#file").val();
+            $(".upload-name").val(fileName);
+        });	
+    </script>
+</body>
+</html>

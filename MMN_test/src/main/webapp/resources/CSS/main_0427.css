@@ -92,7 +92,7 @@
     filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.289));
 }
 
-.popup {
+.watchlist_popup {
     overflow: auto;
     position: absolute;
     background-color: rgb(255, 254, 250);
@@ -117,7 +117,7 @@
     background-size: 100%;
 }
 
-.show .popup {
+.show .watchlist_popup {
     transform: translate(0%, -20%);
     transition: all 0.5s;
 }
@@ -130,18 +130,18 @@
 
 
 /* 스크롤바 커스텀 */
-.popup::-webkit-scrollbar {
+.watchlist_popup::-webkit-scrollbar {
     width: 10px;  /* 스크롤바의 너비 */
 }
 
-.popup::-webkit-scrollbar-thumb {
+.watchlist_popup::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
     background: #e6892c; /* 스크롤바의 색상 */
     
     border-radius: 10px;
 }
 
-.popup::-webkit-scrollbar-track {
+.watchlist_popup::-webkit-scrollbar-track {
     background: #ffffffff;
     border-radius: 0px 10px 10px 0px;  /*스크롤바 뒷 배경 색상*/
 }
