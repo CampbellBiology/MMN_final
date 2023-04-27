@@ -23,6 +23,11 @@
     	String null_tagID = request.getParameter("tagID");
     	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);
     	DB_Conn db = new DB_Conn();
+    	
+    	if(null_tagID != null){
+    		db.updateTagView(tagID);
+    	}
+    	
     	ArrayList<storeByTagDataPrint> list = db.getStoreListByTag(tagID, userID);
     	int lim = Math.min(10, list.size());
     %>
@@ -98,7 +103,7 @@
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
             <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>">
-                <img src="../UI/storeImg/<%=i%>.jpg" class="store_img"></a>
+                <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
                 <div id="store_details<%=i%>" class="store_details">
@@ -116,9 +121,9 @@
                 <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
                     <div class="content">
-                        <h4><%=list.get(i-1).getNickName() %></h4>
+                        <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
                         <p><%=list.get(i-1).getRd().getContents() %></p>
                     </div>
                 </div>
@@ -142,7 +147,7 @@
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
             <div id="store_photo<%=i%>" class="store_photo"><a href="Store_0424.jsp?storeCode=<%=storeCode%>">
-                <img src="../UI/storeImg/<%=i%>.jpg" class="store_img"></a>
+                <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
                 <div id="store_details<%=i%>" class="store_details">
@@ -160,9 +165,9 @@
                 <div class="store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="keepImg<%=i%>" onclick="sendRequest(<%=storeCode%>); keepClick(<%=i%>)" onmouseover="onHover(<%=i%>)" onmouseout="offHover(<%=i%>)" width="100px"></div>
                 <div class="review">
-                    <div class="profile"><img src="../UI/profile/asdf.jpg" id="profile_photo"></div>
+                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;"  id="profile_photo"></div>
                     <div class="content">
-                        <h4><%=list.get(i-1).getNickName() %></h4>
+                        <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
                         <p><%=list.get(i-1).getRd().getContents() %></p>
                     </div>
                 </div>

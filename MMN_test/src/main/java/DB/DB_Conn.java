@@ -1383,4 +1383,62 @@ public class DB_Conn {
 		}
 		return max_tag;
 	}
+	
+	public int getTagView(int tagID) {
+		int ret = 0;
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM tagTbl  where tagID = " + tagID;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				// reviewcount = res.getInt("reviewIndex");
+				ret = res.getInt("tagView");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ret;
+	}
+	
+	public void updateTagView(int tagID) {
+		PreparedStatement pstmt = null;
+		int tagView = getTagView(tagID);
+
+		try {
+			String sql = "UPDATE tagTbl SET tagView = "+ (tagView+1) +" where tagID = " + tagID;
+
+			// sql 실행객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
 }
