@@ -60,7 +60,7 @@
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
 			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
-				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
+				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png"></a> <a
 				class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
 			<button type="button" id="watchlist_button"
@@ -378,7 +378,7 @@
 			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
 																// 상태를 파악함.
 			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
-			httpRequest.open("POST", "watchlistAddOrDelete2.jsp", true);
+			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
 			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
 			}

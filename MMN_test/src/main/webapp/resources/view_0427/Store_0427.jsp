@@ -47,7 +47,7 @@
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
 			<a class="navbar-brand" href="Main_0427.jsp;" id="brand"><img
-				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
+				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png"></a> <a
 				class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
 			<button type="button" id="watchlist_button"
@@ -119,7 +119,7 @@
 <img src="<%=flag == true
 		? "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
 		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png"%>"
-								id="keepImg" onclick="keepClick();sendRequest3();"
+								id="keepImg" onclick="keepClick();sendRequest();"
 								onmouseover="onHover()" onmouseout="offHover()">
                         </button>
                     </div>
@@ -403,7 +403,7 @@
             <!-- 메인 이미지 -->
             
             <script>
-		function sendRequest3() {
+		function sendRequest() {
 			var httpRequest;
 			function createRequest() {
 				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
@@ -426,45 +426,9 @@
 			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
 			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
 			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			
-			var doc = document.getElementById("keepImg");
-			var src = doc.src;
-			
-			var arr = src.split("/");
-			
-			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>&keepType="+arr[arr.length-1]); // Http 요청을 보냄.
+			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>"); // Http 요청을 보냄.
 			}
 		</script>
-		
-		<script>
-		function sendRequest(sc) {
-			var httpRequest;
-			function createRequest() {
-				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
-												// 오페라 등
-					return new XMLHttpRequest();
-				} else { // 익스플로러 6과 그 이하의 버전
-					return new ActiveXObject("Microsoft.XMLHTTP");
-				}
-			}
-			function receiveResponse() {
-				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
-				if (httpRequest.readyState == XMLHttpRequest.DONE
-						&& httpRequest.status == 200) {
-					document.getElementById("text").innerHTML = httpRequest.responseText;
-				}
-			}
-			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
-			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
-																// 상태를 파악함.
-			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
-			httpRequest.open("POST", "watchlistAddOrDelete2.jsp", true);
-			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			
-			httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
-			}
-		</script>
-		
             <script>
                 
                 function init() {
@@ -540,8 +504,8 @@ function sendRequest2() {
 		
 		
             <script type="text/javascript" src="../js/header.js"></script>
-            <script type="text/javascript" src="../js/keepImg.js"></script>         
-            <script type="text/javascript" src="../js/keepImg_star.js"></script>   
+            <script type="text/javascript" src="../js/project01.js"></script>         
+            <script type="text/javascript" src="../js/project02.js"></script>   
 
     </main>
 
