@@ -23,9 +23,9 @@
 			out.println("<div id=\"store"+i+"\" class=\"store\">");
 			out.println("<div class=\"keep_icon\">");
 			out.println("<img src=\"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/star_yellow.png\"");
-			out.println("id=\"keepImg"+ i +"\" onclick = \"sendRequest("+storeCode+"); keepClick("+i+");\" onmouseover=\"onHover("+i+")\" onmouseout=\"offHover("+i+")\">");
+			out.println("id=\"keepImg"+ i +"\" onclick = \"sendRequest("+storeCode+"); keepClick2("+i+");\" onmouseover=\"onHover2("+i+")\" onmouseout=\"offHover2("+i+")\">");
 			out.println("</div>");
-			out.println("<a onclick=\"forPopup("+storeCode+")\">");
+			out.println("<a href=\"Store_0427.jsp?storeCode="+storeCode+"\">");
 			out.println("<div class=\"store_photo\" style=\"background:url(http://192.168.250.44"+wsdp.getStoreImagePath()+") no-repeat; background-size: 100%;\"></div>");
 			out.println("<div class=\"store_details\">");
 			out.println("<div class=\"store_name\"><span class=\"subject\">가게명: </span><span class=\"gray\">"+wsdp.getStoreName()+"</span></div><hr>");
@@ -38,3 +38,5 @@
 		}
 	}
 %>
+
+<script type="text/javascript" src="../js/keepImg_star.js"></script>   

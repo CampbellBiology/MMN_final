@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../CSS/style_store_store_info.css">
     <link rel="stylesheet" href="../CSS/style_store_create_review.css">
     <link rel="stylesheet" href="../CSS/style_store_store_show_review.css">
+    <link href="../CSS/template.css" rel="stylesheet" />
        <link href="../CSS/main_0427.css" rel="stylesheet"/>
 
 
@@ -100,7 +101,7 @@
 			ArrayList<menuData> list = _db.menufindAll();
 			Collections.sort(rtdCntList);
 		/* 	String userID = (String)session.getAttribute("memberID"); */
-			System.out.println("Store_0424.jsp userID : " + userID);
+			System.out.println("Store_0427.jsp userID : " + userID);
 			
 			ArrayList<reviewData> rdList = _db.getReviewByStoreCode(storeCode);
 			
@@ -471,8 +472,40 @@
                 }
 
             </script>
+            
+            <script>
+
+function sendRequest2() {
+		var httpRequest;
+		function createRequest() {
+			if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+											// 오페라 등
+				return new XMLHttpRequest();
+			} else { // 익스플로러 6과 그 이하의 버전
+				return new ActiveXObject("Microsoft.XMLHTTP");
+			}
+		}
+		function receiveResponse() {
+			// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+			if (httpRequest.readyState == XMLHttpRequest.DONE
+					&& httpRequest.status == 200) {
+				document.getElementById("watchlist_popup").innerHTML = httpRequest.responseText;
+			}
+		}
+		httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+		httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+															// 상태를 파악함.
+		// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+		httpRequest.open("POST", "watchlist_popup.jsp", true);
+		httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		httpRequest.send("userID=<%=userID%>"); // Http 요청을 보냄.
+		}
+		</script>
+		
+		
             <script type="text/javascript" src="../js/header.js"></script>
-            <script type="text/javascript" src="../js/project02.js"></script>
+            <script type="text/javascript" src="../js/project01.js"></script>         
+            <script type="text/javascript" src="../js/project02.js"></script>   
 
     </main>
 
