@@ -106,7 +106,7 @@
         <div class="col-xl-6">
           <div class="text-center text-white">
             <!-- Page heading-->
-            <h1 class="mb-5">오늘 뭐 뭇노?</h1>
+            <h1 class="mb-5" style="font-family: 'Gaegu', cursive; font-size: 70px">오늘 뭐 뭇노?</h1>
             <!-- Signup form-->
             <!-- * * * * * * * * * * * * * * *-->
             <!-- * * SB Forms Contact Form * *-->
@@ -119,7 +119,7 @@
               <!-- Email address input-->
               <div class="row">
                 <div class="col">
-                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" onfocus="window_open()" onblur="window_close()" />
+                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" onfocus="window_open()" onblur="window_close()" autocomplete="off" />
                   <!-- <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
                                         <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div> -->
                 </div>
@@ -129,12 +129,12 @@
                   </div>
                    	<div id="search_window">
                       <div id="search_tag">
-                        <div class="search_title">태그</div>
+                        <div class="search_title" style="font-family: 'Gaegu', cursive;">태그</div>
                         <div id="tagInfo"></div>
                       </div><hr>
                       <div id="search_store">
-                        <div class="search_title">가게</div>
-                        <div><a id="storeInfo"></a></div>
+                        <div class="search_title" style="font-family: 'Gaegu', cursive;">가게</div>
+                        <div id="storeInfo"></div>
                       </div>
                     </div>
               </div>
