@@ -5,13 +5,15 @@
 
 #loginasdf {
     position: absolute;
-    right: 150px;
+    top:10px;
+    right: 160px;
     /* display: block; */
     display:none;
 }
 
 #signupasdf {
     position: absolute;
+       top:10px;
     right: 50px;
     /* display: block; */
     display:none;
@@ -21,6 +23,7 @@
 /* 로그인 완료 시 display block으로  */
 #watchlist_button {
     position: absolute;
+       top:7px;
     right: 150px;
     border: none;
     background: none;
@@ -31,6 +34,7 @@
 /* 로그인 완료 시 display block으로  */
 #profile {
     position: absolute;
+       top:5px;
     right: 50px;
     width: 60px;
     height: 60px;

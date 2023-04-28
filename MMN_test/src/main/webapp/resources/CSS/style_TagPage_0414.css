@@ -24,7 +24,7 @@
 
 #headerTitle {
   position: absolute;
-  top: 30px;
+  top: 70px;
   width: 100%;
   margin: 0 auto;
   height: 100px;
@@ -57,11 +57,11 @@ main {
   overflow: hidden;
 }
 
-.store_photo {
+.tag_store_photo {
   float: left;
   width: 300px;
   height: 300px;
-  /* background-color: aqua; */
+   background-color: aqua; 
   cursor: pointer;
 }
 
@@ -71,76 +71,87 @@ main {
 }
 
 .store_info {
-  /* background-color: blueviolet; */
   /* float:right; */
-  position: absolute;
-  left: 36%;
-  top: 3%;
+  position: relative;
+  left: 0px;
+  top:10px;
   width: 600px;
-  margin-left: -10px;
   display: inline-block;
 }
 
 .first_row {
   width: 250px;
   height: 50px;
-  margin-top: 1rem;
-  /* background-color: rgb(50, 114, 93); */
+  position: relative;
+  top: 0px;
+  left: -430px;
 }
 
 .index {
   position: absolute;
-  font-size: 2rem;
-  top:5%;
+  font-size: 30px;
+  top:0px;
+  left: 0px;
   font-weight: 600;
   color: #E17305;
 
 }
 
-.store_name {
+.store_name > a {
   position: absolute;
-  left: 9%;
-  top:5%;
+  left: 40px;
+  top:0px;
   margin: 0px;
-  font-size: 2rem;
+  font-size: 30px;
   color:rgb(74, 74, 74);
   cursor: pointer;
+  text-decoration: none;
   /* background-color: aquamarine; */
+}
+
+.store_name > a:hover {
+text-decoration: none;
+  color:rgb(74, 74, 74);
 }
 
 .second_row {
   width: 500px;
   height: 30px;
   /* background-color: aquamarine; */
+  position: absolute;
+  left: -430px;
+  top:45px;
 }
 
 .score {
   position: absolute;
-  top: 24%;
+  top: 0px;
+   left:0px;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 20px;
   color: #e11705;
 }
 
 .store_category {
   position: absolute;
-  left: 9%;
-  top: 25%;
+  left:50px;
+  top: 0px;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 20px;
   color:gray;
 }
 
 .store_addr {
   position: absolute;
-  top: 40%;
+  top: 80px;
+  left: -430px;
   font-weight: 400;
   text-align: left;
   color: rgb(157, 157, 157);
-  margin-top: 2px;
+    font-size: 15px;
 }
 
-.store_keep {
+.tag_store_keep {
   position: absolute;
   top: 3%;
   right: 0%;
@@ -149,8 +160,8 @@ main {
 
 .watchlist_title {
   position: absolute;
-  top: 41%;
-  right: 4%;
+  top: 100px;
+  right: 8px;
   color:#5d5d5d;
   z-index: 5;
   font-size: 16px;
@@ -159,13 +170,14 @@ main {
 .review {
   width: 600px;
   height: 130px;
-  /* background-color: rgb(177, 125, 225); */
-  padding-top: 30px;
+  position: relative;
+  top: 120px;
+  left: 0px;
 }
 
 .profile {
   position: absolute;
-  top: 60%;
+  top: 10px;
 
   width: 90px;
   height: 90px;
@@ -183,26 +195,27 @@ main {
 
 .content {
   position: absolute;
-  left: 20%;
+  left: 120px;
+  top: 10px;
   width: 480px;
   height: 100px;
   text-align: left;
 }
 
-h4 {
+.content > h4 {
   position: absolute;
-  top: 5%;
+  top: 0px;
   font-weight: 400;
   text-align: left;
   font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
 }
 
-p {
+.content> p {
   position: absolute;
-  top: 50px;
+  top: 30px;
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 100;
-  margin: 0px;
   width: 480px;
   color: gray;
   font-size: 14px;
@@ -216,14 +229,14 @@ p {
    -webkit-box-orient: vertical;
 }
 
-.more_info {
+.more_info > a{
   position: absolute;
   text-align: right;
   color:rgb(74, 74, 74);
   cursor: pointer;
   letter-spacing: 2px;
-  right: 0%;
-  top: 96%;
+  right: 0px;
+  top: 240px;
 }
 
 .more_info>a:hover{
