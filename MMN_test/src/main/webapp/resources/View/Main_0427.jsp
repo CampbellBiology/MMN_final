@@ -16,6 +16,7 @@
   <meta name="author" content="" />
   <title>MMN-main</title>
 
+
   <link href="../CSS/template.css" rel="stylesheet" />
   <link href="../CSS/tag.css" rel="stylesheet" />
   <link href="../CSS/modal.css" rel="stylesheet" />
@@ -58,8 +59,8 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
-			<a class="navbar-brand" href="javascript:brandClick();" id="brand"><img
-				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
+			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
+				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> <a
 				class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
 			<button type="button" id="watchlist_button"
@@ -105,7 +106,7 @@
         <div class="col-xl-6">
           <div class="text-center text-white">
             <!-- Page heading-->
-            <h1 class="mb-5">오늘 뭐 뭇노?</h1>
+            <h1 class="mb-5" style="font-family: 'Gaegu', cursive; font-size: 70px">오늘 뭐 뭇노?</h1>
             <!-- Signup form-->
             <!-- * * * * * * * * * * * * * * *-->
             <!-- * * SB Forms Contact Form * *-->
@@ -118,7 +119,7 @@
               <!-- Email address input-->
               <div class="row">
                 <div class="col">
-                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" onfocus="window_open()" onblur="window_close()" />
+                  <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" onfocus="window_open()" onblur="window_close()" autocomplete="off" />
                   <!-- <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
                                         <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div> -->
                 </div>
@@ -128,12 +129,12 @@
                   </div>
                    	<div id="search_window">
                       <div id="search_tag">
-                        <div class="search_title">태그</div>
+                        <div class="search_title" style="font-family: 'Gaegu', cursive;">태그</div>
                         <div id="tagInfo"></div>
                       </div><hr>
                       <div id="search_store">
-                        <div class="search_title">가게</div>
-                        <div><a id="storeInfo"></a></div>
+                        <div class="search_title" style="font-family: 'Gaegu', cursive;">가게</div>
+                        <div id="storeInfo"></div>
                       </div>
                     </div>
               </div>
@@ -168,7 +169,7 @@
       	int lim = Math.min(15, tdList.size());
       	for(int i=0;i<lim;i++){
       %>
-      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0414.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()" class="a">#<%= tdList.get(i).getTagName() %></a></button>
+      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0427.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()" class="a">#<%= tdList.get(i).getTagName() %></a></button>
       
       <%	
       }
@@ -213,7 +214,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
+                    <a href="Store_0427.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -281,7 +282,7 @@
 						&& httpRequest.status == 200) {
 					document.getElementById("tagInfo").innerHTML=httpRequest.responseText;
 			//		d1.insertAdjacentHTML('afterbegin', '\''+httpRequest.responseText+'\'');
-			//		document.getElementById("tagInfo").innerHtml = '<a id="tagInfo" href="TagPage_0414.jsp">dd</a>'//httpRequest.responseText;
+			//		document.getElementById("tagInfo").innerHtml = '<a id="tagInfo" href="TagPage_0427.jsp">dd</a>'//httpRequest.responseText;
 				}
 			}
 			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
@@ -355,7 +356,33 @@
 		}
 	</script>
 	
-	
+	<script>
+		function sendRequest(sc) {
+			var httpRequest;
+			function createRequest() {
+				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
+												// 오페라 등
+					return new XMLHttpRequest();
+				} else { // 익스플로러 6과 그 이하의 버전
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+			}
+			function receiveResponse() {
+				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
+				if (httpRequest.readyState == XMLHttpRequest.DONE
+						&& httpRequest.status == 200) {
+					document.getElementById("text").innerHTML = httpRequest.responseText;
+				}
+			}
+			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
+			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
+																// 상태를 파악함.
+			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
+			httpRequest.open("POST", "watchlistAddOrDelete2.jsp", true);
+			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
+			}
+		</script>
 		<script>
 var count = 0;
 
@@ -430,8 +457,11 @@ function window_close() {
 
   <!-- template 라이브러리 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/scripts.js"></script>
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+  
+   <script type="text/javascript" src="../js/header.js"></script>
+
+            <script type="text/javascript" src="../js/keepImg_star.js"></script>    
 
 
 </body>

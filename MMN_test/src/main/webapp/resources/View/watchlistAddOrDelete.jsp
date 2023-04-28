@@ -17,9 +17,8 @@
 		String userID = (String)session.getAttribute("memberID");
 		System.out.println("watchlistAddOrDelete session2:"+session.getAttribute("memberID"));
 		int storeCode = Integer.parseInt(request.getParameter("storeCode"));
-		
-		String keepType = request.getParameter("keepType");
 
+		String keepType = request.getParameter("keepType");
 		System.out.println("watchlistAddOrDelete " + userID + "/" + storeCode);
 		System.out.println("watchlistAddOrDelete keepType :" + keepType);
 
@@ -31,7 +30,7 @@
 			System.out.println("Delete");
 			db.deleteWatchlistInfo(userID, storeCode);
 		}
-		else if(res == false && (keepType.equals("keep_btn_sel.png")||keepType.equals("keep_btn_hover.png"))){
+		else if(res == false && keepType.equals("keep_btn_sel.png")){
 			System.out.println("Add");
 			db.addWatchlistInfo(userID, storeCode);
 		}
