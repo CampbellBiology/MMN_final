@@ -11,7 +11,7 @@
     font-weight: 600;
     text-align: center;
     margin: 50px auto 50px auto;
-    box-shadow: 5px 10px 10px 1px rgba(0,0,0,.3); 
+    box-shadow: 5px 10px 10px 1px rgba(0,0,0,0.3); 
   }
   
   
@@ -44,6 +44,6 @@
     word-break:break-word;    
     /* overflow-y:auto;           */
     min-height:100px;        
-    max-height:200px;      
+    max-height:260px;      
   }
   

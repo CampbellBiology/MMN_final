@@ -1,8 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald);
 @import url(https://fonts.googleapis.com/css?family=Quattrocento);
+
 .storeSet {
   font-family: 'Quattrocento', Arial, sans-serif;
   position: relative;
+  top: -15px;
   overflow: hidden;
   margin: 10px;
   /* min-width: 230px;
@@ -15,7 +17,7 @@
 
 
     width: 200px;
-    height: 200px;
+    height: 230px;
     /* border: 15px solid rgb(255, 255, 255); */
     background: url(../UI/storeImg/1.jpg);
     background-repeat: no-repeat;

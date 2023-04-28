@@ -1,19 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
 
-
+* {
+font-family: 'Noto Sans KR', sans-serif;
+}
 
 #loginasdf {
     position: absolute;
-    top:10px;
-    right: 160px;
+    top:13px;
+    right: 170px;
     /* display: block; */
     display:none;
+    font-family: jo
 }
 
 #signupasdf {
     position: absolute;
-       top:10px;
+       top:13px;
     right: 50px;
     /* display: block; */
     display:none;
@@ -177,53 +181,6 @@
     cursor: pointer;
 }
 
-/* .keep_icon {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 5%;
-    left: 22%;
-    z-index: 1;
-    cursor: pointer;
-} */
-
-
-
-/* 킵리스트 버튼, 킵 상태일 때가 디폴트 킵 해제했을 때 empty_star에 display 주기 */
-/* .empty_star가 더 위에 있음 */
-
-
-
-/*
-.star {
-	position: absolute;
-	 top: 8%;
-    left: 26%;
-    
-    filter: drop-shadow(2px 2px 2px gray);
-    cursor: pointer;
-    z-index: 100;
-    fill:rgb(255, 242, 0);
-    width: 30px;
-    height: 30px;
-}
-
-.star:hover {
-    fill:rgb(255, 250, 157);
-}
-
-.empty_star {
-    position: absolute;
-    top: 8%;
-    left: 26%;
-    
-    filter: drop-shadow(2px 2px 2px gray);
-    cursor: pointer;
-    z-index: 2;
-    fill: #F2F2F2;
-}
-*/
-
 
 
 .keep_btn {
@@ -231,12 +188,6 @@
     height: 100%;
     /* filter: drop-shadow(2px 2px 2px #ffff00); */
 }
-
-/* #store_photo{
-    background-color: aliceblue;
-    width: 800px;
-    height: 600px;   
-}*/
 
  .store_photo {
     width: 100px;
@@ -309,49 +260,6 @@ hr {
 
 
 
-/* 가게0~9번까지 보이게 할 때 block, 안 보일 때 none */
-
-/* #store0 {
-    display: none;
-}
-
-#store1 {
-    display: none;
-}
-
-#store2 {
-    display: none;
-}
-
-#store3 {
-    display: none;
-}
-
-#store4 {
-    display: none;
-}
-
-#store5 {
-    display: none;
-}
-
-#store6 {
-    display: none;
-}
-
-#store7 {
-    display: none;
-}
-
-#store8 {
-    display: none;
-}
-
-#store9 {
-    display: none;
-} */
-
-
 /* 킵리스트에 가게 0개일 때 display block, 1개 이상이면 display none */
 .list_none {
   /*   display: none; */
@@ -394,40 +302,6 @@ hr {
 }
 
 
-
-/* ifram으로 불러온 html */
-/* 페이지 전환될 때마다 각각 display none이거나 block */
-/* #main_page {
-    display: block;
-}
-
-#store_page {
-    display: none;
-}
-
-#tag_page {
-    display: none;
-}
- */
-/* #tag_page {
-    display: none;
-} */
-
-
-
-/* .iframeContainer {
-  position: relative;
-  width: 100%;
-  height: 0;
-}
-
-.iframeContainer >#main_page, .iframeContainer >#store_page, .iframeContainer >#tag_page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}  */
 
 #keepImg0,
 #keepImg1,
