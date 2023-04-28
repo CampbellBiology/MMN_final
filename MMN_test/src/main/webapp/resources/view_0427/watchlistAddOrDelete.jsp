@@ -18,17 +18,19 @@
 		System.out.println("watchlistAddOrDelete session2:"+session.getAttribute("memberID"));
 		int storeCode = Integer.parseInt(request.getParameter("storeCode"));
 
+		String keepType = request.getParameter("keepType");
 		System.out.println("watchlistAddOrDelete " + userID + "/" + storeCode);
+		System.out.println("watchlistAddOrDelete keepType :" + keepType);
 
 		boolean res = db.haveWatchlist(userID, storeCode);
 		
 		System.out.println("watchlistAddOrDelete");
 		
-		if(res == true){
+		if(res == true && keepType.equals("keep_btn.png")){
 			System.out.println("Delete");
 			db.deleteWatchlistInfo(userID, storeCode);
 		}
-		else{
+		else if(res == false && keepType.equals("keep_btn_sel.png")){
 			System.out.println("Add");
 			db.addWatchlistInfo(userID, storeCode);
 		}

@@ -29,7 +29,7 @@
 			System.out.println("Delete");
 			db.deleteWatchlistInfo(userID, storeCode);
 		}
-		else if(res == false){
+		else{
 			System.out.println("Add");
 			db.addWatchlistInfo(userID, storeCode);
 		}

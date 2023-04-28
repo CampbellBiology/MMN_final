@@ -378,7 +378,7 @@
 			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
 																// 상태를 파악함.
 			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
-			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
+			httpRequest.open("POST", "watchlistAddOrDelete2.jsp", true);
 			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
 			}
