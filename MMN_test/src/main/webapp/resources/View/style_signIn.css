@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    /* font-family: 'Nanum Gothic', sans-serif; */
+    text-align: center;
+}
+
+form {
+    text-align: center;
+    display: inline-block;
+    /* background-color: rgb(255, 226, 226); */
+    /* border: 1px solid black; */
+    position: relative;
+    padding-left: 20%;
+}
+
+
+#leftside {
+    /* display: block; */
+    /* background-color: aqua; */
+    /* border: 1px solid black; */
+    margin: auto;
+    position: absolute;
+    top: 20%;
+    /* left: -10%; */
+    margin-left: -400px;
+}
+
+#form {
+    display: inline-block;
+    justify-content: center;
+    /* border: 1px solid black; */
+    margin-left: 30px;
+    margin-top: 30px;
+    /* margin-left: 6%; */
+}
+
+#maintext {
+    font-size: 2.5em;
+    color: rgb(89, 89, 89);
+    font-weight: 500;
+    margin: 40px;
+    font-family: 'Gaegu', cursive;
+}
+
+.txtbox {
+    border: 1px solid rgb(203, 203, 203);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0);
+    width: 400px;
+    height: 35px;
+    color: rgb(90, 90, 90);
+    /* margin-bottom: 10px; */
+}
+
+.noti {
+    /* background-color: rgb(194, 121, 49); */
+    width: 400px;
+    height: 30px;
+    margin: auto;
+    display: block;
+    font-size: 14px;
+    text-align: left;
+    position: absolute;
+    padding-top: 3px;
+    color:rgb(250, 67, 11);
+}
+
+#formText {
+    text-align: left;
+    font-weight: 600;
+    font-size: 21px;
+    color: rgb(89, 89, 89);
+    margin-bottom: 5px;
+    margin-left: 0px;
+    font-family: 'Gaegu', cursive;
+}
+
+#blank {
+    height: 40px;
+}
+
+#cancel {
+    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_cancel.png) no-repeat;
+    background-size: contain;
+    width: 160px;
+    height: 60px;
+    cursor: pointer;
+    border: none;
+    margin-left: 10px;
+    margin-right: 40px;
+}
+
+#submit {
+    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_join.png) no-repeat;
+    background-size: contain;
+    width: 160px;
+    height: 60px;
+    cursor: pointer;
+    border: none;
+}
+
+#cancel:hover {
+    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_cancel_hover.png) no-repeat;
+    background-size: contain;
+}
+
+#submit:hover {
+    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_join_hover.png) no-repeat;
+    background-size: contain;
+}
+
+
+
+.subtext {
+    font-size: 15px;
+    color: rgb(139, 139, 139);
+    font-family: 'Gaegu', cursive;
+    letter-spacing: -0.5px;
+}
+
+
+
+/*인풋박스 커스텀*/
+.filebox .upload-name {
+    display: inline-block;
+    height: 35px;
+    padding: 0 10px;
+    vertical-align: middle;
+
+    width: 390px;
+    color: rgb(139, 139, 139);
+    border: 1px solid rgb(203, 203, 203);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.filebox label {
+    position: relative;
+    top: -70px;
+    right: -168px;
+    padding: 5px 10px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #b6b6b6;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 30px;
+    font-size: 14px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
