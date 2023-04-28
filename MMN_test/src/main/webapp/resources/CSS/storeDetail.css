@@ -21,7 +21,7 @@
     /* border: 15px solid rgb(255, 255, 255); */
     background: url(../UI/storeImg/1.jpg);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     border: 10px solid white;
     
   }
