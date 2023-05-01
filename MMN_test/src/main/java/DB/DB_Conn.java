@@ -968,13 +968,14 @@ public class DB_Conn {
 		return ret;
 	}
 
-	//27. 가게페이지에서 리뷰내용 db에 입력/저장하는 메소드(리뷰데이터)
-	//userid로 username 추출해서 표시 예정
+	// 27. 가게페이지에서 리뷰내용 db에 입력/저장하는 메소드(리뷰데이터)
+	// userid로 username 추출해서 표시 예정
 	public void Insert_ReviewData(reviewData _Data) {
 		PreparedStatement pstmt = null; // SQL실행객체
 
 		try {
-			//anonymous으로 리뷰작성 시 익명 체크 시 value값으로 null체크하여 1(true), 체크 안한 경우 null값으로 디폴트로 0입력
+			// anonymous으로 리뷰작성 시 익명 체크 시 value값으로 null체크하여 1(true), 체크 안한 경우 null값으로 디폴트로
+			// 0입력
 			if (_Data.anonymous == null) {
 				String sql = "insert into reviewtbl(storeCode, userId, contents, rating, photoPath)"
 						+ " VALUES(?,?,?,?,null)";
@@ -1024,7 +1025,7 @@ public class DB_Conn {
 		}
 	}
 
-	//28. 가게페이지에서 메뉴리스트와 태그리스트를 DB에 입력/저장하는 메소드
+	// 28. 가게페이지에서 메뉴리스트와 태그리스트를 DB에 입력/저장하는 메소드
 	public void Insert_List(String menuList, String uid, String tagList, String review_store) {
 		// TODO Auto-generated method stub
 		PreparedStatement pstmt = null;
@@ -1033,9 +1034,9 @@ public class DB_Conn {
 		String[] tli = tagList.split(",");
 		String msql, tsql;
 		try {
-			//메뉴 리스트 입력
+			// 메뉴 리스트 입력
 			for (int i = 0; i < mli.length; i++) {
-				//해당 유저가 가장 최근에 작성한 리뷰데이터에 메뉴정보가 입력되도록 order by로 정렬하여 데이터 입력
+				// 해당 유저가 가장 최근에 작성한 리뷰데이터에 메뉴정보가 입력되도록 order by로 정렬하여 데이터 입력
 				msql = "insert into reviewtargettbl(_index, foodCode) values ((select reviewtbl.reviewIndex from reviewtbl where userId='"
 						+ uid + "' "
 						+ "order by regDate desc limit 0, 1), (select menutbl.foodCode from menutbl where (menutbl.foodName = '"
@@ -1044,7 +1045,7 @@ public class DB_Conn {
 				pstmt.executeUpdate();
 
 			}
-			//태그 리스트 입력
+			// 태그 리스트 입력
 			for (int i = 0; i < tli.length; i++) {
 				tsql = "insert into tag_storetbl(storeCode, tagID) values ((select tagtbl.tagID from tagtbl where tagName = '"
 						+ tli[i] + "'), " + review_store + ")";
@@ -1064,7 +1065,7 @@ public class DB_Conn {
 		}
 	}
 
-	//29. 가게페이지에서 리뷰내용 출력을 위한 정보 조회하는 메소드(리뷰 tbl)
+	// 29. 가게페이지에서 리뷰내용 출력을 위한 정보 조회하는 메소드(리뷰 tbl)
 	/*
 	 * index; public String storeCode; public String userID; public String contents;
 	 * public String date; public String rating; public String display; public
@@ -1073,64 +1074,42 @@ public class DB_Conn {
 	// reviewData
 	// int _index, String _contents, String _regDate, String _rating, String
 	// _anonymous, String _photoPath
-	public ArrayList<String> get_ReviewData(int i, String strSort) {
-		ArrayList<String> arr = new ArrayList<>();
+	//review, sd.getStoreCode(), strSort
+	public ArrayList<reviewData> get_ReviewData(int storeCode, String strSort) {
+		ArrayList<reviewData> arr = new ArrayList<>();
 		Statement stmt = null;
 		ResultSet res = null;
 
 		// 리뷰내용조회 쿼리문
 		String sql = "";
 		try {
-			switch(strSort) {
-				case "5":
-					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = 5 order by regDate desc limit "
-							+ i + ", 1";
-					break;
-				case "4":
-					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = 4 order by regDate desc limit "
-							+ i + ", 1";
-					break;
-				case "3":
-					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = 3 order by regDate desc limit "
-							+ i + ", 1";
-					break;
-				default:
-					sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from reviewtbl order by regDate desc limit "
-							+ i + ", 1";
+			if(!strSort.equals("0")) {
+				sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = "
+						+ strSort +" and storeCode = "
+						+ storeCode + " order by regDate desc limit 0,3";
+			}else {
+				sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where storeCode = "
+						+ storeCode + " order by regDate desc limit 0,3";
 			}
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql);
-
+			//reviewIndex, userId, contents, regDate, rating, anonymous, photoPath
 			while (res.next()) {
-				// reviewData rd = new reviewData();
-				// rd.setIndex(res.getInt("reviewIndex"));
-				// rd.setContents(res.getString("contents"));
-				// rd.setDate(res.getString("regDate"));
-				// rd.setRating(res.getString("rating"));
-				// rd.setAnonymous(res.getString("anonymous"));
-				// rd.setPhotoPath(res.getString("photoPath"));
+				reviewData rd = new reviewData();
+				//data 클래스 방식
+				rd.setIndex(res.getInt("reviewIndex"));
+				rd.setUserId(res.getString("userId"));
+				rd.setContents(res.getString("contents"));
+				rd.setRating(res.getString("rating"));
+				rd.setDate(res.getString("regDate"));
+				rd.setAnonymous(res.getString("anonymous"));
+				rd.setPhotoPath(res.getString("photoPath"));
 
-				arr.add(res.getString("reviewIndex"));
-				arr.add(res.getString("userId"));
-				arr.add(res.getString("contents"));
-				arr.add(res.getString("regDate"));
-				switch (res.getString("rating")) {
-				case "5":
-					arr.add("억수로 마싯다");
-					break;
-				case "4":
-					arr.add("갠찮드라");
-					break;
-				case "3":
-					arr.add("영 파이다");
-					break;
-				default:
-					arr.add("평가없음");
-				}
-				arr.add(res.getString("anonymous"));
-				arr.add(res.getString("photoPath"));
+				System.out.println("data: "+res.getInt("reviewIndex"));
+				
+				arr.add(rd);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1149,8 +1128,8 @@ public class DB_Conn {
 		return arr;
 	}
 
-	//30. 리뷰내용 출력을 위해 리뷰인덱스 받아서 리뷰타겟(메뉴)를 가져온다.(menu list)
-	//기록) (제거)storeCode와 reviewIndex
+	// 30. 리뷰내용 출력을 위해 리뷰인덱스 받아서 리뷰타겟(메뉴)를 가져온다.(menu list)
+	// 기록) (제거)storeCode와 reviewIndex
 	public ArrayList<String> get_ReviewTarget(int ri) {
 		ArrayList<String> arr = new ArrayList<>();
 		Statement stmt = null;
@@ -1199,20 +1178,20 @@ public class DB_Conn {
 	 * reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex =
 	 * (select count(*) from mmn.reviewtbl where rating = 3);
 	 */
-	
-	//31. 리뷰 개수 카운트하는 함수
-	public int get_review_count_All() {
+
+	// 31. 리뷰 개수 카운트하는 함수
+	public int get_review_count_All(int storeCode) {
 		Statement stmt = null;
 		ResultSet res = null;
 		int reviewcount = 0;
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql_all = "SELECT reviewtbl.reviewIndex FROM mmn.reviewtbl order by regDate desc limit 0, 1";
+			String sql_all = "SELECT COUNT(*)as reviewCount FROM mmn.reviewtbl where storeCode =" + storeCode;
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql_all);
 			while (res.next()) {
-				reviewcount = res.getInt("reviewIndex");
+				reviewcount = res.getInt("reviewCount");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1229,75 +1208,17 @@ public class DB_Conn {
 		}
 		return reviewcount;
 	}
-	
-	//32~34. 평점별 리뷰 개수 카운트
-	//32. great
-	public int get_review_count_great() {
+
+	// 32~34. 평점별 리뷰 개수 카운트
+	// 32. great
+	public int get_review_count_great(int storeCode) {
 		Statement stmt = null;
 		ResultSet res = null;
 		int reviewcount = 0;
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 5";
-			// select문 실행 명령어
-			res = stmt.executeQuery(sql_all);
-			while (res.next()) {
-				reviewcount = res.getInt("count");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (res != null) {
-					res.close();
-				}
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return reviewcount;
-	}
-	//33. good
-	public int get_review_count_good() {
-		Statement stmt = null;
-		ResultSet res = null;
-		int reviewcount = 0;
-		try {
-			// sql 실행객체 생성
-			stmt = conn.createStatement();
-			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 4";
-			// select문 실행 명령어
-			res = stmt.executeQuery(sql_all);
-			while (res.next()) {
-				reviewcount = res.getInt("count");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (res != null) {
-					res.close();
-				}
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return reviewcount;
-	}
-	//34. bad
-	public int get_review_count_bad() {
-		Statement stmt = null;
-		ResultSet res = null;
-		int reviewcount = 0;
-		try {
-			// sql 실행객체 생성
-			stmt = conn.createStatement();
-			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 3";
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 5 and storeCode = " + storeCode;
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql_all);
 			while (res.next()) {
@@ -1319,18 +1240,81 @@ public class DB_Conn {
 		return reviewcount;
 	}
 
-	//35. 가게페이지에서 가게별 가장많이 먹은 메뉴를 보여주기 위한 메뉴 개수를 카운트하여 리턴
+	// 33. good
+	public int get_review_count_good(int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		int reviewcount = 0;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 4 and storeCode = " + storeCode;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql_all);
+			while (res.next()) {
+				reviewcount = res.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reviewcount;
+	}
+
+	// 34. bad
+	public int get_review_count_bad(int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		int reviewcount = 0;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 3 and storeCode = " + storeCode;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql_all);
+			while (res.next()) {
+				reviewcount = res.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reviewcount;
+	}
+
+	// 35. 가게페이지에서 가게별 리뷰에 달린 메뉴 수가 가장 많은 메뉴 1개를 추출하여 메뉴명 리턴
 	// td.setTagId(res.getInt("tagID"));
 	// td.setTagName(res.getString("tagName"));
 	// td.setTagViews(res.getInt("tagView"));
-	public String get_menuCount() {
+	public String get_menuCount(int storeCode) {
 		String max_menu = null;
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql = "select menutbl.foodName, count(*)as foodCount from menutbl, reviewtargettbl where menutbl.foodCode = reviewtargettbl.foodCode group by menutbl.foodName order by foodCount desc  limit 0, 1;";
+			// 푸드코드로 정렬되면서 푸드코드를 제외한 정보를 빼내기가 어려워 푸드코드 함께 메뉴명 그리고 count결과를 가져온다.
+			String sql = "SELECT menutbl.foodCode, menutbl.foodName, COUNT(*)as foodCount FROM mmn.reviewtargettbl, mmn.menutbl where storeCode = "
+					+ storeCode
+					+ " and reviewtargettbl.foodCode = menutbl.foodCode GROUP BY foodCode order by foodCount desc limit 0,1";
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
@@ -1353,15 +1337,16 @@ public class DB_Conn {
 		return max_menu;
 	}
 
-	//36. 가게페이지에서 가장많이 사용한 태그명을 3개 추출
-	public ArrayList<String> get_tagCount() {
+	// 36. 가게페이지에서 가장많이 사용한(뷰 수가 높은) 태그명을 3개를 추출하여 리턴
+	public ArrayList<String> get_tagCount(int storeCode) {
 		ArrayList<String> max_tag = new ArrayList<>();
 		Statement stmt = null;
 		ResultSet res = null;
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql = "SELECT tagtbl.* FROM mmn.tagtbl  where tagView = (select max(tagView) from tagtbl) limit 0, 3";
+			String sql = "SELECT tagtbl.tagName FROM mmn.tagtbl where tagID = (SELECT tag_storetbl.tagID FROM mmn.tag_storetbl where storeCode="
+					+ storeCode + " and tag_storetbl.tagID = tagtbl.tagID) order by tagView desc limit 0, 3;";
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
