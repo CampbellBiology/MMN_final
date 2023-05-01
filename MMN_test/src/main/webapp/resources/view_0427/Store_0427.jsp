@@ -601,7 +601,7 @@
 				// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
 				httpRequest.open("POST", "watchlist_popup.jsp", true);
 				httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				httpRequest.send("userID="+<%=userID%>); // Http 요청을 보냄.
+				httpRequest.send("userID=<%=userID%>"); // Http 요청을 보냄.
 			}
 			</script>
 		<!-- 정윤 js 이벤트 처리 -->
