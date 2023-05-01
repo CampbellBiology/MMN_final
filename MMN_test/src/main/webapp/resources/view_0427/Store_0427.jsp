@@ -337,7 +337,7 @@
 						%>
 						<!-- 리뷰 정렬을 위한 파라미터로 보낼 input -->
 						<div id="score_btn2" class="score_btn2-1" onclick="sortAll()">
-							전체 (<%=review_count_All%>)
+						전체 (<%=review_count_All%>)
 						</div>
 						<div id="score_btn2" class="score_btn2-2" onclick="sortGreat()">
 							억수로 마싯다 (<%=review_count_great%>)
@@ -370,7 +370,8 @@
 				ArrayList<reviewData> rd = _db.get_ReviewData(sd.getStoreCode(), strSort);
 				
 				session.removeAttribute("test");
-				session.invalidate();
+				//세션종료
+				//session.invalidate();
 				//리스트방식
 				/*int review_in = Integer.parseInt(rd.get(0));
 				String review_id = rd.get(1);
@@ -383,13 +384,12 @@
 					review_id = "익명";
 				}
 				*/
-				System.out.println(rd);
-				//리뷰한 메뉴정보 리스트를 가져오는 함수실행.
-				//파라미터로 (제거)storeCode와 review_index
-				for(reviewData data : rd){
-					System.out.println(data.getIndex());
-					ArrayList<String> menuList = _db.get_ReviewTarget(data.getIndex());
-					//String[] review_photo = data.getPhotoPath().split(",");
+					//리뷰한 메뉴정보 리스트를 가져오는 함수실행.
+					//파라미터로 (제거)storeCode와 review_index
+					for(reviewData data : rd){
+						System.out.println(data.getIndex());
+						ArrayList<String> menuList = _db.get_ReviewTarget(data.getIndex());
+						//String[] review_photo = data.getPhotoPath().split(",");
 			%>
 			<form method="post" id="review_form2" action="reviewSortServlet">
 				<input type="text" id="review_SortText" name="review_SortTexted" style="display: none">
@@ -445,7 +445,7 @@
 						</div>
 					</div>
 					<%
-						}		
+							}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -474,7 +474,6 @@
 		<script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script src="../js/store.js" type="text/javascript" charset="ansi"></script>
-		<script type="text/javascript" src="../js/project01.js"></script>
 		<script type="text/javascript" src="../js/data.js"></script>
 		<!-- 메인 이미지 -->
 
@@ -821,19 +820,31 @@
 			}
 			//억수로 마싯다 클릭시 평점 5인 리뷰 5개 출력.
 			function sortGreat() {
-				document.getElementById("review_SortText").value = 5;
-				document.getElementById("review_form2").submit();
+				if(<%=review_count_great%> == 0){
+					alert("작성된 리뷰가 없습니다.");
+				}else{
+					document.getElementById("review_SortText").value = 5;
+					document.getElementById("review_form2").submit();
+				}
 			}
 			//갠찮드라 클릭시 평점 4인 리뷰 5개 출력.
 			function sortGood() {
-				document.getElementById("review_SortText").value = 4;
-				document.getElementById("review_form2").submit();
+				if(<%=review_count_good%> == 0){
+					alert("작성된 리뷰가 없습니다.");
+				}else{
+					document.getElementById("review_SortText").value = 4;
+					document.getElementById("review_form2").submit();
+				}
 			}
 			//영 파이다 클릭시 평점 3인 리뷰 5개 출력.
 	
 			function sortBad() {
-				document.getElementById("review_SortText").value = 3;
-				document.getElementById("review_form2").submit();
+				if(<%=review_count_bad%> == 0){
+					alert("작성된 리뷰가 없습니다.");
+				}else{
+					document.getElementById("review_SortText").value = 3;
+					document.getElementById("review_form2").submit();
+				}
 			}
 		</script>
 		<!-- 태그부분에 처리하는 기능이 많아서 스크립트를 따로 구분하여 개발 -->
@@ -859,7 +870,7 @@
 			
 			//11. enter시에 태그 배열에 내용 추가하는 메소드/이벤트
 			function show_name(e) {
-				//document.getElementById("id_input_tagName").setAttribute("placeholder", "ex.점심특선");
+				document.getElementById("id_input_tagName").setAttribute("placeholder", "ex.점심특선");
 				//경고문 안보이게
 				document.getElementById("warning_msg").style.display = "none";
 				//input정보
@@ -896,7 +907,7 @@
 					document.getElementById("warning_msg").style.display = "block";
 				} else if (!List.includes(x.value)) {
 					document.getElementById("tagListView").value = null;
-					document.getElementById("tagListView").setAttribute("placeholder", "리스트에 없는 내용입니다.");
+					document.getElementById("id_input_tagName").setAttribute("placeholder", "리스트에 없는 내용입니다.");
 				} else { //빈 검색어라면 log에 none을 표시하고 추가되는 거 없음
 					console.log("none");
 				}
