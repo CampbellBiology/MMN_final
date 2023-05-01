@@ -1035,6 +1035,7 @@ public class DB_Conn {
 		String msql, tsql;
 		try {
 			// 메뉴 리스트 입력
+			//리뷰를 작성한 가게정보와 유저정보, 입력한 메뉴 정보를 조회하여 입력
 			for (int i = 0; i < mli.length; i++) {
 				// 해당 유저가 가장 최근에 작성한 리뷰데이터에 메뉴정보가 입력되도록 order by로 정렬하여 데이터 입력
 				msql = "insert into reviewtargettbl(_index, foodCode) values ((select reviewtbl.reviewIndex from reviewtbl where userId='"
@@ -1046,6 +1047,7 @@ public class DB_Conn {
 
 			}
 			// 태그 리스트 입력
+			//리뷰를 작성한 가게 코드 정보와 입력한 태그 정보를 조회해서 입력
 			for (int i = 0; i < tli.length; i++) {
 				tsql = "insert into tag_storetbl(storeCode, tagID) values ((select tagtbl.tagID from tagtbl where tagName = '"
 						+ tli[i] + "'), " + review_store + ")";
@@ -1102,7 +1104,14 @@ public class DB_Conn {
 				rd.setIndex(res.getInt("reviewIndex"));
 				rd.setUserId(res.getString("userId"));
 				rd.setContents(res.getString("contents"));
-				rd.setRating(res.getString("rating"));
+				switch(res.getString("rating")) {
+					case "4":
+						rd.setRating("갠찮드라");break;
+					case "3":
+						rd.setRating("영 파이다");break;
+					default:
+						rd.setRating("억수로 마싯다");
+				}
 				rd.setDate(res.getString("regDate"));
 				rd.setAnonymous(res.getString("anonymous"));
 				rd.setPhotoPath(res.getString("photoPath"));
