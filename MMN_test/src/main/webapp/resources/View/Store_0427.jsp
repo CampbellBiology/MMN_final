@@ -1,550 +1,1438 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-    <%@page import="DB.*" %>
-    <%@page import="DataClass.*" %>
-    <%@page import="java.util.*" %>
-        <%@page import="Controller.*" %>
-<!Doctype html>
-<html lang="ko">
+package DB;
 
-<head>
-    <meta charset="UTF-8">
-    <title>MMN-가게</title>
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
-    <link rel="stylesheet" href="../CSS/style_store_store_info.css">
-    <link rel="stylesheet" href="../CSS/style_store_create_review.css">
-    <link rel="stylesheet" href="../CSS/style_store_store_show_review.css">
-    <link href="../CSS/template.css" rel="stylesheet" />
-       <link href="../CSS/main_0427.css" rel="stylesheet"/>
+import DataClass.Insert_joinData;
+import DataClass.loginData;
+import DataClass.menuData;
+import DataClass.reviewData;
+import DataClass.rtdCntData;
+import DataClass.storeByTagDataPrint;
+import DataClass.storeData;
+import DataClass.tagData;
+import DataClass.tagListData;
+import DataClass.watchlistData;
 
+public class DB_Conn {
+	String _Sql;
+	final int Max_FoodCode = 10001;
 
-    <link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick.css">
-    <link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick-theme.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../CSS/style_ImagePopUp_0419.css"> -->
+	Connection conn = null;
 
-</head>
+	HashMap<Integer, storeData> store_map = new HashMap<>();
+	HashMap<Integer, menuData> menu_map = new HashMap<>();
+	HashMap<Integer, rtdCntData> rtdCnt_map = new HashMap<>();
 
-<body>
+	public DB_Conn() {
+		Connection();
+	}
 
-  
- <%
-	DB_Conn db = new DB_Conn();
-	String userID = (String) session.getAttribute("memberID");
-	System.out.println("Main_Main.jsp userID:" + userID);
-	watchlist wl = new watchlist(userID);
-	watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
-	ArrayList <tagData> tdList = db.getTagDataList();
-	Collections.sort(tdList);
+	public DB_Conn(String _Sql) {
+		Connection();
+		this._Sql = _Sql;
+	}
 
-	/* int lim = Math.min(wl.getWsdpList().size(), 10);
- 
-	for (int i = 0; i < lim; i++) {
-		arr[i] = wl.getWsdpList().get(i);
-	} */
-	%>
-	<!-- Navigation-->
-	<nav class="navbar navbar-light bg-light static-top">
-		<div class="container">
-			<a class="navbar-brand" href="Main_0427.jsp;" id="brand"><img
-				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> <a
-				class="btn btn-primary" href="Login2.html" id="loginasdf"
-				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
-			<button type="button" id="watchlist_button"
-				style="display:<%=userID == null ? "none" : "block"%>"
-				onclick="sendRequest2()">
-				<img src="../UI/UI/watchlist_active.png" height="50px">
-			</button>
-			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf"
-				style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
+	void Connection() {
+		try {
+			// mysql jdbc driver 로딩
+			Class.forName("com.mysql.jdbc.Driver");
 
-			<!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-			<div id="profile"
-				style="display:<%=userID == null ? "none" : "block"%>">
-				<img src="http://192.168.250.44<%=db.getUserImagePath(userID)%>"
-					id="profile_photo">
-			</div>
-		</div>
-	</nav>
+			// db연결 문자열 but 이방법은 보안에 취약하다. ..
+			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+			String id = "junghan"; // mysql 접속아이디
+			String pwd = "yeil!1234"; // mysql 접속 비번
 
-	<!-- <button id="show">팝업열기</button> -->
-	<section>
-		<div class="background">
-			<div class="window">
+//			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
+//			String id = "root"; // mysql 접속아이디
+//			String pwd = "1234"; // mysql 접속 비번
 
-	<button id="close">
-					<img src="../UI/UI/close1.png" class="close" width="30px"
-						height="30px">
-				</button>
+			// db 접속
+
+			conn = DriverManager.getConnection(url, id, pwd);
+			System.out.println("db접속 성공");
+		} catch (Exception e) {
+			// db관련작업은 반드시 익셉션 처리
+			System.out.println("db접속 실패");
+			e.printStackTrace();
+		}
+	}
+
+	// 1.회원가입
+	// db에서 회원정보를 삽입
+	public void Insert_UserData(Insert_joinData _Data) {
+		PreparedStatement pstmt = null; // SQL실행객체
+
+		try {
+			String sql = "INSERT INTO userTbl(userID, userPW, userName, userEmail, isMaster)" + " VALUES(?,?,?,?,?)";
+
+			// sql 실행객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// ? 에 입력될 값 매핑
+			pstmt.setString(1, _Data.userID);
+			pstmt.setString(2, _Data.userPW);
+			pstmt.setString(3, _Data.userName);
+			pstmt.setString(4, _Data.userEmail);
+			pstmt.setString(5, _Data.isMaster);
+
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+			// 리소스 정리작업
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	// 2. 로그인 정보 매칭 확인
+	// 0 : 마스터계정 로그인 성공 1 : 일반계정 로그인 성공 2: 비밀번호 다름 3: 없는 아이디
+	public int loginMathcing(loginData _data) {
+		try {
+			Statement stmt = null;
+			ResultSet res = null;
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM userTbl where userID = " + "'" + _data.userID + "'";
+			res = stmt.executeQuery(sql);
+
+			String userPW = null;
+			String isMaster = null;
+
+			// 아이디가 존재하면
+			while (res.next()) {
+				// DB의 패스워드와 마스터여부를 가져와서 비교한다.
+				userPW = res.getString("userPW");
+				isMaster = res.getString("isMaster");
+			}
+
+			// userPW에 입력된 값이 있다면
+			if (userPW != null) {
+				// 입력된 패스워드와 데이터베이스의 패스워드가 일치한다면
+				if (userPW.equals(_data.userPW)) {
+					// 만약 마스터 계정이면 0을 리턴한다.
+					if (isMaster.equals("Y")) {
+						return 0;
+						// 마스터 계정이 아니면 1을 리턴한다.
+					} else {
+						return 1;
+					}
+					// 입력된 패스워드와 데이터베이스의 패스워드가 일치하지 않다면 2를 리턴한다.
+				} else {
+					return 2;
+				}
+			}
+
+			// 입력된 패스워드가 없다면 3을 리턴한다.
+			return 3;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 12;
+	}
+
+	//3. 스토어정보 hashmap 만들기
+	// HashMap인 store_map을 만들어간다.
+	// DB에서 스토어테이블의 각각의 컬럼 정보를 가져온다.
+	public void constructStoreMap() {
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM storeTbl";
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				int storeCode = res.getInt("storeCode");
+				String storeName = res.getString("storeName");
+				int cateCode = res.getInt("cateCode");
+				String openAt = res.getString("openAt");
+				String closeAt = res.getString("closeAt");
+				String offDays = res.getString("offDays");
+				String lastOrder = res.getString("lastOrder");
+				String phone = res.getString("phone");
+				String addr = res.getString("addr");
+				String parking = res.getString("parking");
+				String storeImgPath = res.getString("storeImagePath");
+				String web = res.getString("web");
+				String breakStart = res.getString("breakStart");
+				String breakEnd = res.getString("breakEnd");
+
+				// storeDate 클래스의 객체를 생성한다.
+				storeData sd = new storeData(storeCode, storeName, cateCode, openAt, closeAt, offDays, lastOrder, phone,
+						addr, parking, storeImgPath, web, breakStart, breakEnd);
+				// store_map의 키값인 storeCode와 value인 storeData의 객체를 집어넣는다.
+				store_map.put(storeCode, sd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//4. 메뉴 hashmap 만들기
+	//파라미터 가게코드
+	// HashMap 인 menu_map을 만들어간다.
+	public void constructMenuMap(int store) {
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			stmt = conn.createStatement();
+			// SELECT * FROM menuTbl where menutbl.storeCode = 1;
+			String sql = "SELECT * FROM menuTbl where menutbl.storeCode = " + store;
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				int storeCode = res.getInt("storeCode");
+				int foodCode = res.getInt("foodCode");
+				String foodName = res.getString("foodName");
+				int price = res.getInt("price");
+
+				// 클래스 menuData의 객체를 생성한다.
+				menuData md = new menuData(storeCode, foodCode, foodName, price);
+				// menu_map에 value인 위 객체와 키값인 foodCode를 집어넣는다.
+				menu_map.put(foodCode, md);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 5. 가장많이 먹은 음식 카운트 (후보 1)
+	// tmp는 음식 먹은 횟수
+	// RtdCnt ReviewTargetData Count
+	// HashMap인 rtdCnt_map을 만든다.
+	public void constructRtdCnt_map() {
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM reviewTargetTbl";
+			res = stmt.executeQuery(sql);
+
+			// tmp는 카운트 변수이다. 예를 들어, foodCode = 1 일때, tmp[1]은 foodCode가 1인 리뷰타겟의 개수이다.
+			// Max_FoodCode는 무수히 큰 적당한 수(10001)로 대입된 변수다. 모든 foodCode를 표현하기 위함이다.
+			int[] tmp = new int[Max_FoodCode];
+
+			while (res.next()) {
+				int foodCode = res.getInt("foodCode");
+
+				// foodCode일때 배열 값을 1씩 증가시킨다. 리뷰 타겟의 개수를 증가시키는 것과 같다.
+				tmp[foodCode]++;
+			}
+
+			// 모든 foodCode를 순회한다.
+			for (int i = 0; i < Max_FoodCode; i++) {
+				if (tmp[i] == 0)
+					continue;
+				// rtdCntData는 reviewTargetData의 개수를 세는 클래스다.
+				// i는 foodCode이고 tmp[i]는 카운트 변수다.
+				rtdCntData rcd = new rtdCntData(i, tmp[i]);
+				// rtdCnt_map 을 construct 해 간다.
+				rtdCnt_map.put(i, rcd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//6. 푸드코드에 맞는 메뉴명 리턴.
+	// foodCode가 주어졌을 때 음식 이름을 리턴한다.
+	public String getFoodName(int foodCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		String foodName = "";
+		try {
+			stmt = conn.createStatement();
+			// 메뉴테이블에서 foodCode 를 입력해 메뉴들을 가져온다.
+			String sql = "SELECT * FROM menuTbl Where foodCode = " + foodCode;
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				// 음식 이름을 foodName에 입력시킨다.
+				foodName = res.getString("foodName");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return foodName;
+	}
+
+	
+	//7.  평균평점을 리턴하는 함수
+	public double getAverageRating(int storeCode) {
+		// 평점의 합
+		int ratingSum = 0;
+		// 리뷰의 개수
+		int cnt = 0;
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM reviewTbl Where storeCode = " + storeCode;
+			res = stmt.executeQuery(sql);
+
+			// 가게코드가 storeCode인 리뷰들을 순회한다.
+			while (res.next()) {
+				// 평점에 해당하는 값을 변수 rating에 입력시킨다.
+				int rating = res.getInt("rating");
+				// 평점을 모두 더해준다.
+				ratingSum += rating;
+				// 리뷰의 개수
+				cnt++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 가게코드가 storeCode인 리뷰가 하나도 없다면 음수를 리턴한다.
+		if (cnt == 0)
+			return 0.0;
+
+		return ((double) ratingSum) / ((double) cnt);
+	}
+
+	
+	//8. HashMap인 store_map을 ArrayList로 바꿔준다.
+	public ArrayList<storeData> storefindAll() {
+		return new ArrayList<>(store_map.values());
+	}
+
+	//9. HashMap인 menu_map을 ArrayList로 바꿔준다.
+	public ArrayList<menuData> menufindAll() {
+		return new ArrayList<>(menu_map.values());
+	}
+
+	//10. HashMap인 rtdCnt_map을 ArrayList로 바꿔준다.
+	public ArrayList<rtdCntData> rtdCntfindAll() {
+		return new ArrayList<>(rtdCnt_map.values());
+	}
+
+	//11. 가게 코드로 가게정보 가져와서 클래스에 담는다.
+	public storeData getStoreData(int storeCode) {
+		storeData sd = new storeData();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM storeTbl where storeCode = " + storeCode;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				String storeName = res.getString("storeName");
+				int cateCode = res.getInt("cateCode");
+				String openAt = res.getString("openAt");
+				String closeAt = res.getString("closeAt");
+				String offDays = res.getString("offDays");
+				String lastOrder = res.getString("lastOrder");
+				String phone = res.getString("phone");
+				String addr = res.getString("addr");
+				String parking = res.getString("parking");
+				String storeImgPath = res.getString("storeImagePath");
+				String web = res.getString("web");
+				String breakStart = res.getString("breakStart");
+				String breakEnd = res.getString("breakEnd");
+
+				// storeData 클래스의 객체를 생성한다.
+				sd = new storeData(storeCode, storeName, cateCode, openAt, closeAt, offDays, lastOrder, phone, addr,
+						parking, storeImgPath, web, breakStart, breakEnd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return sd;
+	}
+
+	//12. 메인 페이지에서 메뉴 검색을 할 때 storeData ArrayList를 가져온다.(자동완성 & 가게정보 가져오기)
+	//query가 검색한 내용
+	public ArrayList<storeData> getMenuInfo(String query) {
+		ArrayList<storeData> list = new ArrayList<storeData>();
+		String[] tmp = query.split(" ");
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			//like가 sql문에서 특정단어가 포함된 단어로 검색.
+			String sql = "SELECT * FROM menuTbl WHERE foodName LIKE \"%";
+			for (int i = 0; i < tmp.length; i++) {
+				sql += tmp[i] + "%";
+			}
+			sql += "\"";
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				list.add(getStoreData(res.getInt("storeCode")));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+	}
+	
+	// 13. 메인페이지에서 가게검색을 할 때 storeData ArrayList를 가져온다.(자동완성 & 가게정보 가져오기)
+	public ArrayList<storeData> getStoreInfo(String query) {
+		ArrayList<storeData> list = new ArrayList<storeData>();
+		//공백마다 여러개의 단어로 검색 가능, And 검색(둘 다 포함)
+		String[] tmp = query.split(" ");
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			//like가 sql문에서 특정단어가 포함된 단어로 검색.
+			String sql = "SELECT * FROM storeTbl WHERE storeName LIKE \"%";
+			for (int i = 0; i < tmp.length; i++) {
+				sql += tmp[i] + "%";
+			}
+			sql += "\"";
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				int storeCode = res.getInt("storeCode");
+				String storeName = res.getString("storeName");
+				int cateCode = res.getInt("cateCode");
+				String openAt = res.getString("openAt");
+				String closeAt = res.getString("closeAt");
+				String offDays = res.getString("offDays");
+				String lastOrder = res.getString("lastOrder");
+				String phone = res.getString("phone");
+				String addr = res.getString("addr");
+				String parking = res.getString("parking");
+				String storeImgPath = res.getString("storeImagePath");
+				String web = res.getString("web");
+				String breakStart = res.getString("breakStart");
+				String breakEnd = res.getString("breakEnd");
+
+				// storeData 클래스의 객체를 생성한다.
+				storeData sd = new storeData(storeCode, storeName, cateCode, openAt, closeAt, offDays, lastOrder, phone,
+						addr, parking, storeImgPath, web, breakStart, breakEnd);
+
+				list.add(sd);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+	}
+
+	// 14. 메인페이지에서 태그검색을 할 때 tagData ArrayList를 가져온다.(자동완성)
+	public ArrayList<tagData> getTagInfo(String query) {
+		ArrayList<tagData> list = new ArrayList<tagData>();
+		String[] tmp = query.split(" ");
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tagTbl WHERE tagName LIKE \"%";
+			for (int i = 0; i < tmp.length; i++) {
+				sql += tmp[i] + "%";
+			}
+			sql += "\"";
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				tagData td = new tagData();
+				td.setTagId(res.getInt("tagID"));
+				td.setTagName(res.getString("tagName"));
+				td.setTagViews(res.getInt("tagView"));
+
+				list.add(td);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+	}
+
+	// 15. 관심목록에 가게데이터를 추가한다.
+	// userID와 storeCode를 기본키로 사용하여 삽입
+	public void addWatchlistInfo(String userID, int storeCode) {
+		PreparedStatement pstmt = null;
+
+		try {
+			String sql = "INSERT INTO watchlistTbl values (?, ?)";
+
+			// sql 실행객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// ? 에 입력될 값 매핑
+			pstmt.setString(1, userID);
+			pstmt.setInt(2, storeCode);
+
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	//16. 관심목록에 가게데이터를 삭제한다.
+	// userID와 storeCode를 기본키로 사용하여 삭제
+	public void deleteWatchlistInfo(String userID, int storeCode) {
+
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from watchlistTbl where userID = '" + userID + "' and storeCode =" + storeCode;
+			pstmt = conn.prepareStatement(sql);
+
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	//17. 해당 유저의 관심목록에 등록된 가게데이터를 ArrayList로 가져온다.
+	public ArrayList<watchlistData> getWatchListInfo(String userID) {
+		ArrayList<watchlistData> list = new ArrayList<watchlistData>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM watchlistTbl WHERE userID = '" + userID + "'";
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				int storeCode = res.getInt("storeCode");
+
+				watchlistData wd = new watchlistData(userID, storeCode);
+				list.add(wd);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+	}
+
+	//18. 카테고리 코드에 맞는 카테고리 이름을 가져온다.
+	public String getCategoryName(int cateCode) {
+		String ret = "";
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM categoryTbl WHERE cateCode =" + cateCode;
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				ret = res.getString("cateName");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ret;
+	}
+
+	//19. 태그페이지에서 태그별 가게정보를 표시한다.
+	public ArrayList<storeByTagDataPrint> getStoreListByTag(int tagID, String userID) {
+		ArrayList<storeByTagDataPrint> ret = new ArrayList<>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tag_storeTbl where tagID = " + tagID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				//ArrayList에 storeByTagDataPrint방식으로 추가하기 위한 객체
+				storeByTagDataPrint sbdp = new storeByTagDataPrint();
+				int storeCode = res.getInt("storeCode");
+				//가게정보 중 일부(이미지경로, 업종 코드 등)를 가져오기 위한 객체
+				storeData sd = getStoreData(storeCode);
+
+				sbdp.setStoreCode(storeCode);
+				sbdp.setStoreImgPath(sd.getStoreImgPath());
+				sbdp.setCateName(getCategoryName(sd.getCateCode()));
+				sbdp.setAverageRating(getAverageRating(storeCode));
+				sbdp.setStoreName(sd.getStoreName());
+				sbdp.setTagID(tagID);
+				sbdp.setWatchlist(haveWatchlist(userID, storeCode));
+				ArrayList <reviewData> rdList = getReviewByStoreCode(storeCode);
+				reviewData rd = new reviewData();
+				rd.setContents("");
+				sbdp.setRd(rdList.size()==0?rd:rdList.get(0));
+				sbdp.setAddr(sd.getAddr());
+				sbdp.setNickName(getNickname(userID));
+
+				ret.add(sbdp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		Collections.sort(ret);
+
+		return ret;
+	}
+
+	//20. 메인페이지에서 가게이미지 hover했을 때 가게정보를 띄워준다.
+	public ArrayList<tagListData> getTagListByTag(int tagID) {
+		ArrayList<tagListData> ret = new ArrayList<>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tag_storeTbl where tagID = " + tagID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				tagListData tld = new tagListData();
+				int storeCode = res.getInt("storeCode");
+
+				storeData sd = getStoreData(storeCode);
+				ArrayList<reviewData> rdList = getReviewByStoreCode(storeCode);
+
+				tld.setAverageRating(getAverageRating(storeCode));
+				tld.setStoreImagePath(sd.getStoreImgPath());
+				tld.setStoreName(sd.getStoreName());
+				tld.setReviewContent(rdList.size()==0?"":rdList.get(0).getContents());
+				tld.setStoreCode(sd.getStoreCode());
+
+				ret.add(tld);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		Collections.sort(ret);
+
+		return ret;
+	}
+
+	//21. 관심목록 null 체크
+	public boolean haveWatchlist(String userID, int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		boolean ret = false;
+		try {
+			String sql = "SELECT * FROM watchlistTbl WHERE userID = '" + userID + "'" + "and storeCode = " + storeCode;
+
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				ret = true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ret;
+	}
+
+	//22. 태그페이지에서 리뷰의 일부를 표시하기 위한 데이터를 가져온다.
+	public ArrayList<reviewData> getReviewByStoreCode(int storeCode) {
+		ArrayList<reviewData> rdList = new ArrayList<>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM reviewTbl where storeCode = " + storeCode;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				reviewData rd = new reviewData();
+				rd.setUserId(res.getString("userID"));
+				rd.setContents(res.getString("contents"));
+				rd.setStoreCode(""+storeCode);
+				rd.setRating(""+res.getInt("rating"));
+				rd.setPhotoPath(res.getString("PhotoPath"));
+				rd.setIndex(res.getInt("reviewIndex"));
+				rd.setDisplay(res.getString("display"));
+				rd.setDate(res.getString("regDate"));
+				rd.setAnonymous(res.getString("anonymous"));
 				
-			<!--여기에 관심목록 내용 만들어져서 들어감 -->
-				<div class="watchlist_popup" id="watchlist_popup">
-				</div>
-			</div>
-		</div>
-
-    
-    <%
-			DB_Conn _db = new DB_Conn();
-			_db.constructStoreMap();
-			_db.constructRtdCnt_map();
-			ArrayList<storeData> storeList;
-			ArrayList<rtdCntData> rtdCntList;
-			storeList = _db.storefindAll();
-			rtdCntList = _db.rtdCntfindAll();
-			System.out.println("size : " + storeList.size());
-			int storeCode = Integer.parseInt(request.getParameter("storeCode")==null?"0":request.getParameter("storeCode"));
-			storeData sd = _db.getStoreData(storeCode);
-			String storeImgPath = sd.getStoreImgPath();
-			int review_store = sd.getStoreCode();
-			_db.constructMenuMap(review_store);
-			ArrayList<menuData> list = _db.menufindAll();
-			Collections.sort(rtdCntList);
-		/* 	String userID = (String)session.getAttribute("memberID"); */
-			System.out.println("Store_0427.jsp userID : " + userID);
-			
-			ArrayList<reviewData> rdList = _db.getReviewByStoreCode(storeCode);
-			
-			boolean flag = _db.haveWatchlist(userID, storeCode);
-			%>
-    
-    <main>
-        <div id="body">
-            <div id="store">
-
-                <div id="store_info">
-                    <div id="store_name"><%=sd.getStoreName()%></div>
-                    <div id="store_keep">
-                        <button class="store_keep">
-<img src="<%=flag == true
-		? "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
-		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png"%>"
-								id="keepImg" onclick="keepClick();sendRequest3();"
-								onmouseover="onHover()" onmouseout="offHover()">
-                        </button>
-                    </div>
-                    <div id="store_detail">
-                        <p class="subject">평균 평점 : <span class="fromDB-rate"><%= _db.getAverageRating(sd.getStoreCode()) %></span></p>
-                        <p class="subject">가게 시작 시간 : <span class="fromDB"><%=sd.getOpenAt() %></span></p>
-                        <p class="subject">가게 마감 시간 : <span class="fromDB"><%=sd.getCloseAt() %></span></p>
-                        <p class="subject">마지막 주문 가능 시간 : <span class="fromDB"><%=(sd.getLastOrder() == null ? "정보 없음" : sd.getLastOrder()) %></span></p>
-                        <p class="subject">주차 공간 : <span class="fromDB"><%=(sd.getParking()==null ?"주차 정보 없음":sd.getParking().equals("1")?"주차 가능" : "주차 불가") %></span></p>
-                        <p class="subject">휴무일 : <span class="fromDB"><%= (sd.getOffDays() == null ? "정보 없음" : sd.getOffDays()) %></span></p>
-                        <p class="subject">브레이크 타임 : <span class="fromDB"><%=(sd.getBreakStart() == null ? "정보 없음" : sd.getBreakStart() + " ~ " + sd.getBreakEnd()) %></span></p>
-                        <p class="subject">뭐뭇나 회원이 가장 많이 먹은 음식 : <span class="fromDB-most">딸기빙수</span></p>
-                        <p class="subject">관련 태그 : </p>
-                        <div id="related_tag">
-                            <div class="tag1"><a><span class="sharp"># </span>
-                                    <div class="tag2">딸기빙수</div>
-                                </a></div>
-                            <div class="tag1"><a><span class="sharp"># </span>
-                                    <div class="tag2">딸기빙수녹차빙수ㅁㄴ</div>
-                                </a></div>
-                            <div class="tag1"><a><span class="sharp"># </span>
-                                    <div class="tag2">딸기빙수</div>
-                                </a></div>
-                            <div class="tag1"><a><span class="sharp"># </span>
-                                    <div class="tag2">초코빙수</div>
-                                </a></div>
-                            <div class="tag1"><a><span class="sharp"># </span>
-                                    <div class="tag2">인절미빙수</div>
-                                </a></div>
-                            <div class="tag1"><a><span class="sharp"># </span>
-                                    <div class="tag2">인절미빙수</div>
-                                </a></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="store_photo">
-
-                    <!-- 큰 이미지 -->
-                     <div id="mainImage" style ="background-image:url(http://192.168.250.44<%=sd.getStoreImgPath()%>)">
-                    </div>
-
-                    <!-- 작은 이미지들, 선택하면 큰 이미지가 바뀜 -->
-                    <div id="box" class="box">
-                        <div id="color-wrap">
-                            <div id="colorList"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- 여기서부터 리뷰작성 버튼 누르면 리뷰작성란 나옴 -->
-            <div id="review_btn">
-                <input type="button" value="↓ 리뷰 작성하러 가기" class="btn_riview" id="show_btn"
-                    onclick="show_create_review()">
-                <input type="button" value="↑ 닫기" class="btn_riview" id="remove_btn" onclick="remove_create_review()">
-            </div>
-
-
-            <!-- 여기서부터 리뷰작성란 -->
-
-            <div id="create_riview">
-                <div id="review_store_name">가게 이름이 어디까지 길어질까요</div>
-                <div id="noname_check"><input type="checkbox" value="noname">익명으로 작성하기</div>
-
-                <div id="review_whatIAte">내가 먹은 메뉴</div>
-                <div class="selectBox">
-                    <select name="fruits" class="select">
-                        <option disabled selected>fruits 🍊</option>
-                        <option value="apple">apple</option>
-                        <option value="orange">orange</option>
-                        <option value="grape">grape</option>
-                        <option value="melon">melon</option>
-                    </select>
-                    <button type="button" id="x-button">×</button>
-                </div>
-
-                <div id="score_title">평점</div>
-                <div id="score">
-                    <div id="score_great" class="score"><button type="button" value="great" class="score_btn">억수로
-                            마싯다</button></div>
-                    <div id="score_good" class="score"><button type="button" value="good"
-                            class="score_btn">갠찮드라</button></div>
-                    <div id="score_bad" class="score"><button type="button" value="bad" class="score_btn">영
-                            파이다</button>
-                    </div>
-                </div>
-
-
-
-                <div id="show_whatIAte">
-                    <ul id="show_list">
-                        <li id="whatiate_add" class="whatiate">#족발ㅁㄴㅇㄹ</li>
-                        <li id="whatiate_add" class="whatiate">#해asfㄹ전</li>
-                        <li id="whatiate_add" class="whatiate">#ㅁㅇㄹㅁㄴㅇㄻㄴㅇㄹ</li>
-                        <li id="whatiate_add" class="whatiate">#sdfㅁㄴㅇㄻㄴㅇㄹㄹ</li>
-                        <li id="whatiate_add" class="whatiate">그 외 2개</li>
-                        <li id="whatiate_add" class="whatiate" style="display: none">
-                    </ul>
-                </div>
-
-
-
-                <div id="add_tag_title">태그를 입력해주세요.</div>
-                <div id="add_tag">
-                    <input type="text" placeholder="ex.#비오는날" class="tag_input">
-                    <div id="create_tag2" class="create_tag">#asdfasdf</div>
-                    <div id="create_tag3" class="create_tag">#asdfdfasdf</div>
-                    <div id="create_tag4" class="create_tag">#asdfasdf</div>
-                    <button type="button" id="plus_button">+</button>
-                </div>
-
-                <div id="review_title">리뷰를 작성해주세요.</div>
-                <!-- 자동줄바꿈 등 위해 input text가 아닌 textarea 사용함 -->
-                <textarea rows="3" cols=20 wrap="hard" placeholder="최대 4000자" class="input_review"
-                    maxlength="4000"></textarea>
-
-
-                <div id="image_info_title">이미지 등록 최대 5개 <span class="subtext">(jpg, png)</span></div>
-                <div class="filebox">
-                    <label for="file">파일찾기</label><input type="file" id="file" accept=".jpg, .png">
-                </div>
-                <div id="regImages">
-                    <div id="reg_image1" class="reg_images"></div>
-                    <div id="reg_image2" class="reg_images"></div>
-                    <div id="reg_image3" class="reg_images"></div>
-                    <div id="reg_image4" class="reg_images"></div>
-                    <div id="reg_image5" class="reg_images"></div>
-                </div>
-
-                <button type="button" value="toMain" id="review_cancel" class="review_button"
-                    onclick="clear_create_review()">취소</button>
-                <button type="button" value="submit" id="review_submit" class="review_button">등록하기</button>
-
-                <div id="something"></div>
-            </div>
-
-
-            <!-- 여기서부터 리뷰 보여주는 영역 -->
-            <div id="show_review">
-                <div id="first_line">
-                    <div id="review_title2">뭐뭇노 회원들의 소중한 리뷰</div>
-                    <div id="review_sort">
-                        <div id="score_btn2" class="score_btn2-1">전체<span id="score_all2" class="show_score2"> (12)
-                            </span>
-                        </div>
-                        <div id="score_btn2" class="score_btn2-2">억수로 마싯다<span id="score_great2" class="show_score2">
-                                (12)
-                            </span></div>
-                        <div id="score_btn2" class="score_btn2-3">갠찮드라<span id="score_good2" class="show_score2"> (12)
-                            </span></div>
-                        <div id="score_btn2" class="score_btn2-4">영 파이다<span id="score_bad2" class="show_score2"> (12)
-                            </span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="review_wrap">
-                <!-- 리뷰 한 덩이 시작 -->
-                <div class="review_contents">
-                    <div class="review_profile_box">
-                        <div class="review_profile_photo"></div>
-                        <div class="nickname">jennie123</div>
-                    </div>
-
-                    <div class="reg_date">등록일: 22.02.01.12:59</div>
-                    <div class="show_rate">억수로 마싯다</div>
-
-                    <div class="WIA_title"><span class="highlight">닉네임</span>님이 먹은 음식</div>
-                    <div class="WIA_container">
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-                        <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-                        <div class="WIA_contents">그 외 n개</div>
-                    </div>
-
-                    <div class="riview_contents">리뷰 내용이 될 부분 asdf<br>aaav<br>aaav<br>aaav</div>
-
-                    <div class="show_images"><br>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                    </div>
-                </div>
-                <!-- 리뷰 한 덩이 끝-->
-
-                <!-- 리뷰 한 덩이 시작 -->
-                <div class="review_contents">
-                    <div class="review_profile_box">
-                        <div class="review_profile_photo"></div>
-                        <div class="nickname">jennie123</div>
-                    </div>
-
-                    <div class="reg_date">등록일: 22.02.01.12:59</div>
-                    <div class="show_rate">영 파이다</div>
-
-                    <div class="WIA_title"><span class="highlight">닉네임</span>님이 먹은 음식</div>
-                    <div class="WIA_container">
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-                        <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-                        <div class="WIA_contents">그 외 n개</div>
-                    </div>
-
-                    <div class="riview_contents">리뷰 내용이 될 부분 asdf</div>
-
-                    <div class="show_images"><br>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                    </div>
-                </div>
-                <!-- 리뷰 한 덩이 끝-->
-
-                <!-- 리뷰 한 덩이 시작 -->
-                <div class="review_contents">
-                    <div class="review_profile_box">
-                        <div class="review_profile_photo"></div>
-                        <div class="nickname">jennie123</div>
-                    </div>
-
-                    <div class="reg_date">등록일: 22.02.01.12:59</div>
-                    <div class="show_rate">별로드라</div>
-
-                    <div class="WIA_title"><span class="highlight">닉네임</span>님이 먹은 음식</div>
-                    <div class="WIA_container">
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-                        <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
-                        <div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-                        <div class="WIA_contents">그 외 n개</div>
-                    </div>
-
-                    <div class="riview_contents">리뷰 내용이 될 부분 asdf<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav<br>aaav
-                    </div>
-
-                    <div class="show_images"><br>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                        <div class="show_images2"></div>
-                    </div>
-                </div>
-                <!-- 리뷰 한 덩이 끝-->
-             
-            </div>
-
-
-
-            <!-- 여기서부터 스크립트 -->
-
-            <!-- 모달 팝업 스크립트 -->
-            <!-- <script>
-                function show() {
-                    document.querySelector(".background").className = "background show";
-                }
-
-                function close() {
-                    document.querySelector(".background").className = "background";
-                }
-
-                document.querySelector("#show").addEventListener("click", show);
-                document.querySelector("#close").addEventListener("click", close);
-            </script> -->
-
-            <!-- 슬라이드 CSS 라이브러리 스크립트 -->
-            <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-            <script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
-            
-            <script src="../js/store.js" type="text/javascript" charset="ansi"></script>
-		<script type="text/javascript" src="../js/project01.js"></script>
-            
-            <!-- 메인 이미지 -->
-            
-            <script>
-		function sendRequest3() {
-			var httpRequest;
-			function createRequest() {
-				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
-												// 오페라 등
-					return new XMLHttpRequest();
-				} else { // 익스플로러 6과 그 이하의 버전
-					return new ActiveXObject("Microsoft.XMLHTTP");
-				}
+				rdList.add(rd);
 			}
-			function receiveResponse() {
-				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
-				if (httpRequest.readyState == XMLHttpRequest.DONE
-						&& httpRequest.status == 200) {
-					document.getElementById("text").innerHTML = httpRequest.responseText;
-				}
-			}
-			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
-			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
-																// 상태를 파악함.
-			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
-			httpRequest.open("POST", "watchlistAddOrDelete.jsp", true);
-			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			
-			var doc = document.getElementById("keepImg");
-			var src = doc.src;
-			
-			var arr = src.split("/");
-			
-			httpRequest.send("userID=<%=userID%>&storeCode=<%=storeCode%>&keepType="+arr[arr.length-1]); // Http 요청을 보냄.
-			}
-		</script>
-		
-		<script>
-		function sendRequest(sc) {
-			var httpRequest;
-			function createRequest() {
-				if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
-												// 오페라 등
-					return new XMLHttpRequest();
-				} else { // 익스플로러 6과 그 이하의 버전
-					return new ActiveXObject("Microsoft.XMLHTTP");
-				}
-			}
-			function receiveResponse() {
-				// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
-				if (httpRequest.readyState == XMLHttpRequest.DONE
-						&& httpRequest.status == 200) {
-					document.getElementById("text").innerHTML = httpRequest.responseText;
-				}
-			}
-			httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
-			httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
-																// 상태를 파악함.
-			// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
-			httpRequest.open("POST", "watchlistAddOrDelete2.jsp", true);
-			httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			
-			httpRequest.send("userID=<%=userID%>&storeCode="+sc); // Http 요청을 보냄.
-			}
-		</script>
-		
-            <script>
-                
-                function init() {
-//                	var backgroundURL = [ "../UI/UI/keep_btn.png", "../UI/storeImgSub/1-2.jpg",
-//                			"../UI/storeImgSub/1-1.jpg", "../UI/storeImgSub/2-1.jpg",
-//                			"../UI/storeImgSub/2-2.jpg", "../UI/storeImgSub/2-23jpg",
-//                			"../UI/storeImgSub/3-1.jpg", "../UI/storeImgSub/3-2.jpg",
-//                			"../UI/storeImgSub/3-3.jpg", "../UI/storeImgSub/4-1.jpg",
-//                			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
-//                			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
-
-                	 var backgroundURL = [<%=rdList.size()==0?"":rdList.get(0).getPhotoPath()%>];
-
-                	var tag = "";
-
-                	// 배열 길이만큼 div를 동적으로 생성함
-                	for (i = 0; i < backgroundURL.length; i++) {
-    	               	 backgroundURL[i] = "http://192.168.250.44"+backgroundURL[i];
-                		tag += "<img id=" + backgroundURL[i]
-                				+ " class='colorBox' onclick='colorSet(this)'>";
-                	}
-
-                	// 만들어진 div에 클래스명과 onclick함수 부여
-                	var colorBox = document.getElementById("colorList");
-                	document.getElementById("colorList").innerHTML = tag;
-
-                	// colorBox.style.backgroundSize = "100%";
-                	// colorBox.style.backgroundRepeat = "no-repeat";
-
-                	// 만들어진 div들을 List로 담기
-                	var colorBoxList = document.getElementsByClassName("colorBox");
-
-                	// 각 배열 요소에 백그라운드 url 부여
-                	for (i = 0; i < colorBoxList.length; i++) {
-                		// colorBoxList[i].style.backgroundImage = colorBoxList[i].id;
-                		var str = colorBoxList[i].id;
-                		//alert(str);
-                		colorBoxList[i].src = str;
-                	}
-
-                }
-
-            </script>
-            
-            <script>
-
-function sendRequest2() {
-		var httpRequest;
-		function createRequest() {
-			if (window.XMLHttpRequest) { // 익스플로러 7과 그 이상의 버전, 크롬, 파이어폭스, 사파리,
-											// 오페라 등
-				return new XMLHttpRequest();
-			} else { // 익스플로러 6과 그 이하의 버전
-				return new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		function receiveResponse() {
-			// XMLHttpRequest 객체의 현재 상태가 요청 완료이고, 서버에 문서가 존재하면 받은 데이터를 출력함.
-			if (httpRequest.readyState == XMLHttpRequest.DONE
-					&& httpRequest.status == 200) {
-				document.getElementById("watchlist_popup").innerHTML = httpRequest.responseText;
+
+		return rdList;
+	}
+
+	//23. 태그페이지에서 유저명을 표시하기 위한 데이터를 가져온다.
+	public String getNickname(String userID) {
+		String ret = "";
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM userTbl where userID = '" + userID + "'";
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				ret = res.getString("userName");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		httpRequest = createRequest(); // XMLHttpRequest 객체를 생성함.
-		httpRequest.onreadystatechange = receiveResponse; // XMLHttpRequest 객체의 현재
-															// 상태를 파악함.
-		// GET 방식의 비동기식 요청으로 Http 요청을 생성함.
-		httpRequest.open("POST", "watchlist_popup.jsp", true);
-		httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		httpRequest.send("userID=<%=userID%>"); // Http 요청을 보냄.
+
+		return ret;
+	}
+
+	//24. 태그페이지에서 유저프로필 사진을 표시하기 위한 데이터를 가져온다.
+	public String getUserImagePath(String userID) {
+		String ret = "";
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM userTbl where userID = '" + userID + "'";
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				ret = res.getString("userImagePath");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		</script>
-		
-		
-            <script type="text/javascript" src="../js/header.js"></script>
-            <script type="text/javascript" src="../js/keepImg.js"></script>         
-            <script type="text/javascript" src="../js/keepImg_star.js"></script>   
 
-    </main>
+		return ret;
+	}
 
-</body>
+	//25. 태그페이지의 태그제목 표시를 위한 데이터를 가져온다.
+	public String getTagName(int tagID) {
+		String ret = "";
 
-</html>
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tagTbl where tagID = " + tagID;
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				ret = res.getString("tagName");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ret;
+	}
+
+	//26. 태그페이지에서 정렬을 위한 데이터를 가져온다.
+	public ArrayList<tagData> getTagDataList() {
+		ArrayList<tagData> ret = new ArrayList<>();
+
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			String sql = "SELECT * FROM tagTbl";
+			stmt = conn.createStatement();
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				tagData tmp = new tagData();
+				tmp.setTagId(res.getInt("tagID"));
+				tmp.setTagName(res.getString("tagName"));
+				tmp.setTagViews(res.getInt("tagView"));
+
+				ret.add(tmp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null)
+					res.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return ret;
+	}
+
+	// 27. 가게페이지에서 리뷰내용 db에 입력/저장하는 메소드(리뷰데이터)
+	// userid로 username 추출해서 표시 예정
+	public void Insert_ReviewData(reviewData _Data) {
+		PreparedStatement pstmt = null; // SQL실행객체
+
+		try {
+			// anonymous으로 리뷰작성 시 익명 체크 시 value값으로 null체크하여 1(true), 체크 안한 경우 null값으로 디폴트로
+			// 0입력
+			if (_Data.anonymous == null) {
+				String sql = "insert into reviewtbl(storeCode, userId, contents, rating, photoPath)"
+						+ " VALUES(?,?,?,?,null)";
+
+				// sql 실행객체 생성
+				pstmt = conn.prepareStatement(sql);
+
+				// ? 에 입력될 값 매핑
+				pstmt.setString(1, _Data.storeCode);
+				pstmt.setString(2, _Data.userID);
+				pstmt.setString(3, _Data.contents);
+				pstmt.setString(4, _Data.rating);
+				// pstmt.setString(5, _Data.photoPath);
+
+				pstmt.executeUpdate();
+			} else {
+				String sql = "insert into reviewtbl(storeCode, userId, contents, rating, anonymous, photoPath)"
+						+ " VALUES(?,?,?,?,true,null)";
+
+				// sql 실행객체 생성
+				pstmt = conn.prepareStatement(sql);
+
+				// ? 에 입력될 값 매핑
+				pstmt.setString(1, _Data.storeCode);
+				pstmt.setString(2, _Data.userID);
+				pstmt.setString(3, _Data.contents);
+				pstmt.setString(4, _Data.rating);
+				// pstmt.setString(6, _Data.photoPath);
+
+				pstmt.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+			// 리소스 정리작업
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	// 28. 가게페이지에서 메뉴리스트와 태그리스트를 DB에 입력/저장하는 메소드
+	public void Insert_List(String menuList, String uid, String tagList, String review_store) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+
+		String[] mli = menuList.split(",");
+		String[] tli = tagList.split(",");
+		String msql, tsql;
+		try {
+			// 메뉴 리스트 입력
+			//리뷰를 작성한 가게정보와 유저정보, 입력한 메뉴 정보를 조회하여 입력
+			for (int i = 0; i < mli.length; i++) {
+				// 해당 유저가 가장 최근에 작성한 리뷰데이터에 메뉴정보가 입력되도록 order by로 정렬하여 데이터 입력
+				msql = "insert into reviewtargettbl(_index, foodCode) values ((select reviewtbl.reviewIndex from reviewtbl where userId='"
+						+ uid + "' "
+						+ "order by regDate desc limit 0, 1), (select menutbl.foodCode from menutbl where (menutbl.foodName = '"
+						+ mli[i] + "'" + " and storeCode = " + review_store + ")))";
+				pstmt = conn.prepareStatement(msql);
+				pstmt.executeUpdate();
+
+			}
+			// 태그 리스트 입력
+			//리뷰를 작성한 가게 코드 정보와 입력한 태그 정보를 조회해서 입력
+			for (int i = 0; i < tli.length; i++) {
+				tsql = "insert into tag_storetbl(storeCode, tagID) values ((select tagtbl.tagID from tagtbl where tagName = '"
+						+ tli[i] + "'), " + review_store + ")";
+				pstmt = conn.prepareStatement(tsql);
+				pstmt.executeUpdate();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 리소스 정리작업
+			try {
+				pstmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+
+	// 29. 가게페이지에서 리뷰내용 출력을 위한 정보 조회하는 메소드(리뷰 tbl)
+	/*
+	 * index; public String storeCode; public String userID; public String contents;
+	 * public String date; public String rating; public String display; public
+	 * String anonymous; public String photoPath;
+	 */
+	// reviewData
+	// int _index, String _contents, String _regDate, String _rating, String
+	// _anonymous, String _photoPath
+	//review, sd.getStoreCode(), strSort
+	public ArrayList<reviewData> get_ReviewData(int storeCode, String strSort) {
+		ArrayList<reviewData> arr = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet res = null;
+
+		// 리뷰내용조회 쿼리문
+		String sql = "";
+		try {
+			if(!strSort.equals("0")) {
+				sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where rating = "
+						+ strSort +" and storeCode = "
+						+ storeCode + " order by regDate desc limit 0,3";
+			}else {
+				sql = "select reviewIndex, userId, contents, regDate, rating, anonymous, photoPath from mmn.reviewtbl where storeCode = "
+						+ storeCode + " order by regDate desc limit 0,3";
+			}
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql);
+			//reviewIndex, userId, contents, regDate, rating, anonymous, photoPath
+			while (res.next()) {
+				reviewData rd = new reviewData();
+				//data 클래스 방식
+				rd.setIndex(res.getInt("reviewIndex"));
+				rd.setUserId(res.getString("userId"));
+				rd.setContents(res.getString("contents"));
+				switch(res.getString("rating")) {
+					case "4":
+						rd.setRating("갠찮드라");break;
+					case "3":
+						rd.setRating("영 파이다");break;
+					default:
+						rd.setRating("억수로 마싯다");
+				}
+				rd.setDate(res.getString("regDate"));
+				rd.setAnonymous(res.getString("anonymous"));
+				rd.setPhotoPath(res.getString("photoPath"));
+
+				System.out.println("data: "+res.getInt("reviewIndex"));
+				
+				arr.add(rd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// 가져온 정보 리턴
+		return arr;
+	}
+
+	// 30. 리뷰내용 출력을 위해 리뷰인덱스 받아서 리뷰타겟(메뉴)를 가져온다.(menu list)
+	// 기록) (제거)storeCode와 reviewIndex
+	public ArrayList<String> get_ReviewTarget(int ri) {
+		ArrayList<String> arr = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			// String sql = "select * from mmn.reviewtbl order by regDate desc limit "+i+",
+			// 5;";
+			String sql = "SELECT menutbl.foodName FROM mmn.menutbl, mmn.reviewtargettbl where menutbl.foodCode = reviewtargettbl.foodCode and reviewtargettbl._index = "
+					+ ri;
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				arr.add(res.getString("foodName"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// 가져온 정보 리턴
+		return arr;
+	}
+
+	/*
+	 * SELECT reviewtbl.reviewIndex FROM mmn.reviewtbl order by regDate desc limit
+	 * 0, 1; select count(*) from mmn.reviewtbl where rating = 5; SELECT
+	 * reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex =
+	 * (select count(*) from mmn.reviewtbl where rating = 5);
+	 * 
+	 * select count(*) from mmn.reviewtbl where rating = 4; SELECT
+	 * reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex =
+	 * (select count(*) from mmn.reviewtbl where rating = 4);
+	 * 
+	 * select count(*) from mmn.reviewtbl where rating = 3; SELECT
+	 * reviewtbl.reviewIndex FROM mmn.reviewtbl where reviewtbl.reviewIndex =
+	 * (select count(*) from mmn.reviewtbl where rating = 3);
+	 */
+
+	// 31. 리뷰 개수 카운트하는 함수
+	public int get_review_count_All(int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		int reviewcount = 0;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql_all = "SELECT COUNT(*)as reviewCount FROM mmn.reviewtbl where storeCode =" + storeCode;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql_all);
+			while (res.next()) {
+				reviewcount = res.getInt("reviewCount");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reviewcount;
+	}
+
+	// 32~34. 평점별 리뷰 개수 카운트
+	// 32. great
+	public int get_review_count_great(int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		int reviewcount = 0;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 5 and storeCode = " + storeCode;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql_all);
+			while (res.next()) {
+				reviewcount = res.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reviewcount;
+	}
+
+	// 33. good
+	public int get_review_count_good(int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		int reviewcount = 0;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 4 and storeCode = " + storeCode;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql_all);
+			while (res.next()) {
+				reviewcount = res.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reviewcount;
+	}
+
+	// 34. bad
+	public int get_review_count_bad(int storeCode) {
+		Statement stmt = null;
+		ResultSet res = null;
+		int reviewcount = 0;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql_all = "select count(*)as count from mmn.reviewtbl where rating = 3 and storeCode = " + storeCode;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql_all);
+			while (res.next()) {
+				reviewcount = res.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reviewcount;
+	}
+
+	// 35. 가게페이지에서 가게별 리뷰에 달린 메뉴 수가 가장 많은 메뉴 1개를 추출하여 메뉴명 리턴
+	// td.setTagId(res.getInt("tagID"));
+	// td.setTagName(res.getString("tagName"));
+	// td.setTagViews(res.getInt("tagView"));
+	public String get_menuCount(int storeCode) {
+		String max_menu = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			// 푸드코드로 정렬되면서 푸드코드를 제외한 정보를 빼내기가 어려워 푸드코드 함께 메뉴명 그리고 count결과를 가져온다.
+			String sql = "SELECT menutbl.foodCode, menutbl.foodName, COUNT(*)as foodCount FROM mmn.reviewtargettbl, mmn.menutbl where storeCode = "
+					+ storeCode
+					+ " and reviewtargettbl.foodCode = menutbl.foodCode GROUP BY foodCode order by foodCount desc limit 0,1";
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				// reviewcount = res.getInt("reviewIndex");
+				max_menu = res.getString("foodName");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return max_menu;
+	}
+
+	// 36. 가게페이지에서 가장많이 사용한(뷰 수가 높은) 태그명을 3개를 추출하여 리턴
+	public ArrayList<String> get_tagCount(int storeCode) {
+		ArrayList<String> max_tag = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql = "SELECT tagtbl.tagName FROM mmn.tagtbl where tagID = (SELECT tag_storetbl.tagID FROM mmn.tag_storetbl where storeCode="
+					+ storeCode + " and tag_storetbl.tagID = tagtbl.tagID) order by tagView desc limit 0, 3;";
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				// reviewcount = res.getInt("reviewIndex");
+				max_tag.add(res.getString("tagName"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return max_tag;
+	}
+	
+	public int getTagView(int tagID) {
+		int ret = 0;
+		Statement stmt = null;
+		ResultSet res = null;
+		try {
+			// sql 실행객체 생성
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM tagTbl  where tagID = " + tagID;
+			// select문 실행 명령어
+			res = stmt.executeQuery(sql);
+			while (res.next()) {
+				// reviewcount = res.getInt("reviewIndex");
+				ret = res.getInt("tagView");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (res != null) {
+					res.close();
+				}
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ret;
+	}
+	
+	public void updateTagView(int tagID) {
+		PreparedStatement pstmt = null;
+		int tagView = getTagView(tagID);
+
+		try {
+			String sql = "UPDATE tagTbl SET tagView = "+ (tagView+1) +" where tagID = " + tagID;
+
+			// sql 실행객체 생성
+			pstmt = conn.prepareStatement(sql);
+
+			// executeQuery() select 명령어
+			// executeUpdate select 이외 명령어
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+}
