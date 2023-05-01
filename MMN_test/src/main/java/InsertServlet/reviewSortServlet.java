@@ -39,7 +39,7 @@ public class reviewSortServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("test", review_SortTexted);
 		
-		response.sendRedirect(context + "/Store.jsp");
+		response.sendRedirect(context + "/resources/view_0427/Store_0427.jsp?storeCode=" + review_store);
 	}
 
 	/**
