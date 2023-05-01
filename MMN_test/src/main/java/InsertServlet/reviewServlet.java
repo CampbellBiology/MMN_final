@@ -90,10 +90,11 @@ public class reviewServlet extends HttpServlet {
 	        	}else {
 	        		review_imgurls = review_imgurls+","+'"'+fileimgname.toString()+'"';
 	        	}
+	        	//이미지 저장완료
 	        }
 	        //db에 저장하는 형식에 맞춰 url로 방식으로 변환
 	        review_imgurls = review_imgurls.replace("\\", "/");
-	        System.out.println("전체 이미지 경로: "+review_imgurls);
+	        //System.out.println("이미지 경로: "+review_imgurls);
 			
 	        /*
 			//받아온 결과 출력.
@@ -112,11 +113,13 @@ public class reviewServlet extends HttpServlet {
 			sd.setUserId(review_id);
 			sd.setContents(review_text);
 			sd.setRating(review_score);
-			sd.setPhotoPath("지금 사진등록을 못해");
+			sd.setPhotoPath(review_imgurls);
 			sd.setAnonymous(review_noname);
 
 			// DB삽입
+			//리뷰 정보
 			dao.Insert_ReviewData(sd);
+			//메뉴리스트와 태그리스트
 			dao.Insert_List(menuListView, review_id, tagListView, review_store);
 			System.out.println("db 등록 끝");
 			
