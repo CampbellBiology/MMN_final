@@ -1,13 +1,17 @@
 package InsertServlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
 
 import DB.DB_Conn;
 import DataClass.Insert_joinData;
@@ -37,10 +41,19 @@ public class joinServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 
 		request.setCharacterEncoding("utf-8");
-
+		String context = request.getContextPath();
 		//회원가입 시 필수정보를 체크하여 DB에 삽입
 		//필수 값이 null이라면 alert
 		try {
+			String path = "C:/Apache24/htdocs/ImageTest/storeImgSub";
+			File f = new File(path);
+	    	//파일이 있는지 체크
+	    	if(!f.exists()){
+	    		//파일폴더 생성.
+	            f.mkdirs();
+	        }
+			MultipartRequest multi = new MultipartRequest(request, path, 1024 * 1024 * 10, "utf-8");
+			
 			// 유저 아이디
 			String user_id = request.getParameter("user_id");
 			// 유저 패스워드
@@ -54,8 +67,15 @@ public class joinServlet extends HttpServlet {
 			DB_Conn _DB = new DB_Conn();
 			// 삽입할 회원가입 정보를 저장할 객체다.
 			Insert_joinData _Data = new Insert_joinData();
-
-			//필수값 null 체크
+			
+			//이미지 파일명 변경.
+        	//입력한 파일정보 가져오기.
+        	File fileimg = new File("/ImageTest/storeImgSub/"+ multi.getFileNames());
+        	//회원아이디를 파일명으로 설정.
+        	File fileimgname = new File("/ImageTest/storeImgSub/"+user_id+".jpg");
+        	fileimg.renameTo(fileimgname);
+			
+	        //필수값 null 체크
 			if(user_id=="" || user_pw=="" || user_name=="" || user_email=="") {
 				System.out.println("필수값 누락");
 				alert(response, "msg");
@@ -66,19 +86,22 @@ public class joinServlet extends HttpServlet {
 			_Data.userPW = user_pw;
 			_Data.userName = user_name;
 			_Data.userEmail = user_email;
+			_Data.userImgPath = "/ImageTest/storeImgSub/"+user_id+".jpg";
 			_Data.isMaster = "N";
 
 			// 데이터베이스에 회원가입 자료들을 삽입한다.
-			_DB.Insert_UserData(_Data); 
-
-			String context = request.getContextPath();
-			response.sendRedirect(context + "/resources/View/Main_Main.jsp");
+			_DB.Insert_UserData(_Data);
 			
 			}
 
 		} catch (Exception e) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('문제가 발생하였습니다.'); location.href='"+context + "/Store.jsp"+"';</script>"); 
+			writer.close();
 			e.printStackTrace();
 		}
+		response.sendRedirect(context + "/resources/View/Main_Main.jsp");
 	}
 
 	/**

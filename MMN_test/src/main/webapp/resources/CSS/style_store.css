@@ -41,8 +41,9 @@
 }
 
 #store_name{
-    background-color: rgb(177, 251, 226);
-    width: 400px;
+	background-color: black;
+ /*    background-color: rgb(177, 251, 226); */
+    width: 350px;
     height: 100px;
     display: inline-block;
     float: left;

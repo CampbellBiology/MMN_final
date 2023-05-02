@@ -70,7 +70,7 @@ main {
   height: 100%; 
 }
 
-.store_info {
+ .store_info {
   /* float:right; */
   position: relative;
   left: 0px;
@@ -84,7 +84,7 @@ main {
   height: 50px;
   position: relative;
   top: 0px;
-  left: -430px;
+  left: 0px;
 }
 
 .index {
@@ -99,7 +99,7 @@ main {
 
 .store_name > a {
   position: absolute;
-  left: 40px;
+  left: 50px;
   top:0px;
   margin: 0px;
   font-size: 30px;
@@ -119,7 +119,7 @@ text-decoration: none;
   height: 30px;
   /* background-color: aquamarine; */
   position: absolute;
-  left: -430px;
+  left: 0px;
   top:45px;
 }
 
@@ -132,7 +132,7 @@ text-decoration: none;
   color: #e11705;
 }
 
-.store_category {
+ .store_category {
   position: absolute;
   left:50px;
   top: 0px;
@@ -141,17 +141,17 @@ text-decoration: none;
   color:gray;
 }
 
-.store_addr {
+ .store_addr {
   position: absolute;
   top: 80px;
-  left: -430px;
+  left: 0px;
   font-weight: 400;
   text-align: left;
   color: rgb(157, 157, 157);
     font-size: 15px;
 }
 
-.tag_store_keep {
+ .tag_store_keep {
   position: absolute;
   top: 3%;
   right: 0%;
@@ -160,8 +160,8 @@ text-decoration: none;
 
 .watchlist_title {
   position: absolute;
-  top: 100px;
-  right: 8px;
+  top: 110px;
+  right: 18px;
   color:#5d5d5d;
   z-index: 5;
   font-size: 16px;
@@ -171,7 +171,7 @@ text-decoration: none;
   width: 600px;
   height: 130px;
   position: relative;
-  top: 120px;
+  top: 70px;
   left: 0px;
 }
 
@@ -250,4 +250,10 @@ text-decoration: none;
 a {
 	 text-decoration: none;
 	 color: rgb(74, 74, 74);
+}
+
+
+hr {
+    margin: 0px;
+    padding: 0px;
 }

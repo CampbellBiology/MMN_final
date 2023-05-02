@@ -59,24 +59,28 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
-			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
-				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
-				class="btn btn-primary" href="Login2.html" id="loginasdf"
+			<a class="navbar-brand" href="Main_0427.jsp" id="brand">
+			<img src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> 
+				
+			<a class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
+			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf" style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
+				
 			<button type="button" id="watchlist_button"
 				style="display:<%=userID == null ? "none" : "block"%>"
 				onclick="sendRequest2()">
 				<img src="../UI/UI/watchlist_active.png" height="50px">
 			</button>
-			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf"
-				style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
+			
+			<a class="btn btn-primary" id="logoutasdf" style="display:<%=userID == null ? "none" : "block"%>">로그아웃</a>
+
 
 			<!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-			<div id="profile"
+			<%-- <div id="profile"
 				style="display:<%=userID == null ? "none" : "block"%>">
 				<img src="http://192.168.250.44<%=db.getUserImagePath(userID)%>"
 					id="profile_photo">
-			</div>
+			</div> --%>
 		</div>
 	</nav>
 
@@ -95,6 +99,7 @@
 				</div>
 			</div>
 		</div>
+		</section>
 
   
   

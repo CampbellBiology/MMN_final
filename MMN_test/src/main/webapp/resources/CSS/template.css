@@ -107,7 +107,7 @@ body {
 }
 
 hr {
-  margin: 1rem 0;
+/*   margin: 1rem 0; */
   color: inherit;
   border: 0;
   border-top: 1px solid;
@@ -184,7 +184,7 @@ address {
   line-height: inherit;
 }
 
-ol,
+/* ol,
 ul {
   padding-left: 2rem;
 }
@@ -201,7 +201,7 @@ ul ul,
 ol ul,
 ul ol {
   margin-bottom: 0;
-}
+} */
 
 dt {
   font-weight: 700;

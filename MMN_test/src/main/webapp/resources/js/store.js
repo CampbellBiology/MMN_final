@@ -31,16 +31,19 @@ function colorSet(colorPick) {
 	selectedColor = colorPick.id;
 }
 
-function show_create_review() {
+/*function show_create_review() {
 	document.getElementById("create_riview").style.display = "block";
 	document.getElementById("show_btn").style.display = "none";
 	document.getElementById("remove_btn").style.display = "block";
-}
+	document.getElementById("buttons").style.display = "block";
+	
+}*/
 
 function remove_create_review() {
 	document.getElementById("create_riview").style.display = "none";
 	document.getElementById("show_btn").style.display = "block";
 	document.getElementById("remove_btn").style.display = "none";
+	document.getElementById("buttons").style.display = "none";
 }
 
 function cancel_create_review() {

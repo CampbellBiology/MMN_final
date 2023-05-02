@@ -18,9 +18,12 @@
 <link href="../CSS/template.css" rel="stylesheet" />
 <link href="../CSS/main_0427.css" rel="stylesheet" />
 
-<link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick.css">
-<link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick-theme.css">
-<link rel="stylesheet" type="text/css" href="../CSS/style_ImagePopUp_0419.css">
+<link rel="stylesheet" type="text/css"
+	href="../slick-1.8.1/slick/slick.css">
+<link rel="stylesheet" type="text/css"
+	href="../slick-1.8.1/slick/slick-theme.css">
+<link rel="stylesheet" type="text/css"
+	href="../CSS/style_ImagePopUp_0419.css">
 
 <!-- tag autocomplete를 위한 라이브러리 -->
 <link rel="stylesheet" href="../CSS/style_TagInput.css">
@@ -36,7 +39,7 @@
 	String userID = (String) session.getAttribute("memberID");
 	System.out.println("Main_Main.jsp userID:" + userID);
 	watchlist wl = new watchlist(userID);
-	watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
+	//watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
 	ArrayList<tagData> tdList = db.getTagDataList();
 	Collections.sort(tdList);
 
@@ -50,7 +53,7 @@
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
 			<a class="navbar-brand" href="Main_0427.jsp;" id="brand"><img
-				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
+				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> <a
 				class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
 			<button type="button" id="watchlist_button"
@@ -155,20 +158,21 @@
 						</p>
 						<p class="subject">관련 태그 :</p>
 						<div id="related_tag">
-							<%
-							if (storeCode != 0) {
-								for (int i = 0; i < 3; i++) {
-									ArrayList<String> tag_popular = _db.get_tagCount(1);
-							%>
-							<div class="tag1">
-								<a> <span class="sharp"># </span>
-									<div class="tag2"><%=tag_popular.get(i)%></div>
-								</a>
-							</div>
-							<%
-							}
-							}
-							%>
+						   <%
+						   if (storeCode != 0) {
+						      for (int i = 0; i < 6; i++) {
+						         ArrayList<tagData> tag_popular = _db.get_tagCount(1);
+						   %>
+						   <div class="tag1">
+						      <a href="TagPage_0427.jsp?tagID=<%=tag_popular.get(i).getTagId()%>">
+						         <span class="sharp"># </span>
+						         <div class="tag2"><%=tag_popular.get(i).getTagName()%></div>
+						      </a>
+						   </div>
+						   <%
+						   }
+						   }
+						   %>
 						</div>
 					</div>
 				</div>
@@ -192,8 +196,10 @@
 
 			<!-- 여기서부터 리뷰작성 버튼 누르면 리뷰작성란 나옴 -->
 			<div id="review_btn">
-				<input type="button" value="↓ 리뷰 작성하러 가기" class="btn_riview" id="show_btn" onclick="show_create_review()">
-				<input type="button" value="↑ 닫기" class="btn_riview" id="remove_btn" onclick="clearClick()">
+				<input type="button" value="↓ 리뷰 작성하러 가기" class="btn_riview"
+					id="show_btn" onclick="show_create_review()"> <input
+					type="button" value="↑ 닫기" class="btn_riview" id="remove_btn"
+					onclick="remove_create_review()">
 			</div>
 
 
@@ -203,14 +209,16 @@
 				<div id="create_riview">
 					<input name="review_storeCode" value="<%=sd.getStoreCode()%>"
 						style="display: none">
+					<!-- 	<div id="something"></div>	 -->
 					<div id="review_store_name"><%=sd.getStoreName()%></div>
 					<input type="text" name="revihttpRequest.sendew_input_id"
 						value="<%=userID%>" style="display: none">
 					<div id="noname_check">
-						<input type="checkbox" name="noname_check">익명으로 작성하기
+						<input type="checkbox" name="noname_check"> 익명으로 작성하기
 					</div>
 
-					<div id="review_whatIAte">내가 먹은 메뉴</div>
+					<div id="review_whatIAte">내가 먹은 메뉴 <span>*필수입력</span></div>
+
 					<div class="selectBox">
 						<select id="menu_select" name="fruits" class="select"
 							onchange="select_menu()">
@@ -231,25 +239,24 @@
 							}
 							%>
 						</select>
-						<button type="button" id="x-button" onclick="menu_del()">×</button>
+
 						<!-- 선택한 메뉴리스트를 문자열로 전달하기 위한 input -->
 						<input id="menuListView" name="menuListView" style="display: none">
 					</div>
+					<button type="button" id="x-button" onclick="menu_del()">×</button>
 
-					<div id="score_title">평점</div>
+					<div id="score_title">평점 <span>*필수입력</span></div>
 					<!-- 평점정보 전달을 위한 input -->
 					<input id="score_result" name="score_result" style="display: none">
 					<div id="score">
 						<div id="score_great" class="score">
-							<button type="button" value="great" class="score_btn">억수로
-								마싯다</button>
+							<button id="sbtn_great" type="button" value="great" class="score_btn">억수로 마싯다</button>
 						</div>
 						<div id="score_good" class="score">
-							<button type="button" value="good" class="score_btn">갠찮드라</button>
+							<button id="sbtn_good" type="button" value="good" class="score_btn">갠찮드라</button>
 						</div>
 						<div id="score_bad" class="score">
-							<button type="button" value="bad" class="score_btn">영
-								파이다</button>
+							<button id="sbtn_bad" type="button" value="bad" class="score_btn">영 파이다</button>
 						</div>
 					</div>
 
@@ -270,7 +277,7 @@
 					<!-- 메뉴, 태그 돌아와 -->
 
 					<!-- 태그 추가하는 부분 -->
-					<div id="add_tag_title"> 태그를 입력해주세요. </div>
+					<div id="add_tag_title">태그를 입력해주세요.</div>
 					<!-- 태그정보 전달을 위한 input -->
 					<input id="tagListView" name="tagListView" style="display: none">
 					<!-- 태그 입력 경고문 -->
@@ -282,7 +289,9 @@
 						<div id="create_tag4" class="create_tag">#asdfasdf</div>
 					 -->
 						<ul id="lists_tag"></ul>
-						<input type="text" id="id_input_tagName" onkeypress="javascript:show_name(event);" class="tag_input" placeholder="ex.점심특선 (Enter로 입력)">
+						<input type="text" id="id_input_tagName"
+							onkeypress="javascript:show_name(event);" class="tag_input"
+							placeholder="ex.점심특선 (Enter로 입력)">
 						<button type="button" id="plus_button" onclick="tag_del()">x</button>
 						<span id="warning_msg" style="color: red; display: none"></span>
 					</div>
@@ -302,31 +311,35 @@
 					<!-- 파일명 전달해주기 위한 input -->
 					<input type="text" id="id_imgtext" name="name_imgtext"
 						style="display: none">
-					<div class="filebox">
+					<!-- 	<div class="filebox">
 						<label for="file">파일찾기</label>
+					</div> -->
+					<div id="reg_image1" class="reg_images1">
+						이미지를 <br>등록해주세요.
 					</div>
 					<div id="regImages">
-						<!-- 
-					<div id="reg_image1" class="reg_images"></div>
-					<div id="reg_image2" class="reg_images"></div>
+
+
+						<!-- 	<div id="reg_image2" class="reg_images"></div>
 					<div id="reg_image3" class="reg_images"></div>
 					<div id="reg_image4" class="reg_images"></div>
-					<div id="reg_image5" class="reg_images"></div>
-					 -->
+					<div id="reg_image5" class="reg_images"></div> -->
 					</div>
+
+				</div>
+				<div id="buttons">
 					<button type="reset" value="toMain" id="review_cancel"
 						class="review_button" onclick="clearClick()">취소</button>
 					<button type="button" value="submit" id="review_submit"
 						class="review_button" onclick="submitClick()">등록하기</button>
-
-					<div id="something"></div>
 				</div>
+
 			</form>
 
 			<!-- 여기서부터 리뷰 보여주는 영역 -->
 			<div id="show_review">
 				<div id="first_line">
-					<div id="review_title2">뭐뭇노 회원들의 소중한 리뷰</div>
+					<div id="review_title2">뭐뭇노 회원님들의 소중한 리뷰</div>
 					<div id="review_sort">
 						<%
 						//각 리뷰 별 계산하는 함수 불러오기.
@@ -337,7 +350,7 @@
 						%>
 						<!-- 리뷰 정렬을 위한 파라미터로 보낼 input -->
 						<div id="score_btn2" class="score_btn2-1" onclick="sortAll()">
-						전체 (<%=review_count_All%>)
+							전체 (<%=review_count_All%>)
 						</div>
 						<div id="score_btn2" class="score_btn2-2" onclick="sortGreat()">
 							억수로 마싯다 (<%=review_count_great%>)
@@ -358,17 +371,17 @@
 			//reviewIndex, userId, contents, regDate, rating, anonymous, photoPath
 			String strSort = null;
 			try {
-				
+
 				//(리뷰정렬)세션받아오기
 				strSort = (String) session.getAttribute("test");
 				//세션 설정 안한 처음 부를 땐 0 반환
 				if (strSort == null) {
 					strSort = "0";
 				}
-				System.out.println("테스트: "+strSort);
+				System.out.println("테스트: " + strSort);
 				//원하는 데이터(리뷰정렬 세션)를 받았으니 세션 종료시키기
 				ArrayList<reviewData> rd = _db.get_ReviewData(sd.getStoreCode(), strSort);
-				
+
 				session.removeAttribute("test");
 				//세션종료
 				//session.invalidate();
@@ -384,22 +397,42 @@
 					review_id = "익명";
 				}
 				*/
-					//리뷰한 메뉴정보 리스트를 가져오는 함수실행.
-					//파라미터로 (제거)storeCode와 review_index
-					for(reviewData data : rd){
-						System.out.println(data.getIndex());
-						ArrayList<String> menuList = _db.get_ReviewTarget(data.getIndex());
-						//String[] review_photo = data.getPhotoPath().split(",");
+				//리뷰한 메뉴정보 리스트를 가져오는 함수실행.
+				//파라미터로 (제거)storeCode와 review_index
+				for (reviewData data : rd) {
+					System.out.println(data.getIndex());
+					ArrayList<String> menuList = _db.get_ReviewTarget(data.getIndex());
+					//리뷰의 유저 아이디에 맞는 유저 정보 가져오는 메소드 호출(유저 명과 유저 프로필사진 가져오기)
+					Insert_joinData Review_userInfo = _db.get_ReviewInfo(data.getUserId());
+					
 			%>
 			<form method="post" id="review_form2" action="reviewSortServlet">
-				<input type="text" id="review_SortText" name="review_SortTexted" style="display: none">
-				<input name="review_storeCode" value="<%=sd.getStoreCode()%>" style="display: none">
+				<input type="text" id="review_SortText" name="review_SortTexted"
+					style="display: none"> <input name="review_storeCode"
+					value="<%=sd.getStoreCode()%>" style="display: none">
 				<div id="review_wrap">
 					<!-- 리뷰 한 덩이 시작 -->
 					<div class="review_contents">
 						<div class="review_profile_box">
-							<div class="review_profile_photo"></div>
-							<div class="nickname"><%=data.getUserId()%></div>
+							<!-- http://192.168.250.44/ImageTest/userImage/lisa123.jpg -->
+							<!-- review_photo[i] = "http://192.168.250.44"+review_photo[i]; -->
+							<div class="review_profile_photo">
+							<%
+								if(Review_userInfo.getUserImgPath() != null){
+							%>
+							<img src="<%="http://192.168.250.44"+Review_userInfo.getUserImgPath()%>" class="review_profile_photo">
+							<%
+								}
+							%>
+							</div>
+							<div class="nickname">
+							<%
+								if(Review_userInfo.getUserName() != null && data.getUserId() != null && data.getAnonymous() != "1"){
+							%>
+							<%=data.getUserId()%>
+							<%
+								}
+							%></div>
 						</div>
 
 						<div class="reg_date">
@@ -408,14 +441,35 @@
 						<div class="show_rate"><%=data.getRating()%></div>
 
 						<div class="WIA_title">
-							<span class="highlight">닉네임</span>님이 먹은 음식
+							<!-- 리뷰 username 받아오기 -->
+							<span class="highlight">
+							<%
+							if(Review_userInfo.getUserName() != null && data.getUserId() != null && data.getAnonymous() != "1"){
+							%>
+							<%=Review_userInfo.getUserName()%>
+							<%
+								}else{
+							%>
+							<%="익명"%>
+							<%	
+								}
+							%>
+							</span>님이 먹은 음식
 						</div>
 						<div class="WIA_container">
+							
 							<%
 							for (int menu = 0; menu < menuList.size(); menu++) {
+								if(menu < 4){
 							%>
 							<div class="WIA_contents"><%=menuList.get(menu)%></div>
 							<%
+								}else{
+									%>
+									<div class="WIA_contents">그 외 <%=menuList.size()-menu%>개</div>
+									<%
+									break;
+								}
 							}
 							%>
 							<!-- <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
@@ -424,30 +478,33 @@
 								<div class="WIA_contents">그 외 n개</div>
 								 -->
 						</div>
-
+						
 						<div class="riview_contents">
 							<!-- 리뷰 내용이 될 부분 asdf<br>aaav<br>aaav<br>aaav-->
 							<%=data.getContents()%>
 						</div>
-						<!-- http://192.168.250.44/ImageTest/userImage/lisa123.jpg -->
-						<div class="show_images">
-							<br>
-							<%--
-								for(int i=0; i<review_photo.length; i++){
-									review_photo[i] = "http://192.168.250.44"+review_photo[i];
-							--%>
-							<div class="show_images2">
-								<img src=<%--=review_photo[i]--%>>
-							</div>
-							<%--
-								}
-							--%>
+						<div class="show_images"><br>
+						   <%
+						   
+						   if(data.getPhotoPath() != null){
+						      String[] review_photo = data.getPhotoPath().split(",");
+						      for(int i=0; i<review_photo.length; i++){
+						    	  review_photo[i] = review_photo[i].replace("\"", "");
+						    	  review_photo[i] = "http://192.168.250.44"+review_photo[i];
+						   %>
+						<div class="show_images2">
+						   <img src=<%=review_photo[i]%> class="show_images3">
+						</div>
+						   <%
+						      }
+						      }
+						   %>
 						</div>
 					</div>
 					<%
-							}
+					}
 					} catch (Exception e) {
-						e.printStackTrace();
+					e.printStackTrace();
 					}
 					%>
 				</div>
@@ -471,8 +528,9 @@
 
 		<!-- 슬라이드 CSS 라이브러리 스크립트 -->
 		<!-- script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>-->
-		<script src="../slick-1.8.1/slick/slick.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="../slick-1.8.1/slick/slick.js" type="text/javascript"
+			charset="utf-8"></script>
+
 		<script src="../js/store.js" type="text/javascript" charset="ansi"></script>
 		<script type="text/javascript" src="../js/data.js"></script>
 		<!-- 메인 이미지 -->
@@ -546,11 +604,26 @@
 //                			"../UI/storeImgSub/3-3.jpg", "../UI/storeImgSub/4-1.jpg",
 //                			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
 //                			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
-
-                	 var backgroundURL = [<%=rdList.size() == 0 ? "" : rdList.get(0).getPhotoPath()%>];
-
-                	var tag = "";
-
+					
+                	var backgroundURL = [<%=rdList.size() == 0 ? "" : rdList.get(0).getPhotoPath()%>];
+                    
+                    <%
+                for(int i=1;i<rdList.size();i++){
+                   if(rdList.get(i).getPhotoPath() != null){
+                      String [] arr = rdList.get(i).getPhotoPath().split(",");
+                      for(int j=0;j<arr.length; j++){
+                         System.out.println("arr : "+arr[j]);
+                %>
+                      backgroundURL.push(<%=arr[j]%>);
+       
+                   <%
+                   }
+                      }
+                   }
+                   %>
+                          
+                         var tag = "";
+                         
                 	// 배열 길이만큼 div를 동적으로 생성함
                 	for (i = 0; i < backgroundURL.length; i++) {
     	               	 backgroundURL[i] = "http://192.168.250.44"+backgroundURL[i];
@@ -707,39 +780,65 @@
 					console.log(i + "(menu): " + menu_list[i]);
 				}
 			}
-	
-			/*
+			
 			//3. 평점 클릭 이벤트 처리 -> 다른 곳에서 처리
 			//평점 클릭시 버튼마다 설정
 			//평점 점수 5, 3, 1
 			//클릭시 클릭한 평점에 따라 버튼 색변경
 			$("#score_great").on("click", (e)=> {
 				document.getElementById("score_result").value = 5;
+				document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 102, 0)";
+				document.getElementById("sbtn_great").style.color="white";
+				document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_great").style.boxShadow ="0.2s";
 				
-				document.getElementById("btn_score_great").style.backgroundColor="#FF4500";
-				document.getElementById("btn_score_good").style.backgroundColor="#D2B48C";
-				document.getElementById("btn_score_bad").style.backgroundColor="#D2B48C";
+				document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 248, 238)";
+				document.getElementById("sbtn_good").style.color="rgb(255, 123, 0)";
+				document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_good").style.boxShadow ="0.3s";
 				
+				document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 248, 238)";
+				document.getElementById("sbtn_bad").style.color="rgb(255, 123, 0)";
+				document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_bad").style.boxShadow ="0.3s";
 			});
 				
 			$("#score_good").on("click", (e)=> {
+				document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 248, 238)";
+				document.getElementById("sbtn_great").style.color="rgb(255, 123, 0)";
+				document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_great").style.boxShadow ="0.3s";
+				
 				document.getElementById("score_result").value = 4;
+				document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 102, 0)";
+				document.getElementById("sbtn_good").style.color="white";
+				document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_good").style.boxShadow ="0.2s";
 				
-				document.getElementById("btn_score_great").style.background="#D2B48C";
-				document.getElementById("btn_score_good").style.background="#FF8C00";
-				document.getElementById("btn_score_bad").style.background="#D2B48C";
-				
+				document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 248, 238)";
+				document.getElementById("sbtn_bad").style.color="rgb(255, 123, 0)";
+				document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_bad").style.boxShadow ="0.3s";
 			});
+			
 			$("#score_bad").on("click", (e)=> {
+				document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 248, 238)";
+				document.getElementById("sbtn_great").style.color="rgb(255, 123, 0)";
+				document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_great").style.boxShadow ="0.3s";
+				
+				document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 248, 238)";
+				document.getElementById("sbtn_good").style.color="rgb(255, 123, 0)";
+				document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_good").style.boxShadow ="0.3s";
+				
 				document.getElementById("score_result").value = 3;
-				
-				document.getElementById("btn_score_great").style.background="#D2B48C";
-				document.getElementById("btn_score_good").style.background="#D2B48C";
-				document.getElementById("btn_score_bad").style.background="#DAA520";
-				
+				document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 102, 0)";
+				document.getElementById("sbtn_bad").style.color="white";
+				document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
+				document.getElementById("sbtn_bad").style.boxShadow ="0.2s";
 			});
-			*/
-	
+			
 			//4. 이미지 파일 업로드시 미리보기 처리하는 메소드/이벤트
 			function readImg(input) {
 				//4-1. 이미지 미리보기 처리
@@ -765,6 +864,7 @@
 						};
 						reader.readAsDataURL(image);
 					}
+					document.getElementById("reg_image1").style.display ="none";
 				}
 	
 				//4-2. 업로드한 이미지 파일의 파일명을 추출하여 input으로 전달
@@ -803,6 +903,7 @@
 				
 				//미리보기 이미지 삭제
 				document.getElementById("regImages").innerHTML = "";
+				document.getElementById("reg_image1").style.display ="block";
 			}
 			//8. 등록하기 버튼을 클릭했을 때 submit 처리(서블릿 이동)
 			function submitClick(){
@@ -903,10 +1004,10 @@
 				} else if (tag_count > 4) { //태그 검색 개수가 6개 이상이라면 비활성화
 					//console.log("tag_input1");
 					x.disabled = true;
-					document.getElementById("warning_msg").innerText = "태그는 5개로 제한되어 있습니다.";
+					document.getElementById("warning_msg").innerText = "태그는 5개까지 등록할 수 있습니다.";
 					document.getElementById("warning_msg").style.display = "block";
 				} else if (!List.includes(x.value)) {
-					document.getElementById("tagListView").value = null;
+					document.getElementById("id_input_tagName").value = null;
 					document.getElementById("id_input_tagName").setAttribute("placeholder", "리스트에 없는 내용입니다.");
 				} else { //빈 검색어라면 log에 none을 표시하고 추가되는 거 없음
 					console.log("none");
@@ -944,6 +1045,20 @@
 				} else {
 					console.log("Value already missing in tag list");
 				}
+			}
+		</script>
+		
+		<script>
+		function show_create_review() {
+			   <%if ((String) session.getAttribute("memberID") != null) {%>
+			   document.getElementById("create_riview").style.display = "block";
+			   document.getElementById("show_btn").style.display = "none";
+			   document.getElementById("remove_btn").style.display = "block";
+			   document.getElementById("buttons").style.display = "block";
+			   <%} else {%>
+			   alert("회원이 아닙니다.");
+			   window.open("Login2.html");
+			   <%}%>		   
 			}
 		</script>
 		<script type="text/javascript" src="../js/header.js"></script>

@@ -85,7 +85,7 @@ form {
 }
 
 #cancel {
-    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_cancel.png) no-repeat;
+    background: url(../UI/UI/btn_cancel.png) no-repeat;
     background-size: contain;
     width: 160px;
     height: 60px;
@@ -96,7 +96,7 @@ form {
 }
 
 #submit {
-    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_join.png) no-repeat;
+    background: url(../UI/UI/btn_join.png) no-repeat;
     background-size: contain;
     width: 160px;
     height: 60px;
@@ -105,12 +105,12 @@ form {
 }
 
 #cancel:hover {
-    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_cancel_hover.png) no-repeat;
+    background: url(../UI/UI/btn_cancel_hover.png) no-repeat;
     background-size: contain;
 }
 
 #submit:hover {
-    background: url(https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/btn_join_hover.png) no-repeat;
+    background: url(../UI/UI/btn_join_hover.png) no-repeat;
     background-size: contain;
 }
 
