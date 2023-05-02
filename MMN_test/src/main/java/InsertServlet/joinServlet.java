@@ -19,7 +19,7 @@ import DataClass.Insert_joinData;
 /**
  * Servlet implementation class servlet_
  */
-@WebServlet("/resources/View/join")
+@WebServlet("/resources/view_0427/join")
 public class joinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

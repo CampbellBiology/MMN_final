@@ -44,17 +44,13 @@ public class DB_Conn {
 			// mysql jdbc driver 로딩
 			Class.forName("com.mysql.jdbc.Driver");
 
-			// db연결 문자열 but 이방법은 보안에 취약하다. ..
+			// db연결 문자열
 			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
 			String id = "junghan"; // mysql 접속아이디
 			String pwd = "yeil!1234"; // mysql 접속 비번
 
-//			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
-//			String id = "root"; // mysql 접속아이디
-//			String pwd = "1234"; // mysql 접속 비번
 
 			// db 접속
-
 			conn = DriverManager.getConnection(url, id, pwd);
 			System.out.println("db접속 성공");
 		} catch (Exception e) {

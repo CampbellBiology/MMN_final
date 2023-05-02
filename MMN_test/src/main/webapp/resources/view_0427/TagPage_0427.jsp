@@ -31,28 +31,30 @@
 	for (int i = 0; i < lim; i++) {
 		arr[i] = wl.getWsdpList().get(i);
 	} */
+	String null_tagID = request.getParameter("tagID");
+	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);
+	//TagPage_0427.jsp?tagID=<%= tdList.get(i).getTagId()
+	session.setAttribute("urlPage", "/resources/view_0427/TagPage_0427.jsp?tagID=" + tagID);
 	%>
 	<!-- Navigation-->
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
-			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
-				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> <a
-				class="btn btn-primary" href="Login2.html" id="loginasdf"
+			<a class="navbar-brand" href="Main_0427.jsp" id="brand">
+			<img src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> 
+				
+			<a class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
+			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf" style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
+				
 			<button type="button" id="watchlist_button"
 				style="display:<%=userID == null ? "none" : "block"%>"
 				onclick="sendRequest2()">
 				<img src="../UI/UI/watchlist_active.png" height="50px">
 			</button>
-			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf"
-				style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
 
-			<!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-			<div id="profile"
-				style="display:<%=userID == null ? "none" : "block"%>">
-				<img src="http://192.168.250.44<%=db.getUserImagePath(userID)%>"
-					id="profile_photo">
-			</div>
+			<form method="post" action ="sessionOut">
+				<button type="submit" class="btn btn-primary" id="logoutasdf" style="display:<%=userID == null ? "none" : "block"%>">로그아웃</button>
+			</form>
 		</div>
 	</nav>
 
@@ -80,8 +82,7 @@
     	System.out.println("TagPage_0414.jsp userID:"+userID);
     	
     	System.out.println("TagPage_0414.jsp tagID : "+request.getParameter("tagID"));
-    	String null_tagID = request.getParameter("tagID");
-    	int tagID = Integer.parseInt(null_tagID==null?"1":null_tagID);
+    	
 /*     	DB_Conn db = new DB_Conn(); */
     	
     	if(null_tagID != null){
@@ -118,7 +119,7 @@
        
         <!-- 태그리스트 1묶음 -->
         <div id="tagList<%=i%>" class="taglist">
-            <div id="tag_store_photo<%=i%>" class="tag_store_photo"><a href="Store_0427.jsp?storeCode=<%=storeCode%>" onclick="goTop()">
+            <div id="tag_store_photo<%=i%>" class="tag_store_photo"><a href="Store_0427.jsp?storeCode=<%=storeCode%>">
                 <img src="http://192.168.250.44<%=list.get(i-1).getStoreImgPath()%>" class="store_img"></a>
             </div>
             <div id="store_info<%=i%>" class="store_info">
@@ -255,14 +256,14 @@ if(count == 0){
 }
 
 //스크롤 바닥 감지
-window.parent.onscroll = function(e) {
+window.onscroll = function(e) {
 	
 	if(count == 3)
 		return;
 	
   //추가되는 임시 콘텐츠
   //window height + window scrollY 값이 document height보다 클 경우,
-  if((window.parent.innerHeight + window.parent.scrollY) >= document.body.offsetHeight) {
+  if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
   	//실행할 로직 (콘텐츠 추가)
       count++;
   	if(count == 1)
@@ -275,11 +276,6 @@ window.parent.onscroll = function(e) {
       $('article').append(addContent);
   }
 };
-
-
-function goTop(){
-	parent.window.scroll(0,0);
-}
 
 
 </script>
@@ -373,12 +369,9 @@ function sendRequest2() {
 			}
 		</script>
 	<script type="text/javascript" src="../js/keepImg_3.js"></script>
-	 <script type="text/javascript" src="../js/header.js"></script> 
-	 
+	<script type="text/javascript" src="../js/header.js"></script> 	 
 	<script type="text/javascript" src="../js/keepImg_star.js"></script>
-	        
-
-    
+	          
 </body>
 
 </html>

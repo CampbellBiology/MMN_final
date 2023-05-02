@@ -36,8 +36,7 @@ public class reviewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
+
 		System.out.println("리뷰 서블릿 호출");
 		// 인코딩 지정
 		request.setCharacterEncoding("utf-8");
@@ -96,18 +95,6 @@ public class reviewServlet extends HttpServlet {
 	        review_imgurls = review_imgurls.replace("\\", "/");
 	        //System.out.println("이미지 경로: "+review_imgurls);
 			
-	        /*
-			//받아온 결과 출력.
-			System.out.println("menu: "+menuListView);
-			System.out.println("tag: "+tagListView);
-			
-			System.out.println("store: "+review_store);
-			System.out.println("id: "+review_id);
-			System.out.println("text: "+review_text);
-			System.out.println("score: "+review_score); //true: value, false: null(익명체크)
-			System.out.println("no: "+review_noname);
-			*/
-			
 			// 데이터 reviewData 방식으로 저장
 			sd.setStoreCode(review_store);
 			sd.setUserId(review_id);
@@ -130,8 +117,6 @@ public class reviewServlet extends HttpServlet {
 			writer.close();
 			e.printStackTrace();
 		}
-		//"Store_0424.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"
-		//response.sendRedirect(context + "/View/Store_0424.jsp?storeCode="+review_store);
 		response.sendRedirect(context + "/resources/view_0427/Store_0427.jsp?storeCode=" + review_store);
 	}
 

@@ -48,13 +48,18 @@
 	for (int i = 0; i < lim; i++) {
 		arr[i] = wl.getWsdpList().get(i);
 	} */
+
+	int storeCode = Integer.parseInt(request.getParameter("storeCode") == null ? "0" : request.getParameter("storeCode"));
+	//HttpSession session = request.getSession();
+	session.setAttribute("urlPage", "/resources/view_0427/Store_0427.jsp?storeCode=" + storeCode);
 	%>
 	<!-- Navigation-->
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
 			<a class="navbar-brand" href="Main_0427.jsp;" id="brand"><img
-				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> <a
-				class="btn btn-primary" href="Login2.html" id="loginasdf"
+				src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png"
+				height="50px"></a> <a class="btn btn-primary" href="Login2.html"
+				id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
 			<button type="button" id="watchlist_button"
 				style="display:<%=userID == null ? "none" : "block"%>"
@@ -64,12 +69,10 @@
 			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
 
-			<!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-			<div id="profile"
-				style="display:<%=userID == null ? "none" : "block"%>">
-				<img src="http://192.168.250.44<%=db.getUserImagePath(userID)%>"
-					id="profile_photo">
-			</div>
+			<form method="post" action="sessionOut">
+				<button type="submit" class="btn btn-primary" id="logoutasdf"
+					style="display:<%=userID == null ? "none" : "block"%>">로그아웃</button>
+			</form>
 		</div>
 	</nav>
 
@@ -98,7 +101,7 @@
 	storeList = _db.storefindAll();
 	rtdCntList = _db.rtdCntfindAll();
 	System.out.println("size : " + storeList.size());
-	int storeCode = Integer.parseInt(request.getParameter("storeCode") == null ? "0" : request.getParameter("storeCode"));
+
 	storeData sd = _db.getStoreData(storeCode);
 	String storeImgPath = sd.getStoreImgPath();
 	int review_store = sd.getStoreCode();
@@ -158,21 +161,22 @@
 						</p>
 						<p class="subject">관련 태그 :</p>
 						<div id="related_tag">
-						   <%
-						   if (storeCode != 0) {
-						      for (int i = 0; i < 6; i++) {
-						         ArrayList<tagData> tag_popular = _db.get_tagCount(1);
-						   %>
-						   <div class="tag1">
-						      <a href="TagPage_0427.jsp?tagID=<%=tag_popular.get(i).getTagId()%>">
-						         <span class="sharp"># </span>
-						         <div class="tag2"><%=tag_popular.get(i).getTagName()%></div>
-						      </a>
-						   </div>
-						   <%
-						   }
-						   }
-						   %>
+							<%
+							if (storeCode != 0) {
+								ArrayList<tagData> tag_popular = _db.get_tagCount(sd.getStoreCode());
+								for (int i = 0; i < tag_popular.size(); i++) {
+							%>
+							<div class="tag1">
+								<a
+									href="TagPage_0427.jsp?tagID=<%=tag_popular.get(i).getTagId()%>">
+									<span class="sharp"># </span>
+									<div class="tag2"><%=tag_popular.get(i).getTagName()%></div>
+								</a>
+							</div>
+							<%
+								}
+							}
+							%>
 						</div>
 					</div>
 				</div>
@@ -217,16 +221,13 @@
 						<input type="checkbox" name="noname_check"> 익명으로 작성하기
 					</div>
 
-					<div id="review_whatIAte">내가 먹은 메뉴 <span>*필수입력</span></div>
+					<div id="review_whatIAte">
+						내가 먹은 메뉴 <span class="ess">(필수)</span>
+					</div>
 
 					<div class="selectBox">
 						<select id="menu_select" name="fruits" class="select"
 							onchange="select_menu()">
-							<!--option disabled selected>fruits 🍊</option>
-						<option value="apple">apple</option>
-						<option value="orange">orange</option>
-						<option value="grape">grape</option>
-						<option value="melon">melon</option-->
 							<%
 							int cnt = 0;
 							for (menuData md : list) {
@@ -245,18 +246,23 @@
 					</div>
 					<button type="button" id="x-button" onclick="menu_del()">×</button>
 
-					<div id="score_title">평점 <span>*필수입력</span></div>
+					<div id="score_title">
+						평점 <span class="ess">(필수)</span>
+					</div>
 					<!-- 평점정보 전달을 위한 input -->
 					<input id="score_result" name="score_result" style="display: none">
 					<div id="score">
 						<div id="score_great" class="score">
-							<button id="sbtn_great" type="button" value="great" class="score_btn">억수로 마싯다</button>
+							<button id="sbtn_great" type="button" value="great"
+								class="score_btn">억수로 마싯다</button>
 						</div>
 						<div id="score_good" class="score">
-							<button id="sbtn_good" type="button" value="good" class="score_btn">갠찮드라</button>
+							<button id="sbtn_good" type="button" value="good"
+								class="score_btn">갠찮드라</button>
 						</div>
 						<div id="score_bad" class="score">
-							<button id="sbtn_bad" type="button" value="bad" class="score_btn">영 파이다</button>
+							<button id="sbtn_bad" type="button" value="bad" class="score_btn">영
+								파이다</button>
 						</div>
 					</div>
 
@@ -311,19 +317,11 @@
 					<!-- 파일명 전달해주기 위한 input -->
 					<input type="text" id="id_imgtext" name="name_imgtext"
 						style="display: none">
-					<!-- 	<div class="filebox">
-						<label for="file">파일찾기</label>
-					</div> -->
+
 					<div id="reg_image1" class="reg_images1">
 						이미지를 <br>등록해주세요.
 					</div>
 					<div id="regImages">
-
-
-						<!-- 	<div id="reg_image2" class="reg_images"></div>
-					<div id="reg_image3" class="reg_images"></div>
-					<div id="reg_image4" class="reg_images"></div>
-					<div id="reg_image5" class="reg_images"></div> -->
 					</div>
 
 				</div>
@@ -404,7 +402,6 @@
 					ArrayList<String> menuList = _db.get_ReviewTarget(data.getIndex());
 					//리뷰의 유저 아이디에 맞는 유저 정보 가져오는 메소드 호출(유저 명과 유저 프로필사진 가져오기)
 					Insert_joinData Review_userInfo = _db.get_ReviewInfo(data.getUserId());
-					
 			%>
 			<form method="post" id="review_form2" action="reviewSortServlet">
 				<input type="text" id="review_SortText" name="review_SortTexted"
@@ -417,22 +414,25 @@
 							<!-- http://192.168.250.44/ImageTest/userImage/lisa123.jpg -->
 							<!-- review_photo[i] = "http://192.168.250.44"+review_photo[i]; -->
 							<div class="review_profile_photo">
-							<%
-								if(Review_userInfo.getUserImgPath() != null){
-							%>
-							<img src="<%="http://192.168.250.44"+Review_userInfo.getUserImgPath()%>" class="review_profile_photo">
-							<%
+								<%
+								if (Review_userInfo.getUserImgPath() != null) {
+								%>
+								<img
+									src="<%="http://192.168.250.44" + Review_userInfo.getUserImgPath()%>"
+									class="review_profile_photo">
+								<%
 								}
-							%>
+								%>
 							</div>
 							<div class="nickname">
-							<%
-								if(Review_userInfo.getUserName() != null && data.getUserId() != null && data.getAnonymous() != "1"){
-							%>
-							<%=data.getUserId()%>
-							<%
+								<%
+								if (Review_userInfo.getUserName() != null && data.getUserId() != null && data.getAnonymous() != "1") {
+								%>
+								<%=data.getUserId()%>
+								<%
 								}
-							%></div>
+								%>
+							</div>
 						</div>
 
 						<div class="reg_date">
@@ -442,63 +442,54 @@
 
 						<div class="WIA_title">
 							<!-- 리뷰 username 받아오기 -->
-							<span class="highlight">
-							<%
-							if(Review_userInfo.getUserName() != null && data.getUserId() != null && data.getAnonymous() != "1"){
-							%>
-							<%=Review_userInfo.getUserName()%>
-							<%
-								}else{
-							%>
-							<%="익명"%>
-							<%	
-								}
-							%>
+							<span class="highlight"> <%
+ 						if (Review_userInfo.getUserName() != null && data.getUserId() != null && data.getAnonymous() != "1") {
+ 							%> <%=Review_userInfo.getUserName()%> <%
+ 							} else {%> <%="익명"%> <%}%>
 							</span>님이 먹은 음식
 						</div>
 						<div class="WIA_container">
-							
+
 							<%
 							for (int menu = 0; menu < menuList.size(); menu++) {
-								if(menu < 4){
+								if (menu < 4) {
 							%>
 							<div class="WIA_contents"><%=menuList.get(menu)%></div>
 							<%
-								}else{
-									%>
-									<div class="WIA_contents">그 외 <%=menuList.size()-menu%>개</div>
-									<%
-									break;
-								}
+							} else {
+							%>
+							<div class="WIA_contents">
+								그 외
+								<%=menuList.size() - menu%>개
+							</div>
+							<%
+							break;
+							}
 							}
 							%>
-							<!-- <div class="WIA_contents">동적으로 추가asdfasdfasdf</div>
-								<div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇㅎ</div>
-								<div class="WIA_contents">동적으로 추가ㅁㄴㅇㄻㄴㅇㅎㅁㄴㅇㅎㅁㄴㅇ</div>
-								<div class="WIA_contents">그 외 n개</div>
-								 -->
+
 						</div>
-						
+
 						<div class="riview_contents">
 							<!-- 리뷰 내용이 될 부분 asdf<br>aaav<br>aaav<br>aaav-->
 							<%=data.getContents()%>
 						</div>
-						<div class="show_images"><br>
-						   <%
-						   
-						   if(data.getPhotoPath() != null){
-						      String[] review_photo = data.getPhotoPath().split(",");
-						      for(int i=0; i<review_photo.length; i++){
-						    	  review_photo[i] = review_photo[i].replace("\"", "");
-						    	  review_photo[i] = "http://192.168.250.44"+review_photo[i];
-						   %>
-						<div class="show_images2">
-						   <img src=<%=review_photo[i]%> class="show_images3">
-						</div>
-						   <%
-						      }
-						      }
-						   %>
+						<div class="show_images">
+							<br>
+							<%
+							if (data.getPhotoPath() != null) {
+								String[] review_photo = data.getPhotoPath().split(",");
+								for (int i = 0; i < review_photo.length; i++) {
+									review_photo[i] = review_photo[i].replace("\"", "");
+									review_photo[i] = "http://192.168.250.44" + review_photo[i];
+							%>
+							<div class="show_images2">
+								<img src=<%=review_photo[i]%> class="show_images3">
+							</div>
+							<%
+							}
+							}
+							%>
 						</div>
 					</div>
 					<%
@@ -510,30 +501,12 @@
 				</div>
 			</form>
 		</div>
-		<!-- 여기서부터 스크립트 -->
 
-		<!-- 모달 팝업 스크립트 -->
-		<!-- <script>
-                function show() {
-                    document.querySelector(".background").className = "background show";
-                }
-
-                function close() {
-                    document.querySelector(".background").className = "background";
-                }
-
-                document.querySelector("#show").addEventListener("click", show);
-                document.querySelector("#close").addEventListener("click", close);
-            </script> -->
-
-		<!-- 슬라이드 CSS 라이브러리 스크립트 -->
-		<!-- script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>-->
 		<script src="../slick-1.8.1/slick/slick.js" type="text/javascript"
 			charset="utf-8"></script>
 
 		<script src="../js/store.js" type="text/javascript" charset="ansi"></script>
 		<script type="text/javascript" src="../js/data.js"></script>
-		<!-- 메인 이미지 -->
 
 		<script>
 				function sendRequest3() {
@@ -597,30 +570,19 @@
 			</script>
 		<script>
                 function init() {
-//                	var backgroundURL = [ "../UI/UI/keep_btn.png", "../UI/storeImgSub/1-2.jpg",
-//                			"../UI/storeImgSub/1-1.jpg", "../UI/storeImgSub/2-1.jpg",
-//                			"../UI/storeImgSub/2-2.jpg", "../UI/storeImgSub/2-23jpg",
-//                			"../UI/storeImgSub/3-1.jpg", "../UI/storeImgSub/3-2.jpg",
-//                			"../UI/storeImgSub/3-3.jpg", "../UI/storeImgSub/4-1.jpg",
-//                			"../UI/storeImgSub/4-2.jpg", "../UI/storeImgSub/5-1.jpg",
-//                			"../UI/storeImgSub/5-2.jpg" ]; // 색상코드를 원하는 만큼 넣어주세요~!
 					
                 	var backgroundURL = [<%=rdList.size() == 0 ? "" : rdList.get(0).getPhotoPath()%>];
                     
-                    <%
-                for(int i=1;i<rdList.size();i++){
-                   if(rdList.get(i).getPhotoPath() != null){
-                      String [] arr = rdList.get(i).getPhotoPath().split(",");
-                      for(int j=0;j<arr.length; j++){
-                         System.out.println("arr : "+arr[j]);
-                %>
+                    <%for (int i = 1; i < rdList.size(); i++) {
+	if (rdList.get(i).getPhotoPath() != null) {
+		String[] arr = rdList.get(i).getPhotoPath().split(",");
+		for (int j = 0; j < arr.length; j++) {
+			System.out.println("arr : " + arr[j]);%>
                       backgroundURL.push(<%=arr[j]%>);
        
-                   <%
-                   }
-                      }
-                   }
-                   %>
+                   <%}
+}
+}%>
                           
                          var tag = "";
                          
@@ -677,377 +639,372 @@
 				httpRequest.send("userID=<%=userID%>"); // Http 요청을 보냄.
 			}
 			</script>
-		<!-- 정윤 js 이벤트 처리 -->
-		<!-- 메뉴 추가&삭제, 평점,  -->
-		<script type="text/javascript">
-			//1. 메뉴 select 선택 시 추가되는 메소드/이벤트
-			//메뉴명 담은 배열 생성
-			var menu_list = [];
-			var menu_count = 0;
-			//선택된 메뉴명을 먹은 메뉴에 추가하는 이벤트
-			function select_menu() {
-				//선택한 메뉴 정보 가져오기
-				var sMenu = document.getElementById("menu_select");
-				//선택한 메뉴명 가져오기
-				var Menu_data = sMenu.options[sMenu.selectedIndex].text;
-				//null이 아니면서 갯수가 3개이하이며, 중복이 없을 때 처리
-				if (Menu_data != "" && menu_count < 3) {
-					//리스트 추가
-					menu_list.push(Menu_data);
-					//ul과 div 불러오기
-					//var input_MenuList = document.getElementById("show_list");
-					//var add_Menu = document.getElementById("whatiate_add");
-					//리스트 요소 생성
-					//생성한 리스트의 id는 list_menu+(숫자)
-					var input_Menu = document.createElement('li');
-					input_Menu.innerText = Menu_data;
-					input_Menu.setAttribute("id", "whatiate" + menu_count);
-					input_Menu.setAttribute("class", "whatiate");
-					//생성한 요소를 null 이면 뒤, 설정시 그 요소의 앞에 위치 시킨다.
-					//input_MenuList.insertBefore(input_Menu, add_Menu);
-					menu_count = menu_list.length;
-					document.querySelector("ul#show_list").appendChild(input_Menu);
-					document.getElementById("menuListView").value = menu_list.toString();
-				} else if (menu_count == 3) { //선택한 메뉴 갯수가 4개 이상이라면 숨겼던 div보여주고 text변경.
-					//<li id="whatiate_add" class="whatiate" style="display: none">
-					var input_Menu = document.createElement('li');
-					input_Menu.setAttribute("id", "whatiate_add");
-					input_Menu.setAttribute("class", "whatiate");
-					//input_MenuList.insertBefore(input_Menu, add_Menu);
-					document.querySelector("ul#show_list").appendChild(input_Menu);
-					//리스트에 추가
-					menu_list.push(Menu_data);
-					menu_count = menu_list.length;
-					//text수정
-					document.getElementById("whatiate_add").innerText = "그 외 1개";
-				} else if (menu_count > 3) { //선택한 메뉴 갯수가 4개 이상이라면 숨겼던 div보여주고 text변경.
-					//count가 4개 이상이라면 그 외 *개 보이게
-					//document.getElementById("whatiate_add").style.display = "block";
-					//리스트에 추가
-					menu_list.push(Menu_data);
-					menu_count = menu_list.length;
-					//text수정
-					document.getElementById("whatiate_add").innerText = "그 외 " + (menu_count - 3) + "개";
-				} else {
-					//입력이나 처리 없음
-					console.log("none");
-				}
-				//길이따라 count 재지정.
-				menu_count = menu_list.length;
-				//내용 확인용 함수 호출
-				menu_list_view();
-			}
-			//2. 메뉴 x클릭 시 삭제되는 메소드/이벤트
-			//메뉴 리스트 삭제
-			//지금은 input 옆에 x, 클릭시 뒤에서부터 리스트 삭제.
-			function menu_del() {
-				//지울 리스트 요소 선택 (맨 마지막에 생성된 요소)
-				var del_list = document.getElementById("whatiate" + (menu_count - 1).toString());
-				if (menu_list.length != 0 && menu_count < 4) {
-					//보이는 li 지우기
-					del_list.remove();
-					//리스트에서 삭제
-					menu_list.pop();
-					//길이따라 count 재지정.
-					menu_count = menu_list.length;
-				} else if (menu_count > 2) {
-					//선택한 메뉴가 4개 이상일때 삭제 방법
-					//리스트에서 삭제
-					menu_list.pop();
-					//길이에 따라 재지정
-					menu_count = menu_list.length;
-					//갯수 확인용 로그
-					console.log("현재 개수: " + (menu_count) + "개");
-					//갯수에 따라 text 수정
-					document.getElementById("whatiate_add").innerText = "그 외 " + (menu_count - 3) + "개";
-					//3개라면 "그 외 3개"표시 안함.
-					if ((menu_count - 3) === 0) {
-						document.getElementById("whatiate_add").remove();
-					}
-				} else {
-					//이미 없어짐.
-					console.log("Value already missing in menu list");
-				}
-				//내용 확인용 함수 호출
-				menu_list_view();
-			}
-	
-			//1,2 - 메뉴 내용 확인용(로그) 함수 : 개발용
-			//내용 확인용 함수
-			function menu_list_view() {
-				//배열 내용출력
-				for (var i = 0; i < menu_list.length; i++) {
-					console.log(i + "(menu): " + menu_list[i]);
-				}
-			}
 			
-			//3. 평점 클릭 이벤트 처리 -> 다른 곳에서 처리
-			//평점 클릭시 버튼마다 설정
-			//평점 점수 5, 3, 1
-			//클릭시 클릭한 평점에 따라 버튼 색변경
-			$("#score_great").on("click", (e)=> {
-				document.getElementById("score_result").value = 5;
-				document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 102, 0)";
-				document.getElementById("sbtn_great").style.color="white";
-				document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_great").style.boxShadow ="0.2s";
-				
-				document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 248, 238)";
-				document.getElementById("sbtn_good").style.color="rgb(255, 123, 0)";
-				document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_good").style.boxShadow ="0.3s";
-				
-				document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 248, 238)";
-				document.getElementById("sbtn_bad").style.color="rgb(255, 123, 0)";
-				document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_bad").style.boxShadow ="0.3s";
-			});
-				
-			$("#score_good").on("click", (e)=> {
-				document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 248, 238)";
-				document.getElementById("sbtn_great").style.color="rgb(255, 123, 0)";
-				document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_great").style.boxShadow ="0.3s";
-				
-				document.getElementById("score_result").value = 4;
-				document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 102, 0)";
-				document.getElementById("sbtn_good").style.color="white";
-				document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_good").style.boxShadow ="0.2s";
-				
-				document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 248, 238)";
-				document.getElementById("sbtn_bad").style.color="rgb(255, 123, 0)";
-				document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_bad").style.boxShadow ="0.3s";
-			});
-			
-			$("#score_bad").on("click", (e)=> {
-				document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 248, 238)";
-				document.getElementById("sbtn_great").style.color="rgb(255, 123, 0)";
-				document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_great").style.boxShadow ="0.3s";
-				
-				document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 248, 238)";
-				document.getElementById("sbtn_good").style.color="rgb(255, 123, 0)";
-				document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_good").style.boxShadow ="0.3s";
-				
-				document.getElementById("score_result").value = 3;
-				document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 102, 0)";
-				document.getElementById("sbtn_bad").style.color="white";
-				document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
-				document.getElementById("sbtn_bad").style.boxShadow ="0.2s";
-			});
-			
-			//4. 이미지 파일 업로드시 미리보기 처리하는 메소드/이벤트
-			function readImg(input) {
-				//4-1. 이미지 미리보기 처리
-				//var img_count = 1;
-				//input에 입력한 파일 가져오기
-				//while(img in input.files){
-				if (document.getElementById("reviewimg").files.length > 5) {
-					alert("파일은 최대 5개 입력가능합니다.");
-					document.getElementById("reviewimg").value = "";
-					return 0;
-				} else {
-					for (var image of event.target.files) {
-						var reader = new FileReader();
-						/*if (input.files && input.files[0]) {
-						} else {
-							document.getElementById("preview"+img_count).src = "";
-						}*/
-						reader.onload = function(event) {
-							var imgview = document.createElement("img");
-							imgview.setAttribute("src", event.target.result);
-							imgview.setAttribute("class", "reg_images")
-							document.querySelector("div#regImages").appendChild(imgview);
-						};
-						reader.readAsDataURL(image);
-					}
-					document.getElementById("reg_image1").style.display ="none";
-				}
-	
-				//4-2. 업로드한 이미지 파일의 파일명을 추출하여 input으로 전달
-				//입력한 이미지 파일명을 전달하기 위해 input에 파일명 문자열로 입력
-				var files_name = "";
-				var multi = document.getElementById("reviewimg").files;
-				for (var i = 0; i < multi.length; i++) {
-					console.log(multi[i].name);
-					files_name = files_name + "," + multi[i].name;
-				}
-				document.getElementById("id_imgtext").value = files_name;
-				console.log(files_name);
-			}
-	
-			//5. 파일추가 버튼을 클릭했을때, 이전에 추가한 파일 삭제하는 메소드/이벤트
-			function clickImg() {
-				var pdiv = document.getElementById("regImages");
-				while (pdiv.hasChildNodes()) {
-					pdiv.removeChild(pdiv.firstChild);
-				}
-			}
-	
-			/*6. 리뷰 작성하기 버튼을 클릭 시 작성 페이지 보이도록 -> 다른 곳에서 처리
-			function writeClick(){
-				document.getElementById("review_write").style.display = "none";
-				document.getElementById("review_form").style.display = "block";
-			}*/
-	
-			//7. 취소 버튼을 클릭했을 때 clear 처리
-			function clearClick(){
-				//보이는 메뉴 삭제
-				document.getElementById("show_list").innerHTML = "";
-				menu_list.length = 0;
-				menu_count = 0;
-				//보이는 태그 삭제
-				
-				//미리보기 이미지 삭제
-				document.getElementById("regImages").innerHTML = "";
-				document.getElementById("reg_image1").style.display ="block";
-			}
-			//8. 등록하기 버튼을 클릭했을 때 submit 처리(서블릿 이동)
-			function submitClick(){
-				document.getElementById("review_form").submit();
-				//return false;
-			}
-	
-			//9. 리뷰 정렬
-			//0421
-			//리뷰 정렬 클릭마다 내용 변경.
-			//전체 클릭시 최신순으로 5개 출력.
-			function sortAll() {
-				document.getElementById("review_SortText").value = 0;
-				document.getElementById("review_form2").submit();
-			}
-			//억수로 마싯다 클릭시 평점 5인 리뷰 5개 출력.
-			function sortGreat() {
-				if(<%=review_count_great%> == 0){
-					alert("작성된 리뷰가 없습니다.");
-				}else{
-					document.getElementById("review_SortText").value = 5;
-					document.getElementById("review_form2").submit();
-				}
-			}
-			//갠찮드라 클릭시 평점 4인 리뷰 5개 출력.
-			function sortGood() {
-				if(<%=review_count_good%> == 0){
-					alert("작성된 리뷰가 없습니다.");
-				}else{
-					document.getElementById("review_SortText").value = 4;
-					document.getElementById("review_form2").submit();
-				}
-			}
-			//영 파이다 클릭시 평점 3인 리뷰 5개 출력.
-	
-			function sortBad() {
-				if(<%=review_count_bad%> == 0){
-					alert("작성된 리뷰가 없습니다.");
-				}else{
-					document.getElementById("review_SortText").value = 3;
-					document.getElementById("review_form2").submit();
-				}
-			}
-		</script>
-		<!-- 태그부분에 처리하는 기능이 많아서 스크립트를 따로 구분하여 개발 -->
-		<script type="text/javascript">
-			//10~13. 태그명 입력시 배열을 생성하여 여러개의 태그 처리
-			//태그명 담을 배열 생성
-			var tag_list = [];
-			var tag_count = 0;
-			
-			//10. tag 입력 자동완성 이벤트(현재 jQuery 충돌로 안나옴)
-			$(function() {
-				$("#id_input_tagName").autocomplete({ //오토 컴플릿트 시작
-					source: List, // source는 data.js파일 내부의 List 배열
-					focus: function(event, ui) { // 방향키로 자동완성단어 선택 가능하게 만들어줌	
-						//console.log(ui.item);
-						return false;
-					},
-					minLength: 1,// 최소 글자수
-					delay: 10, //autocomplete 딜레이 시간(ms)
-					//disabled: true, //자동완성 기능 끄기
-				});
-			});
-			
-			//11. enter시에 태그 배열에 내용 추가하는 메소드/이벤트
-			function show_name(e) {
-				document.getElementById("id_input_tagName").setAttribute("placeholder", "ex.점심특선");
-				//경고문 안보이게
-				document.getElementById("warning_msg").style.display = "none";
-				//input정보
-				var x = document.getElementById("id_input_tagName");
-				//입력이 없거나 태그가 5개 이하라면(0~4) 입력받음
-				//code: 입력키, 입력이 ""이 아닐때, tag개수가 5개 이하일 때, 중복체크 1: 중복아님, 0:중복
-				if (e.key == 'Enter' && tag_count < 5 && x.value != "" && dup_check(x.value) && List.includes(x.value)) {
-					console.log("tag_input");
-					
-					//입력한 내용을 배열에 추가
-					tag_list.push(x.value);
-					//태그목록 생성
-					//var input_TagList = document.createElement('ul');
-					var input_TagList = document.getElementById("lists_tag");
-					var input_Tag = document.createElement('li');
-					input_Tag.setAttribute("class", "create_tag");
-					input_Tag.innerText = "#" + x.value;
-					input_Tag.setAttribute("id", "list_tag" + tag_count);
-	
-					//위치 지정
-					//특정위치 앞에 삽입(상속관계), div > ul > li
-					input_TagList.insertBefore(input_Tag, null);
-	
-					//input창 초기화
-					x.value = null;
-					//카운트
-					tag_count++;
-	
-					document.getElementById("tagListView").value = tag_list.toString();
-				} else if (tag_count > 4) { //태그 검색 개수가 6개 이상이라면 비활성화
-					//console.log("tag_input1");
-					x.disabled = true;
-					document.getElementById("warning_msg").innerText = "태그는 5개까지 등록할 수 있습니다.";
-					document.getElementById("warning_msg").style.display = "block";
-				} else if (!List.includes(x.value)) {
-					document.getElementById("id_input_tagName").value = null;
-					document.getElementById("id_input_tagName").setAttribute("placeholder", "리스트에 없는 내용입니다.");
-				} else { //빈 검색어라면 log에 none을 표시하고 추가되는 거 없음
-					console.log("none");
-				}
-			}
-	
-			//12. 입력한 태그 중복확인 이벤트(t: 중복아님, f:중복)/메소드
-			//입력 input의 value값(String)
-			function dup_check(str) {
-				var x = document.getElementById("id_input_tagName");
-				for (var i = 0; i < tag_count; i++) {
-					if (str === tag_list[i]) {
-						document.getElementById("warning_msg").innerText = "중복된 태그는 입력되지 않습니다.";
-						document.getElementById("warning_msg").style.display = "block";
-						return 0;
-					}
-				}
-				return 1;
-			}
-	
-			//13. input 옆에 x 클릭시 뒤에서부터 리스트 삭제 이벤트
-			function tag_del() {
-				//현재 배열 위치와 tag입력 개수 출력
-				console.log("del: " + "list_tag" + (tag_count - 1).toString() + "\t" + tag_count);
-				//tag_count != 0 체크하려했는데 실수지만 잘 
-				if (tag_list.length != 0) {
-					document.getElementById("list_tag" + (tag_count - 1)).remove();
-					tag_list.pop();
-					tag_count--;
-					document.getElementById("warning_msg").style.display = "none";
-					document.getElementById("id_input_tagName").disabled = false;
-					//input창 초기화
-					document.getElementById("tagListView").value = null;
-					document.getElementById("tagListView").value = tag_list.toString();
-				} else {
-					console.log("Value already missing in tag list");
-				}
-			}
-		</script>
-		
+			<script type="text/javascript">
+         //1. 메뉴 select 선택 시 추가되는 메소드/이벤트
+         //메뉴명 담은 배열 생성
+         var menu_list = [];
+         var menu_count = 0;
+         //선택된 메뉴명을 먹은 메뉴에 추가하는 이벤트
+         function select_menu() {
+            //선택한 메뉴 정보 가져오기
+            var sMenu = document.getElementById("menu_select");
+            //선택한 메뉴명 가져오기
+            var Menu_data = sMenu.options[sMenu.selectedIndex].text;
+            //null이 아니면서 갯수가 3개이하이며, 중복이 없을 때 처리
+            var menu_dup = dup_check(menu_list, menu_count, Menu_data);
+            if (Menu_data != "" && menu_count < 3 && menu_dup) {
+               //리스트 추가
+               menu_list.push(Menu_data);
+               //ul과 div 불러오기
+               //var input_MenuList = document.getElementById("show_list");
+               //var add_Menu = document.getElementById("whatiate_add");
+               //리스트 요소 생성
+               //생성한 리스트의 id는 list_menu+(숫자)
+               var input_Menu = document.createElement('li');
+               input_Menu.innerText = Menu_data;
+               input_Menu.setAttribute("id", "whatiate" + menu_count);
+               input_Menu.setAttribute("class", "whatiate");
+               //생성한 요소를 null 이면 뒤, 설정시 그 요소의 앞에 위치 시킨다.
+               //input_MenuList.insertBefore(input_Menu, add_Menu);
+               menu_count = menu_list.length;
+               document.querySelector("ul#show_list").appendChild(input_Menu);
+               document.getElementById("menuListView").value = menu_list.toString();
+            } else if (menu_count == 3 && menu_dup) { //선택한 메뉴 갯수가 4개 이상이라면 숨겼던 div보여주고 text변경.
+               //<li id="whatiate_add" class="whatiate" style="display: none">
+               var input_Menu = document.createElement('li');
+               input_Menu.setAttribute("id", "whatiate_add");
+               input_Menu.setAttribute("class", "whatiate");
+               //input_MenuList.insertBefore(input_Menu, add_Menu);
+               document.querySelector("ul#show_list").appendChild(input_Menu);
+               //리스트에 추가
+               menu_list.push(Menu_data);
+               menu_count = menu_list.length;
+               //text수정
+               document.getElementById("whatiate_add").innerText = "그 외 1개";
+            } else if (menu_count > 3 && menu_dup) { //선택한 메뉴 갯수가 4개 이상이라면 숨겼던 div보여주고 text변경.
+               //count가 4개 이상이라면 그 외 *개 보이게
+               //document.getElementById("whatiate_add").style.display = "block";
+               //리스트에 추가
+               menu_list.push(Menu_data);
+               menu_count = menu_list.length;
+               //text수정
+               document.getElementById("whatiate_add").innerText = "그 외 " + (menu_count - 3) + "개";
+            } else {
+               //입력이나 처리 없음
+               console.log("none");
+            }
+            //길이따라 count 재지정.
+            menu_count = menu_list.length;
+            //내용 확인용 함수 호출
+            //menu_list_view();
+         }
+         //2. 메뉴 x클릭 시 삭제되는 메소드/이벤트
+         //메뉴 리스트 삭제
+         //지금은 input 옆에 x, 클릭시 뒤에서부터 리스트 삭제.
+         function menu_del() {
+            //지울 리스트 요소 선택 (맨 마지막에 생성된 요소)
+            var del_list = document.getElementById("whatiate" + (menu_count - 1).toString());
+            if (menu_list.length != 0 && menu_count < 4) {
+               //보이는 li 지우기
+               del_list.remove();
+               //리스트에서 삭제
+               menu_list.pop();
+               //길이따라 count 재지정.
+               menu_count = menu_list.length;
+            } else if (menu_count > 2) {
+               //선택한 메뉴가 4개 이상일때 삭제 방법
+               //리스트에서 삭제
+               menu_list.pop();
+               //길이에 따라 재지정
+               menu_count = menu_list.length;
+               //갯수 확인용 로그
+               //console.log("현재 개수: " + (menu_count) + "개");
+               //갯수에 따라 text 수정
+               document.getElementById("whatiate_add").innerText = "그 외 " + (menu_count - 3) + "개";
+               //3개라면 "그 외 3개"표시 안함.
+               if ((menu_count - 3) === 0) {
+                  document.getElementById("whatiate_add").remove();
+               }
+            } else {
+               //이미 없어짐.
+               console.log("Value already missing in menu list");
+            }
+            //내용 확인용 함수 호출
+            //menu_list_view();
+         }
+         /*
+         //1,2 - 메뉴 내용 확인용(로그) 함수 : 개발용
+         //내용 확인용 함수
+         function menu_list_view() {
+            //배열 내용출력
+            for (var i = 0; i < menu_list.length; i++) {
+               console.log(i + "(menu): " + menu_list[i]);
+            }
+         }
+         */
+         //3. 평점 클릭 이벤트 처리 -> 다른 곳에서 처리
+         //평점 클릭시 버튼마다 설정
+         //평점 점수 5, 3, 1
+         //클릭시 클릭한 평점에 따라 버튼 색변경
+         $("#score_great").on("click", (e)=> {
+            document.getElementById("score_result").value = 5;
+            document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 102, 0)";
+            document.getElementById("sbtn_great").style.color="white";
+            document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_great").style.boxShadow ="0.2s";
+            
+            document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 248, 238)";
+            document.getElementById("sbtn_good").style.color="rgb(255, 123, 0)";
+            document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_good").style.boxShadow ="0.3s";
+            
+            document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 248, 238)";
+            document.getElementById("sbtn_bad").style.color="rgb(255, 123, 0)";
+            document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_bad").style.boxShadow ="0.3s";
+         });
+            
+         $("#score_good").on("click", (e)=> {
+            document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 248, 238)";
+            document.getElementById("sbtn_great").style.color="rgb(255, 123, 0)";
+            document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_great").style.boxShadow ="0.3s";
+            
+            document.getElementById("score_result").value = 4;
+            document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 102, 0)";
+            document.getElementById("sbtn_good").style.color="white";
+            document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_good").style.boxShadow ="0.2s";
+            
+            document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 248, 238)";
+            document.getElementById("sbtn_bad").style.color="rgb(255, 123, 0)";
+            document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_bad").style.boxShadow ="0.3s";
+         });
+         
+         $("#score_bad").on("click", (e)=> {
+            document.getElementById("sbtn_great").style.backgroundColor= "rgb(255, 248, 238)";
+            document.getElementById("sbtn_great").style.color="rgb(255, 123, 0)";
+            document.getElementById("sbtn_great").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_great").style.boxShadow ="0.3s";
+            
+            document.getElementById("sbtn_good").style.backgroundColor= "rgb(255, 248, 238)";
+            document.getElementById("sbtn_good").style.color="rgb(255, 123, 0)";
+            document.getElementById("sbtn_good").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_good").style.boxShadow ="0.3s";
+            
+            document.getElementById("score_result").value = 3;
+            document.getElementById("sbtn_bad").style.backgroundColor= "rgb(255, 102, 0)";
+            document.getElementById("sbtn_bad").style.color="white";
+            document.getElementById("sbtn_bad").style.boxShadow ="2px 2px 2px gray";
+            document.getElementById("sbtn_bad").style.boxShadow ="0.2s";
+         });
+         
+         //4. 이미지 파일 업로드시 미리보기 처리하는 메소드/이벤트
+         function readImg(input) {
+            //4-1. 이미지 미리보기 처리
+            //var img_count = 1;
+            //input에 입력한 파일 가져오기
+            //while(img in input.files){
+            if (document.getElementById("reviewimg").files.length > 5) {
+               alert("파일은 최대 5개 입력가능합니다.");
+               document.getElementById("reviewimg").value = "";
+               return 0;
+            } else {
+               for (var image of event.target.files) {
+                  var reader = new FileReader();
+                  /*if (input.files && input.files[0]) {
+                  } else {
+                     document.getElementById("preview"+img_count).src = "";
+                  }*/
+                  reader.onload = function(event) {
+                     var imgview = document.createElement("img");
+                     imgview.setAttribute("src", event.target.result);
+                     imgview.setAttribute("class", "reg_images")
+                     document.querySelector("div#regImages").appendChild(imgview);
+                  };
+                  reader.readAsDataURL(image);
+               }
+               document.getElementById("reg_image1").style.display ="none";
+            }
+   
+            //4-2. 업로드한 이미지 파일의 파일명을 추출하여 input으로 전달
+            //입력한 이미지 파일명을 전달하기 위해 input에 파일명 문자열로 입력
+            var files_name = "";
+            var multi = document.getElementById("reviewimg").files;
+            for (var i = 0; i < multi.length; i++) {
+               //console.log(multi[i].name);
+               files_name = files_name + "," + multi[i].name;
+            }
+            document.getElementById("id_imgtext").value = files_name;
+            //console.log(files_name);
+         }
+   
+         //5. 파일추가 버튼을 클릭했을때, 이전에 추가한 파일 삭제하는 메소드/이벤트
+         function clickImg() {
+            var pdiv = document.getElementById("regImages");
+            while (pdiv.hasChildNodes()) {
+               pdiv.removeChild(pdiv.firstChild);
+            }
+         }
+   
+         /*6. 리뷰 작성하기 버튼을 클릭 시 작성 페이지 보이도록 -> 다른 곳에서 처리
+         function writeClick(){
+            document.getElementById("review_write").style.display = "none";
+            document.getElementById("review_form").style.display = "block";
+         }*/
+   
+         //7. 취소 버튼을 클릭했을 때 clear 처리
+         function clearClick(){
+            //보이는 메뉴 삭제
+            document.getElementById("show_list").innerHTML = "";
+            menu_list.length = 0;
+            menu_count = 0;
+            //보이는 태그 삭제
+            
+            //미리보기 이미지 삭제
+            document.getElementById("regImages").innerHTML = "";
+            document.getElementById("reg_image1").style.display ="block";
+         }
+         //8. 등록하기 버튼을 클릭했을 때 submit 처리(서블릿 이동)
+         function submitClick(){
+            document.getElementById("review_form").submit();
+            //return false;
+         }
+   
+         //9. 리뷰 정렬
+         //0421
+         //리뷰 정렬 클릭마다 내용 변경.
+         //전체 클릭시 최신순으로 5개 출력.
+         function sortAll() {
+            document.getElementById("review_SortText").value = 0;
+            document.getElementById("review_form2").submit();
+         }
+         //억수로 마싯다 클릭시 평점 5인 리뷰 5개 출력.
+         function sortGreat() {
+            if(<%=review_count_great%> == 0){
+               alert("작성된 리뷰가 없습니다.");
+            }else{
+               document.getElementById("review_SortText").value = 5;
+               document.getElementById("review_form2").submit();
+            }
+         }
+         //갠찮드라 클릭시 평점 4인 리뷰 5개 출력.
+         function sortGood() {
+            if(<%=review_count_good%> == 0){
+               alert("작성된 리뷰가 없습니다.");
+            }else{
+               document.getElementById("review_SortText").value = 4;
+               document.getElementById("review_form2").submit();
+            }
+         }
+         //영 파이다 클릭시 평점 3인 리뷰 5개 출력.
+   
+         function sortBad() {
+            if(<%=review_count_bad%> == 0){
+               alert("작성된 리뷰가 없습니다.");
+            }else{
+               document.getElementById("review_SortText").value = 3;
+               document.getElementById("review_form2").submit();
+            }
+         }
+         
+         //10~13. 태그명 입력시 배열을 생성하여 여러개의 태그 처리
+         //태그명 담을 배열 생성
+         var tag_list = [];
+         var tag_count = 0;
+         
+         //10. tag 입력 자동완성 이벤트(현재 jQuery 충돌로 안나옴)
+         $(function() {
+            $("#id_input_tagName").autocomplete({ //오토 컴플릿트 시작
+               source: List, // source는 data.js파일 내부의 List 배열
+               focus: function(event, ui) { // 방향키로 자동완성단어 선택 가능하게 만들어줌   
+                  //console.log(ui.item);
+                  return false;
+               },
+               minLength: 1,// 최소 글자수
+               delay: 10, //autocomplete 딜레이 시간(ms)
+               //disabled: true, //자동완성 기능 끄기
+            });
+         });
+         
+         //11. enter시에 태그 배열에 내용 추가하는 메소드/이벤트
+         function show_name(e) {
+            document.getElementById("id_input_tagName").setAttribute("placeholder", "ex.점심특선");
+            //input정보
+            var x = document.getElementById("id_input_tagName");
+            //입력이 없거나 태그가 5개 이하라면(0~4) 입력받음
+            //중복체크 1: 중복아님, 0:중복
+            var tag_dup = dup_check(tag_list, tag_count, x.value)
+            //code: 입력키, 입력이 ""이 아닐때, tag개수가 5개 이하일 때
+            if (e.key == 'Enter' && tag_count < 5 && x.value != "" && tag_dup && List.includes(x.value)) {
+               //입력한 내용을 배열에 추가
+               tag_list.push(x.value);
+               //태그목록 생성
+               //var input_TagList = document.createElement('ul');
+               var input_TagList = document.getElementById("lists_tag");
+               var input_Tag = document.createElement('li');
+               input_Tag.setAttribute("class", "create_tag");
+               input_Tag.innerText = "#" + x.value;
+               input_Tag.setAttribute("id", "list_tag" + tag_count);
+   
+               //위치 지정
+               //특정위치 앞에 삽입(상속관계), div > ul > li
+               input_TagList.insertBefore(input_Tag, null);
+   
+               //input창 초기화
+               x.value = null;
+               //카운트
+               tag_count++;
+   
+               document.getElementById("tagListView").value = tag_list.toString();
+            } else if (tag_count > 4) { //태그 검색 개수가 6개 이상이라면 비활성화
+               //console.log("tag_input1");
+               x.disabled = true;
+               document.getElementById("id_input_tagName").value = null;
+               document.getElementById("id_input_tagName").setAttribute("placeholder", "태그는 5개까지 등록할 수 있습니다.");
+            } else if (!List.includes(x.value)) {
+               document.getElementById("id_input_tagName").value = null;
+               document.getElementById("id_input_tagName").setAttribute("placeholder", "리스트에 없는 내용입니다.");
+            } else if (tag_dup === 0){
+               document.getElementById("id_input_tagName").value = null;
+               document.getElementById("id_input_tagName").setAttribute("placeholder", "중복된 태그는 입력되지 않습니다.");
+            }else { //빈 검색어라면 log에 none을 표시하고 추가되는 거 없음
+               console.log("none");
+            }
+         }
+   
+         //12-1. 입력한 태그 중복확인 이벤트(t: 중복아님, f:중복)/메소드
+         //입력 input의 value값(String)
+         function dup_check(list, count, str) {
+            for (var i = 0; i < count; i++) {
+               if (str === list[i]) {
+                  return 0;
+               }
+            }
+            return 1;
+         }
+         
+         //13. input 옆에 x 클릭시 뒤에서부터 리스트 삭제 이벤트
+         function tag_del() {
+            //현재 배열 위치와 tag입력 개수 출력
+            //console.log("del: " + "list_tag" + (tag_count - 1).toString() + "\t" + tag_count);
+            //tag_count != 0 체크하려했는데 실수지만 잘 
+            if (tag_list.length != 0) {
+               document.getElementById("list_tag" + (tag_count - 1)).remove();
+               tag_list.pop();
+               tag_count--;
+               document.getElementById("id_input_tagName").disabled = false;
+               //input창 초기화
+               document.getElementById("tagListView").value = null;
+               document.getElementById("tagListView").value = tag_list.toString();
+            } else {
+               console.log("Value already missing in tag list");
+            }
+         }
+      </script>
+
 		<script>
 		function show_create_review() {
 			   <%if ((String) session.getAttribute("memberID") != null) {%>
