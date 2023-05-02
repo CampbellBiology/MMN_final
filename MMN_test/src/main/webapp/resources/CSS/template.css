@@ -2171,3 +2171,7 @@ header.masthead h1, header.masthead .h1 {
     font-size: 3rem;
   }
 }
+
+.mb-5 {
+	margin-bottom: 20px;
+}
