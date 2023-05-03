@@ -265,8 +265,8 @@ window.onscroll = function(e) {
   //window height + window scrollY 값이 document height보다 클 경우,
   if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
   	//실행할 로직 (콘텐츠 추가)
-      count++;
-  	if(count == 1)
+    if(count==0)count=2;
+	else count++;
   		return;
       var addContent;
       
