@@ -267,7 +267,7 @@ window.onscroll = function(e) {
   	//실행할 로직 (콘텐츠 추가)
     if(count==0)count=2;
 	else count++;
-  		return;
+  	
       var addContent;
       
       addContent = document.getElementById("art"+count).innerHTML;
