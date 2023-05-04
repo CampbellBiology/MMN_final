@@ -21,10 +21,6 @@
 	DB_Conn db = new DB_Conn();
 	String userID = (String) session.getAttribute("memberID");
 	System.out.println("tagPage_0427.jsp userID:" + userID);
-	watchlist wl = new watchlist(userID);
-	watchlistStoreDataPrint[] arr = new watchlistStoreDataPrint[10];
-	ArrayList <tagData> tdList = db.getTagDataList();
-	Collections.sort(tdList);
 
 	/* int lim = Math.min(wl.getWsdpList().size(), 10);
  
