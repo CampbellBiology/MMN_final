@@ -43,7 +43,7 @@ public class joinServlet extends HttpServlet {
       //회원가입 시 필수정보를 체크하여 DB에 삽입
       //필수 값이 null이라면 alert
       try {
-         String path = "C:/Apache24/htdocs/ImageTest/storeImgSub";
+         String path = "C:/Apache24/htdocs/ImageTest/userImage";
          File f = new File(path);
           //파일이 있는지 체크
           if(!f.exists()){
