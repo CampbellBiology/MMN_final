@@ -14,7 +14,7 @@
 	int lim = Math.min(wdList.size(), 10);
 	
 	if(lim == 0){
-		out.println("<img src=\"../UI/UI/뭐뭇나_List_none.png\" class=\"list_none\"id=\"list_none\">");
+		out.println("<img src=\"../UI/UI/mmn_List_none.png\" class=\"list_none\"id=\"list_none\">");
 	}
 	else{
 		for(int i=0;i<lim;i++){
