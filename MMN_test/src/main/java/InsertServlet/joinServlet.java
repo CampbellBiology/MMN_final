@@ -69,9 +69,9 @@ public class joinServlet extends HttpServlet {
          
          //이미지 파일명 변경.
            //입력한 파일정보 가져오기.
-           File fileimg = new File("/ImageTest/storeImgSub/"+ multi.getFileNames());
+           File fileimg = new File("/ImageTest/userImage/"+ multi.getFileNames());
            //회원아이디를 파일명으로 설정.
-           File fileimgname = new File("/ImageTest/storeImgSub/"+user_id+".jpg");
+           File fileimgname = new File("/ImageTest/userImage/"+user_id+".jpg");
            fileimg.renameTo(fileimgname);
          
            //필수값 null 체크
