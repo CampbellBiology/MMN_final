@@ -25,7 +25,7 @@ function joinID() {
 
 function joinPW() {
     let PW_txtbx = document.querySelector('#user_pw');
-    let regPW = /^[a-z0-9-_]{5,20}$/;
+    let regPW = /^[a-z0-9-_]{8,16}$/;
 
 
     if (PW_txtbx.value == "") {
@@ -35,7 +35,7 @@ function joinPW() {
     else if (!regPW.test(PW_txtbx.value)) //정규식
     {
         document.querySelector('#pw_noti').style.display = "block";
-        document.querySelector('#pw_noti').innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
+        document.querySelector('#pw_noti').innerHTML = "8~16자의 영문 소문자, 숫자, 특수기호(_),(-)만 사용 가능합니다.";
     }
     else {
         document.querySelector('#pw_noti').style.display = "none";
@@ -70,7 +70,7 @@ function joinName() {
         document.querySelector('#name_noti').innerHTML = "필수값입니다";
     } else if (!regName.test(Name_txtbx.value)) {
         document.querySelector('#name_noti').style.display = "block";
-        document.querySelector('#name_noti').innerHTML = "한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)";
+        document.querySelector('#name_noti').innerHTML = "한글과 영문 대소문자를 사용하세요. (특수기호, 공백 사용 불가)";
     } else { document.querySelector('#name_noti').style.display = "none"; 
     newName = true;}
 }

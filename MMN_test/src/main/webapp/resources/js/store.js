@@ -16,8 +16,6 @@ window.onload = function() {
 }
 
 function colorSet(colorPick) {
-	// document.querySelector("body").style.backgroundImage = colorPick.id;
-
 	// 메인으로 보여줄 div에 백그라운드 url 동적으로 부여
 	document.getElementById("mainImage").style.backgroundImage = `url(${colorPick.id})`;
 
@@ -31,16 +29,12 @@ function colorSet(colorPick) {
 	selectedColor = colorPick.id;
 }
 
-function show_create_review() {
-	document.getElementById("create_riview").style.display = "block";
-	document.getElementById("show_btn").style.display = "none";
-	document.getElementById("remove_btn").style.display = "block";
-}
 
 function remove_create_review() {
 	document.getElementById("create_riview").style.display = "none";
 	document.getElementById("show_btn").style.display = "block";
 	document.getElementById("remove_btn").style.display = "none";
+	document.getElementById("buttons").style.display = "none";
 }
 
 function cancel_create_review() {

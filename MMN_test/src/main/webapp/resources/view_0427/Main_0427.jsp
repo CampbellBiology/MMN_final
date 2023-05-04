@@ -26,20 +26,11 @@
 
   <link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick.css">
   <link rel="stylesheet" type="text/css" href="../slick-1.8.1/slick/slick-theme.css">
-   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 </head>
 
 
 <body>
-  <!-- Navigation-->
-  <!-- <nav class="navbar navbar-light bg-light static-top">
-    <div class="container">
-      <a class="navbar-brand" href="#!"><img src="../UI/UI/logo_MMN(2).png" width="100px"></a>
-      <a class="btn btn-primary" href="#signup" id="loginasdf">로그인</a>
-      <a class="btn btn-primary" href="#signup" id="signupasdf">회원가입</a>
-    </div>
-  </nav> -->
-  <!-- Masthead-->
   
  <%
 	DB_Conn db = new DB_Conn();
@@ -50,33 +41,27 @@
 	ArrayList <tagData> tdList = db.getTagDataList();
 	Collections.sort(tdList);
 
-	/* int lim = Math.min(wl.getWsdpList().size(), 10);
- 
-	for (int i = 0; i < lim; i++) {
-		arr[i] = wl.getWsdpList().get(i);
-	} */
+	session.setAttribute("urlPage", "/resources/view_0427/Main_0427.jsp");
 	%>
 	<!-- Navigation-->
 	<nav class="navbar navbar-light bg-light static-top">
 		<div class="container">
-			<a class="navbar-brand" href="Main_0427.jsp" id="brand"><img
-				src="../UI/UI/logo_MMN(2).PNG" width="100px"></a> <a
-				class="btn btn-primary" href="Login2.html" id="loginasdf"
+			<a class="navbar-brand" href="Main_0427.jsp" id="brand">
+			<img src="https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/banner3_50px.png" height="50px"></a> 
+				
+			<a class="btn btn-primary" href="Login2.html" id="loginasdf"
 				style="display:<%=userID != null ? "none" : "block"%>">로그인</a>
+			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf" style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
+				
 			<button type="button" id="watchlist_button"
 				style="display:<%=userID == null ? "none" : "block"%>"
 				onclick="sendRequest2()">
 				<img src="../UI/UI/watchlist_active.png" height="50px">
 			</button>
-			<a class="btn btn-primary" href="SignIn2.html" id="signupasdf"
-				style="display:<%=userID != null ? "none" : "block"%>">회원가입</a>
 
-			<!-- 유저 이미지 파일 src DB에서 가져와서 넣어줘야 해요 -->
-			<div id="profile"
-				style="display:<%=userID == null ? "none" : "block"%>">
-				<img src="http://192.168.250.44<%=db.getUserImagePath(userID)%>"
-					id="profile_photo">
-			</div>
+			<form method="post" action ="sessionOut">
+				<button type="submit" class="btn btn-primary" id="logoutasdf" style="display:<%=userID == null ? "none" : "block"%>">로그아웃</button>
+			</form>
 		</div>
 	</nav>
 
@@ -95,36 +80,24 @@
 				</div>
 			</div>
 		</div>
+		</section>
 
-  
-  
-  
   
   <header class="masthead">
     <div class="container position-relative">
       <div class="row justify-content-center">
         <div class="col-xl-6">
           <div class="text-center text-white">
-            <!-- Page heading-->
+
             <h1 class="mb-5" style="font-family: 'Gaegu', cursive; font-size: 70px">오늘 뭐 뭇노?</h1>
-            <!-- Signup form-->
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- * * SB Forms Contact Form * *-->
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- This form is pre-integrated with SB Forms.-->
-            <!-- To make this form functional, sign up at-->
-            <!-- https://startbootstrap.com/solution/contact-forms-->
-            <!-- to get an API token!-->
+
             <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
-              <!-- Email address input-->
               <div class="row">
                 <div class="col">
                   <input class="form-control form-control-lg" id="search" type="text" placeholder="태그 또는 메뉴 검색" onkeyup="sendRequestTag(); sendRequestStore();" onfocus="window_open()" onblur="window_close()" autocomplete="off" />
-                  <!-- <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                                        <div class="invalid-feedback text-white" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div> -->
+
                 </div>
                 <div class="col-auto">
-                  <!-- <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">검색</button> -->
                   <button class="search_btn" id="search_btn">검색</button>
                   </div>
                    	<div id="search_window">
@@ -166,10 +139,12 @@
     <div id="tag_area">
       <div id="titleasdf">#태그</div>
       <% 
-      	int lim = Math.min(15, tdList.size());
+      	int lim = Math.min(20, tdList.size());
       	for(int i=0;i<lim;i++){
       %>
-      <button class="bttn-material-flat bttn-md bttn-primary"><a href = "TagPage_0427.jsp?tagID=<%= tdList.get(i).getTagId() %>" onclick="goTop()" class="a">#<%= tdList.get(i).getTagName() %></a></button>
+      <button class="bttn-material-flat bttn-md bttn-primary">
+      	<a href = "TagPage_0427.jsp?tagID=<%= tdList.get(i).getTagId() %>" class="a">#<%= tdList.get(i).getTagName() %></a>
+      </button>
       
       <%	
       }
@@ -214,7 +189,7 @@
                       <h3><%= tlbt.getTldList().get(j).getStoreName() %></h3>
                       <p><%=tlbt.getTldList().get(j).getReviewContent() %></p>
                     </figcaption>
-                    <a href="Store_0427.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>" onclick="goTop()"></a>
+                    <a href="Store_0427.jsp?storeCode=<%=tlbt.getTldList().get(j).getStoreCode()%>"></a>
                   </figure>
                   <!-- 가게 한 덩이 -->
 				<%
@@ -392,14 +367,14 @@ if(count == 0){
 }
 
 //스크롤 바닥 감지
-window.parent.onscroll = function(e) {
+window.onscroll = function(e) {
 	
 	if(count == 3)
 		return;
 	
   //추가되는 임시 콘텐츠
   //window height + window scrollY 값이 document height보다 클 경우,
-  if((window.parent.innerHeight + window.parent.scrollY) >= document.body.offsetHeight) {
+  if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
   	//실행할 로직 (콘텐츠 추가)
       count++;
   	if(count == 1)
@@ -413,9 +388,6 @@ window.parent.onscroll = function(e) {
   }
 };
 
-function goTop(){
-	parent.window.scroll(0,0);
-}
 
 </script>
 
@@ -463,7 +435,5 @@ function window_close() {
 
             <script type="text/javascript" src="../js/keepImg_star.js"></script>    
 
-
-</body>
-
+	</body>
 </html>

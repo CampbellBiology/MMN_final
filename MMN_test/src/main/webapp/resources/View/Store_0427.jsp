@@ -158,7 +158,7 @@
 							<%
 							if (storeCode != 0) {
 								for (int i = 0; i < 3; i++) {
-									ArrayList<String> tag_popular = _db.get_tagCount(1);
+									ArrayList<tagData> tag_popular = _db.get_tagCount(1);
 							%>
 							<div class="tag1">
 								<a> <span class="sharp"># </span>

@@ -19,7 +19,7 @@ function logID() {
 
 function logPW() {
     let PW_txtbx = document.querySelector('#user_pw');
-    let regPW = /^[a-z0-9-_]{5,20}$/;
+    let regPW = /^[a-z0-9-_]{8,16}$/;
 
 
     if (PW_txtbx.value == "") {
@@ -28,7 +28,7 @@ function logPW() {
     else if (!regPW.test(PW_txtbx.value)) //정규식
     {
         document.querySelector('#pw_noti').style.display = "block";
-        document.querySelector('#pw_noti').innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
+        document.querySelector('#pw_noti').innerHTML = "8~16자의 영문 소문자, 숫자, 특수기호(_),(-)만 사용 가능합니다.";
     }
     else {
         document.querySelector('#pw_noti').style.display = "none";
@@ -47,12 +47,12 @@ function cancel_login() {
 
 function mySubmit() {
 	
-	if(newId==false || newPw==false || newPw_confirm==false) {
-		alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
-		return false;
-	} else {
+	if(newId==true && newPw==true) {
 		alert("로그인 성공");
 		return true;
+	} else {
+		alert("아이디 또는 비밀번호를 올바르게 입력해주세요.");
+		return false;		
 	}
 }
 

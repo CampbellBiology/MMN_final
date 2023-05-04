@@ -44,17 +44,13 @@ public class DB_Conn {
 			// mysql jdbc driver 로딩
 			Class.forName("com.mysql.jdbc.Driver");
 
-			// db연결 문자열 but 이방법은 보안에 취약하다. ..
+			// db연결 문자열
 			String url = "jdbc:mysql://192.168.250.44/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
 			String id = "junghan"; // mysql 접속아이디
 			String pwd = "yeil!1234"; // mysql 접속 비번
 
-//			String url = "jdbc:mysql://localhost/mmn?characterEncoding=UTF-8&serverTimezone=UTC";
-//			String id = "root"; // mysql 접속아이디
-//			String pwd = "1234"; // mysql 접속 비번
 
 			// db 접속
-
 			conn = DriverManager.getConnection(url, id, pwd);
 			System.out.println("db접속 성공");
 		} catch (Exception e) {
@@ -70,7 +66,7 @@ public class DB_Conn {
 		PreparedStatement pstmt = null; // SQL실행객체
 
 		try {
-			String sql = "INSERT INTO userTbl(userID, userPW, userName, userEmail, isMaster)" + " VALUES(?,?,?,?,?)";
+			String sql = "INSERT INTO userTbl(userID, userPW, userName, userEmail, isMaster, userImagePath)" + " VALUES(?,?,?,?,?,?)";
 
 			// sql 실행객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -81,6 +77,7 @@ public class DB_Conn {
 			pstmt.setString(3, _Data.userName);
 			pstmt.setString(4, _Data.userEmail);
 			pstmt.setString(5, _Data.isMaster);
+			pstmt.setString(6, _Data.userImgPath);
 
 			// executeQuery() select 명령어
 			// executeUpdate select 이외 명령어
@@ -352,8 +349,14 @@ public class DB_Conn {
 		// 가게코드가 storeCode인 리뷰가 하나도 없다면 음수를 리턴한다.
 		if (cnt == 0)
 			return 0.0;
+		
+	    double ret = ((double) ratingSum) / ((double) cnt);
+	      
+	    ret *= 10;
+	    ret = Math.round(ret);
+	    ret /= 10;
 
-		return ((double) ratingSum) / ((double) cnt);
+	    return ret;
 	}
 
 	
@@ -676,7 +679,7 @@ public class DB_Conn {
 		return ret;
 	}
 
-	//19. 태그페이지에서 태그별 가게정보를 표시한다.
+	//19. 메인페이지에서 태그별 가게정보를 표시한다.
 	public ArrayList<storeByTagDataPrint> getStoreListByTag(int tagID, String userID) {
 		ArrayList<storeByTagDataPrint> ret = new ArrayList<>();
 
@@ -772,7 +775,7 @@ public class DB_Conn {
 		return ret;
 	}
 
-	//21. 관심목록 null 체크
+	//21. 관심목록 상태 체크(TRUE: 노란별, FALSE: 회색별)
 	public boolean haveWatchlist(String userID, int storeCode) {
 		Statement stmt = null;
 		ResultSet res = null;
@@ -978,7 +981,7 @@ public class DB_Conn {
 			// 0입력
 			if (_Data.anonymous == null) {
 				String sql = "insert into reviewtbl(storeCode, userId, contents, rating, photoPath)"
-						+ " VALUES(?,?,?,?,null)";
+						+ " VALUES(?,?,?,?,?)";
 
 				// sql 실행객체 생성
 				pstmt = conn.prepareStatement(sql);
@@ -988,12 +991,12 @@ public class DB_Conn {
 				pstmt.setString(2, _Data.userID);
 				pstmt.setString(3, _Data.contents);
 				pstmt.setString(4, _Data.rating);
-				// pstmt.setString(5, _Data.photoPath);
+				pstmt.setString(5, _Data.photoPath);
 
 				pstmt.executeUpdate();
 			} else {
 				String sql = "insert into reviewtbl(storeCode, userId, contents, rating, anonymous, photoPath)"
-						+ " VALUES(?,?,?,?,true,null)";
+						+ " VALUES(?,?,?,?,true,?)";
 
 				// sql 실행객체 생성
 				pstmt = conn.prepareStatement(sql);
@@ -1003,7 +1006,7 @@ public class DB_Conn {
 				pstmt.setString(2, _Data.userID);
 				pstmt.setString(3, _Data.contents);
 				pstmt.setString(4, _Data.rating);
-				// pstmt.setString(6, _Data.photoPath);
+				pstmt.setString(6, _Data.photoPath);
 
 				pstmt.executeUpdate();
 			}
@@ -1346,21 +1349,59 @@ public class DB_Conn {
 		return max_menu;
 	}
 
-	// 36. 가게페이지에서 가장많이 사용한(뷰 수가 높은) 태그명을 3개를 추출하여 리턴
-	public ArrayList<String> get_tagCount(int storeCode) {
-		ArrayList<String> max_tag = new ArrayList<>();
+	// 36. 가게페이지에서 가장많이 사용한(뷰 수가 높은) 태그명을 6개를 추출하여 리턴
+	   public ArrayList<tagData> get_tagCount(int storeCode) {
+	      ArrayList<tagData> max_tag = new ArrayList<>();
+	      Statement stmt = null;
+	      ResultSet res = null;
+	      try {
+	         // sql 실행객체 생성
+	         stmt = conn.createStatement();
+	         String sql = "SELECT tagtbl.tagID, tagtbl.tagName FROM mmn.tagtbl where tagID = (SELECT tag_storetbl.tagID FROM mmn.tag_storetbl where storeCode="
+	               + storeCode + " and tag_storetbl.tagID = tagtbl.tagID) order by tagView desc limit 0, 6;";
+	         // select문 실행 명령어
+	         res = stmt.executeQuery(sql);
+	         while (res.next()) {
+	            tagData td = new tagData();
+	            // reviewcount = res.getInt("reviewIndex");
+	            
+	            td.setTagId(Integer.parseInt(res.getString("tagID")));
+	            td.setTagName(res.getString("tagName"));
+	            max_tag.add(td);
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         try {
+	            if (res != null) {
+	               res.close();
+	            }
+	            if (stmt != null)
+	               stmt.close();
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	      return max_tag;
+	   }
+	   
+	//37. 리뷰의 유저 아이디에 맞는 유저 정보 리턴(유저 명과 유저 프로필사진 가져오기)
+	public Insert_joinData get_ReviewInfo(String _id){
 		Statement stmt = null;
 		ResultSet res = null;
+		Insert_joinData ij = new Insert_joinData();
 		try {
 			// sql 실행객체 생성
 			stmt = conn.createStatement();
-			String sql = "SELECT tagtbl.tagName FROM mmn.tagtbl where tagID = (SELECT tag_storetbl.tagID FROM mmn.tag_storetbl where storeCode="
-					+ storeCode + " and tag_storetbl.tagID = tagtbl.tagID) order by tagView desc limit 0, 3;";
+			// 푸드코드로 정렬되면서 푸드코드를 제외한 정보를 빼내기가 어려워 푸드코드 함께 메뉴명 그리고 count결과를 가져온다.
+			String sql = "select usertbl.userName, usertbl.userImagePath from mmn.usertbl where userID = '"+_id+"'";
 			// select문 실행 명령어
 			res = stmt.executeQuery(sql);
 			while (res.next()) {
-				// reviewcount = res.getInt("reviewIndex");
-				max_tag.add(res.getString("tagName"));
+				
+				//max_menu = res.getString("foodName");
+				ij.setUserName(res.getString("userName"));
+				ij.setUserImgPath(res.getString("userImagePath"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1375,9 +1416,8 @@ public class DB_Conn {
 				e.printStackTrace();
 			}
 		}
-		return max_tag;
+		return ij;
 	}
-	
 	public int getTagView(int tagID) {
 		int ret = 0;
 		Statement stmt = null;

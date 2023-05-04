@@ -38,6 +38,10 @@ public class loginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 
+		HttpSession session = request.getSession();
+	    String recentURI = (String)session.getAttribute("urlPage");
+	    session.removeAttribute("urlPage");
+	    
 		request.setCharacterEncoding("UTF-8");
 
 		//로그인시 DB로 데이터를 조회하여 데이별 결과 출력
@@ -63,7 +67,7 @@ public class loginServlet extends HttpServlet {
 			loginData.setLoginStatus(res);
 
 			// 세션 객체를 얻는다.
-			HttpSession session = request.getSession();
+			//HttpSession session = request.getSession();
 			// member 속성에 유저 아이디를 넣는다. 이걸로 유저가 로그인 중인지 체크한다.
 			session.setAttribute("memberID", _Data.userID);
 
@@ -71,25 +75,23 @@ public class loginServlet extends HttpServlet {
 			// 로그인 후 띄울 화면을 설정하기 위한 코드
 			String context = request.getContextPath();
 
-			//로그인 실패 시 alert 매서드 타게 함
+			
 			if (res == 0) {
-				System.out.println("마스터 계정 로그인 성공");
-				response.sendRedirect(context + "/resources/view_0427/Main_0427.jsp");
-//				response.sendRedirect(context + "/loginSuccess.jsp");
-			} else if (res == 1) {
-				System.out.println("일반 계정 로그인 성공");
-				response.sendRedirect(context + "/resources/view_0427/Main_0427.jsp");
-			} else if (res == 2) {
-				System.out.println("비밀번호를 다시 확인 해주세요");
-				alert(response, context);
-//				response.sendRedirect(context + "/loginFailure.jsp");
-			} else {
-				
-				System.out.println("아이디가 잘못 됐습니다.");
-				alert(response, context);
-//				response.sendRedirect(context + "/loginFailure.jsp");
-			}
-
+	            System.out.println("마스터 계정 로그인 성공");
+	            response.sendRedirect(context + "/resources/view_0427/Main_0427.jsp");
+	         } else if (res == 1) {
+	            System.out.println("일반 계정 로그인 성공");
+	            //이전페이지로 돌아가게 함
+	            response.sendRedirect(context+recentURI);
+	         } else if (res == 2) {
+	            System.out.println("비밀번호를 다시 확인 해주세요");
+	          //로그인 실패 시 alert 매서드 타게 함
+	            alert(response, context);
+	         } else {          
+	            System.out.println("아이디가 잘못 됐습니다.");
+	          //로그인 실패 시 alert 매서드 타게 함
+	            alert(response, context);
+	         }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,9 +106,7 @@ public class loginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	
-	
+		
 	//로그인 실패 시 뜨는 alert 매서드
 	public static void alert(HttpServletResponse response, String msg) {
 	    try {
@@ -120,12 +120,4 @@ public class loginServlet extends HttpServlet {
 			e.printStackTrace();
 	    }
 	}
-	
-	
-
 }
-
-
-
-
-
