@@ -478,15 +478,15 @@
 							<%
 							if (!data.getPhotoPath().equals("")) {
 								String[] review_photo = data.getPhotoPath().split(",");
-								for (int i = 0; i < review_photo.length; i++) {
-									review_photo[i] = review_photo[i].replace("\"", "");
-									review_photo[i] = "http://192.168.250.44" + review_photo[i];
+								for (int pho = 0; pho < review_photo.length; pho++) {
+									review_photo[pho] = review_photo[pho].replace("\"", "");
+									review_photo[pho] = "http://192.168.250.44" + review_photo[pho];
 							%>
-							<div class="show_images2">
-								<img src=<%=review_photo[i]%> class="show_images3">
-							</div>
+								<div class="show_images2">
+									<img src=<%=review_photo[pho]%> class="show_images3">
+								</div>
 							<%
-							}
+								}
 							}
 							%>
 						</div>

@@ -47,9 +47,8 @@
 
                 <div id="formText">프로필 사진 <span class="subtext">(jpg, png파일 1개만 등록 가능합니다.)</span></div>
                 <div class="filebox">
-
                     <input class="upload-name" value="첨부파일" placeholder="첨부파일" id="user_photo" name="user_photo"
-                        accept=".jpg, .png"><br>
+                        accept=".jpg, .png" onchange="readImg()"><br>
                     <label for="file">파일찾기</label>
                     <input type="file" id="file" name="file">
                     <div id="photo_noti" class="noti"></div>
@@ -69,7 +68,7 @@
         $("#file").on('change', function () {
             var fileName = $("#file").val();
             $(".upload-name").val(fileName);
-        });	
+        });
     </script>
 </body>
 </html>

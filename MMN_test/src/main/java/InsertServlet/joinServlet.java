@@ -61,17 +61,21 @@ public class joinServlet extends HttpServlet {
          // 유저 이메일
          String user_email = multi.getParameter("user_email");
          
-
+         String file_name = multi.getParameter("user_photo");
          // 데이터베이스 접근
          DB_Conn _DB = new DB_Conn();
          // 삽입할 회원가입 정보를 저장할 객체다.
          Insert_joinData _Data = new Insert_joinData();
-         
+         System.out.println("file: "+file_name);
          //이미지 파일명 변경.
            //입력한 파일정보 가져오기.
-           File fileimg = new File("/ImageTest/userImage/"+ multi.getFileNames());
+         //파일명 못가져오나봐.. 다시get
+         file_name = file_name.replace("\\", "/");
+         file_name = file_name.replace("C:/fakepath/", "");
+         System.out.println("file: "+file_name);
+           File fileimg = new File("C:/Apache24/htdocs/ImageTest/userImage/"+file_name);
            //회원아이디를 파일명으로 설정.
-           File fileimgname = new File("/ImageTest/userImage/"+user_id+".jpg");
+           File fileimgname = new File("C:/Apache24/htdocs/ImageTest/userImage/"+user_id+".jpg");
            fileimg.renameTo(fileimgname);
          
            //필수값 null 체크
