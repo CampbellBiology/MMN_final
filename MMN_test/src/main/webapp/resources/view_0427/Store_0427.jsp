@@ -987,6 +987,7 @@
 
 		<script>
 		function show_create_review() {
+				//세션이 있을때 리뷰작성가능
 			   <%if ((String) session.getAttribute("memberID") != null) {%>
 			   document.getElementById("create_riview").style.display = "block";
 			   document.getElementById("show_btn").style.display = "none";

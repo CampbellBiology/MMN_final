@@ -1418,6 +1418,8 @@ public class DB_Conn {
 		}
 		return ij;
 	}
+	
+	//38. 태그 뷰 데이터를 가져오는 메소드
 	public int getTagView(int tagID) {
 		int ret = 0;
 		Statement stmt = null;
@@ -1448,6 +1450,7 @@ public class DB_Conn {
 		return ret;
 	}
 	
+	//39. 해당 태그의 태그페이지가 표시 되었을 때 태그 뷰수를 증가시키는 메소드
 	public void updateTagView(int tagID) {
 		PreparedStatement pstmt = null;
 		int tagView = getTagView(tagID);
