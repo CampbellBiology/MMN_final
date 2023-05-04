@@ -1,492 +1,452 @@
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap')
+	;
 
 * {
-    font-family: 'Noto Sans KR', sans-serif;
-    /* background-color: rgb(239, 238, 238); */
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
-
-/* 여기서부터 리뷰 생성 */
-
 #create_riview {
-    width: 1100px;
-    height: 790px;
-    /* position: absolute;
-    top: 900px;
-    left: 0px; */
-    border: 1px solid rgb(255, 123, 0);
-    text-align: center;
-    display: none;
-    margin-bottom: 50px;
-
-    /* display: flex; */
+	width: 1100px;
+	height: 740px;
+	border: 1px solid rgb(255, 123, 0);
+	text-align: center;
+	display: none;
+	margin-bottom: 50px;
 }
 
 #review_store_name {
-    width: 1050px;
-    height: 50px;
-    display: flex;
-    margin: 20px;
-    /* top: 790px;
-    left: 260px; */
-    text-align: left;
-    font-size: 32px;
-    font-weight: 600;
-    /* background-color: rgb(225, 255, 184); */
-    padding-left: 10px;
-    padding-bottom: 10px;
-    border: 1px solid gray;
-    border-style: none none solid none;
+	width: 1050px;
+	height: 50px;
+	display: flex;
+	margin: 20px;
+	text-align: left;
+	font-size: 32px;
+	font-weight: 600;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	border: 1px solid gray;
+	border-style: none none solid none;
 }
 
 #noname_check {
-    position: relative;
-    top: -70px;
-    right: 30px;
-    text-align: right;
-    color: gray;
-    /* background-color: aliceblue; */
+	position: relative;
+	top: -70px;
+	right: 30px;
+	text-align: right;
+	color: gray;
 }
 
 #review_whatIAte {
-    width: 300px;
-    height: 30px;
-    display: flex;
-    margin-left: 30px;
-    margin-top: -20px;
-    /* position: relative;
-    top: 30px;
-    left: 30px; */
-    font-weight: 400;
-    text-align: left;
-    font-size: 20px;
-    /* background-color: rgb(230, 203, 255); */
+	width: 300px;
+	height: 30px;
+	display: flex;
+	margin-left: 30px;
+	margin-top: -20px;
+	font-weight: 400;
+	text-align: left;
+	font-size: 20px;
 }
 
 /* 셀렉트박스 커스텀 */
-
 .selectBox {
-    /* position: relative;
-    top: 40px;
-    left: 30px; */
-    display: flex;
-    margin-top: 10px;
-    margin-left: 30px;
-    width: 250px;
-    height: 35px;
-    border-radius: 4px;
-    border: 1px solid lightcoral;
+	margin-top: 10px;
+	margin-left: 30px;
+	padding-right: 5px;
+	width: 250px;
+	height: 35px;
+	border-radius: 4px;
+	border: 1px solid lightcoral;
 }
 
 .selectBox .select {
-    width: inherit;
-    height: inherit;
-    background: transparent;
-    border: 0 none;
-    outline: 0 none;
-    padding: 0px 5px;
-    position: relative;
-    z-index: 3;
+	width: inherit;
+	height: inherit;
+	background: transparent;
+	border: 0 none;
+	outline: 0 none;
+	padding: 0px 5px;
+	position: relative;
+	z-index: 3;
 }
 
 .selectBox .select option {
-    background: lightcoral;
-    color: #fff;
-    padding: 3px 0;
-    font-size: 16px;
+	background: lightcoral;
+	color: #fff;
+	padding: 3px 3;
+	font-size: 16px;
 }
 
 #x-button {
-    border-radius: 4px;
-    border: 1px solid lightcoral;
-    background-color: white;
-    width: 30px;
-    height: 36px;
-    position: relative;
-    top: -1px;
-    left: 35px;
-    font-size: 13px;
-    font-weight: 600;
+	border-radius: 4px;
+	border: 1px solid lightcoral;
+	background-color: white;
+	width: 30px;
+	height: 36px;
+	position: relative;
+	top: -35px;
+	left: -245px;
+	font-size: 13px;
+	font-weight: 600;
 }
 
 #x-button:hover {
-    background-color: lightcoral;
-    color: white;
-    cursor: pointer;
+	background-color: lightcoral;
+	color: white;
+	cursor: pointer;
 }
 
 /* 여기까지 셀렉트 박스 커스텀 */
-
 #show_whatIAte {
-    width: 550px;
-    display: flex;
-    margin-left: 30px;
-    margin-top: -105px;
-    /* top: -10px;
-    left: 30px; */
-    /* background-color: rgb(240, 182, 121); */
+	width: 550px;
+	display: flex;
+	margin-left: 30px;
+	margin-top: -135px;
 }
 
 ul {
-    list-style: none;
-    padding-left: 0;
-    margin-left: 0px;
+	list-style: none;
+	padding-left: 0;
+	margin-left: 0px;
 }
 
 .whatiate {
-    width: auto;
-    height: 30px;
-    text-align: left;
-    padding: 5px 10px 0px 10px;
-    border: 1px solid lightcoral;
-    border-radius: 4px;
-    float: left;
-    color: lightcoral;
-    font-size: 14px;
-    background-color: rgb(255, 255, 255);
-    display: inline-flex;
-    margin: 0px 7px 7px 0px;
+	width: auto;
+	height: 30px;
+	text-align: left;
+	padding: 5px 10px 0px 10px;
+	border: 1px solid lightcoral;
+	border-radius: 4px;
+	float: left;
+	color: lightcoral;
+	font-size: 14px;
+	background-color: rgb(255, 255, 255);
+	display: inline-flex;
+	margin: 0px 7px 7px 0px;
 }
 
 .whatiate:hover {
-    box-shadow: 2px 2px 2px gray;
-    transition: 0.3s;
+	box-shadow: 2px 2px 2px gray;
+	transition: 0.3s;
 }
-
-
-
 
 /* 여기서부터 평점 */
-
 #score_title {
-    width: 400px;
-    height: 50px;
-    /* background-color: rgb(152, 152, 152); */
-
-    font-weight: 400;
-    text-align: left;
-    font-size: 20px;
-    position: relative;
-    top: -80px;
-    left: 610px;
+	width: 400px;
+	height: 50px;
+	font-weight: 400;
+	text-align: left;
+	font-size: 20px;
+	position: relative;
+	top: -80px;
+	left: 610px;
 }
-
 
 #score {
-    width: 500px;
-    height: 50px;
-    position: relative;
-    top: -100px;
-    left: 600px;
-    text-align: left;
-    /* background-color: rgb(255, 102, 0); */
+	width: 500px;
+	height: 50px;
+	position: relative;
+	top: -100px;
+	left: 600px;
+	text-align: left;
 }
-
 
 .score {
-    display: inline-block;
-    font-weight: 600;
-    width: 130px;
-    height: 30px;
-    margin-top: 10px;
-    padding: 0 10px;
-
+	display: inline-block;
+	font-weight: 600;
+	width: 130px;
+	height: 30px;
+	margin-top: 10px;
+	padding: 0 10px;
 }
 
-#score_great,
-#score_good {
-    border: 1px solid gray;
-    border-style: none solid none none;
+#score_great, #score_good {
+	border: 1px solid gray;
+	border-style: none solid none none;
 }
 
 #score_great {
-    border: 1px solid gray;
-    border-style: none solid none none;
+	border: 1px solid gray;
+	border-style: none solid none none;
 }
-
-
 
 .score_btn {
-    font-size: 15px;
-    font-weight: 400;
-    color: rgb(255, 123, 0);
-    border: 1px solid rgb(255, 123, 0);
-    /* border-radius: 5px; */
-    cursor: pointer;
-    background-color: rgb(255, 255, 255);
-    text-shadow: 1px 1px 1px 0px gray;
-    margin-right: 10px;
-    width: 130px;
-    height: 30px;
-}
-
-.score_btn:hover {
-    background-color: rgb(255, 248, 238);
-    box-shadow: 2px 2px 2px gray;
-    transition: 0.3s;
-}
-
-
-/* 클릭 상태 색깔 유지는 자바스크립트로 하기 */
-.score_btn:focus {
-    background-color: rgb(255, 102, 0);
-    color: white;
-    box-shadow: 2px 2px 2px gray;
-    transition: 0.2s;
+	font-size: 15px;
+	font-weight: 400;
+	color: rgb(255, 123, 0);
+	border: 1px solid rgb(255, 123, 0);
+	cursor: pointer;
+	background-color: rgb(255, 255, 255);
+	text-shadow: 1px 1px 1px 0px gray;
+	margin-right: 10px;
+	width: 130px;
+	height: 30px;
 }
 
 /* 여기서부터 태그 */
-
 #add_tag_title {
-    /* position: absolute;
-    top: 30px;
-    left: 30px; */
-
-    display: flex;
-    margin-left: 30px;
-
-    font-weight: 400;
-    text-align: left;
-    font-size: 20px;
+	display: flex;
+	margin-left: 30px;
+	font-weight: 400;
+	text-align: left;
+	font-size: 20px;
 }
 
 #add_tag {
-    /* position: relative;
-    top: 340px;
-    left: 30px; */
-    /* background-color: #848484; */
-    width: 950px;
-    display: flex;
-    margin-left: 30px;
-    margin-top: 10px;
+	width: 950px;
+	display: flex;
+	margin-left: 30px;
+	margin-top: 10px;
 }
 
-
 .create_tag {
-    display: inline-block;
-    background-color: pink;
-    width: 200px;
-    height: 30px;
+	display: inline-block;
+	background-color: pink;
+	width: 200px;
+	height: 30px;
+	width: auto;
+	height: 30px;
+	text-align: left;
+	padding: 5px 10px 0px 10px;
+	border: 1px solid lightcoral;
+	border-radius: 4px;
+	float: left;
+	margin: -15px 7px 0px 0px;
+	color: lightcoral;
+	font-size: 14px;
+	background-color: rgb(255, 255, 255);
+}
 
-    width: auto;
-    height: 30px;
-    text-align: left;
-    padding: 5px 10px 0px 10px;
-    border: 1px solid lightcoral;
-    border-radius: 4px;
-    float: left;
-    margin: 0px 7px 7px 0px;
-    color: lightcoral;
-    font-size: 14px;
-    background-color: rgb(255, 255, 255);
-
+#lists_tag>li {
+	height: 35px;
 }
 
 #plus_button {
-    border-radius: 4px;
-    border: 1px solid lightcoral;
-    background-color: white;
-    width: 30px;
-    height: 36px;
-    font-size: 13px;
-    font-weight: 600;
-    float: left;
+	border-radius: 4px;
+	border: 1px solid lightcoral;
+	background-color: white;
+	width: 30px;
+	height: 36px;
+	font-size: 13px;
+	font-weight: 600;
+	float: left;
 }
 
 #plus_button:hover {
-    background-color: lightcoral;
-    color: white;
-    cursor: pointer;
+	background-color: lightcoral;
+	color: white;
+	cursor: pointer;
 }
 
 .tag_input {
-    width: auto;
-    width: auto;
-    height: 30px;
-    text-align: left;
-    padding: 2px 10px 2px 10px;
-    border: 1px solid lightcoral;
-    border-radius: 4px;
-    float: left;
-    margin: 0px 7px 7px 0px;
-    color: lightcoral;
-    font-size: 14px;
-    background-color: rgb(255, 255, 255);
+	width: auto;
+	width: auto;
+	height: 35px;
+	text-align: left;
+	padding: 2px 10px 2px 10px;
+	border: 1px solid lightcoral;
+	border-radius: 4px;
+	float: left;
+	margin: 0px 7px 7px 0px;
+	color: lightcoral;
+	font-size: 14px;
+	background-color: rgb(255, 255, 255);
 }
+
 .tag_input:focus {
-    outline: 0;
+	outline: 0;
 }
 
 .tag_input::placeholder {
-    color: rgb(197, 197, 197);
-  }
-
-
-
-
+	color: rgb(197, 197, 197);
+}
 
 /* 여기서부터 리뷰 */
 #review_title {
-    font-weight: 400;
-    text-align: left;
-    font-size: 20px;
-    /* position: relative;
-    top: 410px;
-    left: 30px; */
-    display: flex;
-    margin-left: 30px;
-    margin-top: 30px;
+	font-weight: 400;
+	text-align: left;
+	font-size: 20px;
+	display: flex;
+	margin-left: 30px;
+	margin-top: 30px;
 }
 
 .input_review {
-   display: flex;
-   margin-left: 30px;
-   margin-top: 10px;
-    border: 1px solid lightcoral;
-    width: 700px;
-    height: 100px;
-    overflow-y: auto;
-    word-break: break-all;
-    padding: 5px;
-    resize: none;
+	display: flex;
+	margin-left: 30px;
+	margin-top: 10px;
+	border: 1px solid lightcoral;
+	width: 700px;
+	height: 100px;
+	overflow-y: auto;
+	word-break: break-all;
+	padding: 5px;
+	resize: none;
 }
 
 .input_review:focus {
-    outline: 0;
+	outline: 0;
 }
 
 .input_review::placeholder {
-    color: rgb(197, 197, 197);
-    padding: 3px;
-    text-align: left;
-  }
-
-
+	color: rgb(197, 197, 197);
+	padding: 3px;
+	text-align: left;
+}
 
 /* 여기서부터 이미지 등록 */
-
 #image_info_title {
-    /* position: relative;
-    top: 590px;
-    left: 30px; */
-    display: flex;
-    margin-left: 30px;
-    margin-top: 30px;
-    
-    font-weight: 400;
-    text-align: left;
-    font-size: 20px;
+	display: flex;
+	margin-left: 30px;
+	margin-top: 30px;
+	font-weight: 400;
+	text-align: left;
+	font-size: 20px;
 }
 
 .subtext {
-    color: gray;
-    font-size: 14px;
-    margin-top: 6px;
+	color: gray;
+	font-size: 14px;
+	margin-top: 6px;
 }
 
-
 #regImages {
-    width: 850px;
-
-    /* position: relative;
-    top: 620px;
-    left: 25px; */
-    display: flex;
-    margin-left: 30px;
-    margin-top: -20px;
+	width: 850px;
+	display: flex;
+	margin-left: 30px;
+	margin-top: 10px;
 }
 
 .reg_images {
-    width: 100px;
-    height: 100px;
-    border: 1px solid lightcoral;
-    display: inline-block;
-    margin: 5px;
-    float: left;
+	width: 120px;
+	height: 120px;
+	border: 1px solid lightcoral;
+	display: inline-block;
+	margin: 5px 10px 5px 5px;
+	float: left;
+	padding-top: 30px;
 }
 
+.reg_images1 {
+	width: 120px;
+	height: 120px;
+	border: 1px solid lightcoral;
+	padding-top: 30px;
+	margin-left: 30px;
+}
 
 .filebox label {
-    position: relative;
-    top: -30px;
-    left: -230px;
-    padding: 5px 10px;
-    color: #fff;
-    vertical-align: middle;
-    background-color: #b6b6b6;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 30px;
-    font-size: 14px;
+	position: relative;
+	top: -30px;
+	left: -230px;
+	padding: 5px 10px;
+	color: #fff;
+	vertical-align: middle;
+	background-color: #b6b6b6;
+	border-radius: 5px;
+	cursor: pointer;
+	height: 30px;
+	font-size: 14px;
 }
 
 .filebox input[type="file"] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
+	position: absolute;
+	width: 0;
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
 }
 
+#reviewimg {
+	position: relative;
+	left: -120px;
+	margin-top: -50px;
+	padding: 5px 10px;
+	vertical-align: middle;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+}
 
-
+#buttons {
+	position: relative;
+	top: -110px;
+	left: 240px;
+	width: 600px;
+	display: none;
+}
 
 .review_button {
-    font-size: 16px;
-    font-weight: 400;
-    color: rgb(255, 123, 0);
-    border: 1px solid rgb(255, 123, 0);
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: rgb(255, 255, 255);
-    text-shadow: 1px 1px 1px 0px gray;
-    width: 130px;
-    height: 40px;
-    display: inline-flex;
+	font-size: 16px;
+	font-weight: 400;
+	color: rgb(255, 123, 0);
+	border: 1px solid rgb(255, 123, 0);
+	border-radius: 4px;
+	cursor: pointer;
+	background-color: rgb(255, 255, 255);
+	text-shadow: 1px 1px 1px 0px gray;
+	width: 130px;
+	height: 40px;
+	display: inline-flex;
 }
 
 .review_button:hover {
-    background-color: rgb(255, 248, 238);
-    box-shadow: 2px 2px 2px gray;
-    transition: 0.3s;
+	background-color: rgb(255, 248, 238);
+	box-shadow: 2px 2px 2px gray;
+	transition: 0.3s;
 }
-
 
 /* 클릭 상태 색깔 유지는 자바스크립트로 하기 */
 .review_button:focus {
-    background-color: rgb(255, 102, 0);
-    color: white;
-    box-shadow: 2px 2px 2px gray;
-    transition: 0.2s;
+	background-color: rgb(255, 102, 0);
+	color: white;
+	box-shadow: 2px 2px 2px gray;
+	transition: 0.2s;
 }
 
 #review_cancel {
-    position: relative;
-    top: 0px;
-    left: 380px;
-    padding-left: 48px;
-    padding-top: 5px;
+	position: relative;
+	bottom: 0px;
+	left: 380px;
+	padding-left: 48px;
+	padding-top: 5px;
 }
 
 #review_submit {
-    position: relative;
-    top: 0px;
-    left: 400px;
-    padding-left: 33px;
-    padding-top: 5px;
+	position: relative;
+	bottom: 0px;
+	left: 400px;
+	padding-left: 33px;
+	padding-top: 5px;
 }
 
 #something {
-    width: 250px;
-    height: 790px;
-    position: relative;
-    top: -740px;
-    left: 1150px;
-    background: url(../UI/UI/ceroAD.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+	width: 250px;
+	height: 790px;
+	position: absolute;
+	top: 0px;
+	left: 1150px;
+	background: url(../UI/UI/ceroAD.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
+.ess {
+	font-size: 12px;
+	color: lightcoral;
+}
 
+#review_whatIAte>.ess {
+	position: relative;
+	top: 10px;
+	left: 4px;
+}
+
+#score_title>.ess {
+	position: relative;
+	top: 0px;
+}

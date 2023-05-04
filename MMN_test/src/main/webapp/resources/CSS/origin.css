@@ -1,19 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Gaegu&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
 
-
-
-#loginasdf {
-	position: absolute;
-	right: 15%;
-	display: block;
-}
-
-#signupasdf {
-	position: absolute;
-	right: 7%;
-}
 
 #tag_area {
 	background-color: rgba(240, 240, 240);
@@ -33,26 +23,14 @@
 	height: 200px;
 	border: 1px solid black;
 	display: inline-block;
-	/* margin: 0.3em; */
 }
 
 .test {
-	/* border: 1px solid black; */
 	width: 900px;
 	height: 200px;
 	margin: 0 auto;
 }
 
-/* .store_photo {
-    width: 200px;
-    height: 200px;
-    border: 15px solid rgb(255, 255, 255);
-    background: url(../UI/storeImg/1.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin: 10px;
-  
-  } */
 .store_score {
 	background-color: #00000089;
 	border: 3px solid rgba(255, 158, 68, 0.863);
@@ -79,6 +57,9 @@
 	border-radius: 5px;
 	font-weight: 400;
 	font-size: 18px;
+	position: relative;
+	top: 0px;
+	left:-270px;
 }
 
 .search_btn:hover {
@@ -123,8 +104,6 @@
 }
 
 .search_title {
-/* 	background-color: rgb(255, 158, 68);
-	border-radius: 5px; */
 	width: 50px;
 	height: 33px;
 	color: rgb(255, 158, 68);
@@ -144,9 +123,7 @@
 	color: white;
 }
 
-
 /* 검색창 태그 꾸미기 */
-
 .tag {
 	width: auto;
 	height: 40px;
@@ -154,7 +131,7 @@
 	border-radius: 5px;
 	display: inline-block;
 	float: left;
-	margin:10px;
+	margin: 10px;
 	text-align: center;
 	font-weight: 400;
 	padding: 5px 10px 10px 10px;
@@ -162,11 +139,10 @@
 	font-size: 17px;
 }
 
-.tag > a {
+.tag>a {
 	text-decoration: none;
 	color: gray;
 }
-
 
 #tagInfo, #storeInfo {
 	margin-left: 0px;

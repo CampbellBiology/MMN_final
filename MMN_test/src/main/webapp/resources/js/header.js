@@ -1,9 +1,4 @@
-
-	
-		
-		
-
-    function show() {
+ function show() {
       document.querySelector(".background").className = "background show";
     }
 
