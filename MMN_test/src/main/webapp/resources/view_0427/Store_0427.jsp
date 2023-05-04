@@ -476,7 +476,7 @@
 						<div class="show_images">
 							<br>
 							<%
-							if (data.getPhotoPath() != null) {
+							if (!data.getPhotoPath().equals("")) {
 								String[] review_photo = data.getPhotoPath().split(",");
 								for (int i = 0; i < review_photo.length; i++) {
 									review_photo[i] = review_photo[i].replace("\"", "");
