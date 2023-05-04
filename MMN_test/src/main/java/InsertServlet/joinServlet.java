@@ -85,7 +85,7 @@ public class joinServlet extends HttpServlet {
          _Data.userPW = user_pw;
          _Data.userName = user_name;
          _Data.userEmail = user_email;
-         _Data.userImgPath = "/ImageTest/storeImgSub/"+user_id+".jpg";
+         _Data.userImgPath = "/ImageTest/userImage/"+user_id+".jpg";
          _Data.isMaster = "N";
          System.out.println("회원가입데이터삽입성공");
 
