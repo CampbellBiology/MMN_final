@@ -138,7 +138,13 @@
                 <div class="tag_store_keep"><img src="<%=db.haveWatchlist(userID, storeCode) == true?"https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn_sel.png"
             		: "https://raw.githubusercontent.com/CampbellBiology/MMN2/master/MMN_test/src/main/webapp/resources/UI/UI/keep_btn.png" %>" id="tag_keepImg<%=i%>" onclick="keepClick3(<%=i%>); sendRequest3(<%=storeCode%>, <%=i%>);" onmouseover="onHover3(<%=i%>)" onmouseout="offHover3(<%=i%>)" width="100px"></div>
                 <div class="review">
-                    <div class="profile"><img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo"></div>
+                	<div class="profile">
+                    <% if( db.getUserImagePath(list.get(i-1).getRd().getUserId()) != null){ %> 
+                    <img src="http://192.168.250.44<%=db.getUserImagePath(list.get(i-1).getRd().getUserId())%>" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo">
+                    <% }else{ %>
+                    <img src="http://192.168.250.44/ImageTest/userImage/none.jpg" style="background:no-repeat; background-size:cover; width:90px; height:90px;" id="profile_photo">
+                    <%} %>
+                    </div>
                     <div class="content">
                         <h4><%=db.getNickname(list.get(i-1).getRd().getUserId())%></h4>
                         <p><%=list.get(i-1).getRd().getContents()%></p>
