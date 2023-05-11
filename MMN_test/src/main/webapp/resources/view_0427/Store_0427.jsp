@@ -92,11 +92,8 @@
 	<%
 	DB_Conn _db = new DB_Conn();
 	_db.constructStoreMap();
-	_db.constructRtdCnt_map();
 	ArrayList<storeData> storeList;
-	ArrayList<rtdCntData> rtdCntList;
 	storeList = _db.storefindAll();
-	rtdCntList = _db.rtdCntfindAll();
 	System.out.println("size : " + storeList.size());
 
 	storeData sd = _db.getStoreData(storeCode);
@@ -104,7 +101,6 @@
 	int review_store = sd.getStoreCode();
 	_db.constructMenuMap(review_store);
 	ArrayList<menuData> list = _db.menufindAll();
-	Collections.sort(rtdCntList);
 	/* 	String userID = (String)session.getAttribute("memberID"); */
 	System.out.println("Store_0427.jsp userID : " + userID);
 

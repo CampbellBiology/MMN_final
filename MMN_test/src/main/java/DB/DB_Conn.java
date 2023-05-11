@@ -13,7 +13,6 @@ import DataClass.Insert_joinData;
 import DataClass.loginData;
 import DataClass.menuData;
 import DataClass.reviewData;
-import DataClass.rtdCntData;
 import DataClass.storeByTagDataPrint;
 import DataClass.storeData;
 import DataClass.tagData;
@@ -28,7 +27,6 @@ public class DB_Conn {
 
 	HashMap<Integer, storeData> store_map = new HashMap<>();
 	HashMap<Integer, menuData> menu_map = new HashMap<>();
-	HashMap<Integer, rtdCntData> rtdCnt_map = new HashMap<>();
 
 	public DB_Conn() {
 		Connection();
@@ -230,53 +228,6 @@ public class DB_Conn {
 		}
 	}
 
-	// 5. 가장많이 먹은 음식 카운트 (후보 1)
-	// tmp는 음식 먹은 횟수
-	// RtdCnt ReviewTargetData Count
-	// HashMap인 rtdCnt_map을 만든다.
-	public void constructRtdCnt_map() {
-		Statement stmt = null;
-		ResultSet res = null;
-		try {
-			stmt = conn.createStatement();
-			String sql = "SELECT * FROM reviewTargetTbl";
-			res = stmt.executeQuery(sql);
-
-			// tmp는 카운트 변수이다. 예를 들어, foodCode = 1 일때, tmp[1]은 foodCode가 1인 리뷰타겟의 개수이다.
-			// Max_FoodCode는 무수히 큰 적당한 수(10001)로 대입된 변수다. 모든 foodCode를 표현하기 위함이다.
-			int[] tmp = new int[Max_FoodCode];
-
-			while (res.next()) {
-				int foodCode = res.getInt("foodCode");
-
-				// foodCode일때 배열 값을 1씩 증가시킨다. 리뷰 타겟의 개수를 증가시키는 것과 같다.
-				tmp[foodCode]++;
-			}
-
-			// 모든 foodCode를 순회한다.
-			for (int i = 0; i < Max_FoodCode; i++) {
-				if (tmp[i] == 0)
-					continue;
-				// rtdCntData는 reviewTargetData의 개수를 세는 클래스다.
-				// i는 foodCode이고 tmp[i]는 카운트 변수다.
-				rtdCntData rcd = new rtdCntData(i, tmp[i]);
-				// rtdCnt_map 을 construct 해 간다.
-				rtdCnt_map.put(i, rcd);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (res != null)
-					res.close();
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 	//6. 푸드코드에 맞는 메뉴명 리턴.
 	// foodCode가 주어졌을 때 음식 이름을 리턴한다.
 	public String getFoodName(int foodCode) {
@@ -368,11 +319,6 @@ public class DB_Conn {
 	//9. HashMap인 menu_map을 ArrayList로 바꿔준다.
 	public ArrayList<menuData> menufindAll() {
 		return new ArrayList<>(menu_map.values());
-	}
-
-	//10. HashMap인 rtdCnt_map을 ArrayList로 바꿔준다.
-	public ArrayList<rtdCntData> rtdCntfindAll() {
-		return new ArrayList<>(rtdCnt_map.values());
 	}
 
 	//11. 가게 코드로 가게정보 가져와서 클래스에 담는다.
